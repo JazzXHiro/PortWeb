@@ -1,0 +1,21 @@
+========== NAV ==========
+.nav__logo
+Keerti
+
+.nav__link
+Home - About - Projects - Resume - Contact
+
+
+========== HOME ==========
+.home__social
+https://www.linkedin.com/
+https://github.com/
+https://discord.com/
+
+* Insert the professions into the js file (HOME TYPED JS), then save.
+
+.home__subtitle
+Hi, I'm a
+
+.home__title
+Keerti Vardhan
