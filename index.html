@@ -61,15 +61,90 @@
         <main class="main">
             <!--================== HOME ==================-->
             <section class="home section" id="home">
+                <div class="home__container container grid">
+                    <div class = "home__content">
+                        <div class = "home__image">
+                            <img src="img/home-profile.png" alt="image" class="home__img">
+                        </div>
 
+                        <div class = "home__social">
+                            <a href="https://www.linkedin.com/in/keerti-vardhan-475423299/" target="_blank" class="home__link">
+                                <i class="ri-linkedin-box-fill"></i>
+                            </a>
+
+                            <a href="https://github.com/JazzXHiro" target="_blank" class="home__link">
+                                <i class="ri-github-fill"></i>
+                            </a>
+
+                            <a href="#" class="home__link" onclick="copyDiscord(event)" title="Copy Discord Username">
+                                <i id="discord-icon" class="ri-discord-fill"></i>
+                            </a>
+
+                            <span id ="discord-msg" class="copy-msg"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="home__data grid">
+                        <p class="home__subtitle">
+                        Hi, I'm a <span id="home-typed">Game Developer</span>
+                        </p>
+
+                        <h1 class="home__title">Keerti Vardhan</h1>
+
+                        <p class="home__description">
+                            A Computer Science student passionate about game development and software engineering.Check out my portfolio to see my projects and skills!
+                        </p>
+
+                        <div class="home__buttons">
+                            <a href="pdf/KeertiVardhan_Resume.pdf" download="" target="_blank" class="button">Download CV</a>
+                            <a href="#projects" class="button button__ghost">Projects</a>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!--================== ABOUT ==================-->
             <section class="about section" id="about">
+                <div class="about__container container grid">
+                    <div class="about__content">
+                        <div class="about__data">
+                            <h2 class="section__title">About Me</h2>
 
+                            <p class="about__description">
+                                I am an enthusiastic Computer Science student with a passion for game development and software engineering. I love creating immersive experiences and innovative solutions through code.
+                            </p>
+
+                            <a href="#contact" class="button button__ghost">Contact Me</a>
+                        </div>
+
+                        <div class="about__skills">
+                            <h3 class="about__subtitle">
+                                <i class="ri-bookmark-3-fill"></i>
+                                <span>Skills</span>
+                            </h3>
+
+                            <ul class="about__items">
+                                <li class="about__item">HTML</li>
+                                <li class="about__item">CSS</li>
+                                <li class="about__item">JavaScript</li>
+                                <li class="about__item">C</li>
+                                <li class="about__item">C++</li>
+                                <li class="about__item">Python</li>
+                                <li class="about__item">Unity</li>
+                                <li class="about__item">Godot</li>
+                                <li class="about__item">Pygame</li>
+                                <li class="about__item">Git</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="about__image">
+                        <img src="img/about-profile.png" alt="image" class="about__img">
+                    </div>
+                </div>
             </section>
 
-            <!--================== SKILLS ==================-->
+            <!--================== PROJECTS ==================-->
             <section class="projects section" id="projects">
 
             </section>
