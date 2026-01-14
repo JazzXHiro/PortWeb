@@ -65,3 +65,11 @@ const shadowHeader = () => {
                        : header.classList.remove('shadow-header')
 }
 window.addEventListener('scroll', shadowHeader)
+
+/*======================== CONTACT EMAIL JS ======================*/
+const contactForm = document.getElementById('contact-form'),
+      contactMessage = document.getElementById('contact-message'),
+
+const sendEmail = (e) => {
+    e.preventDefault()
+}
