@@ -642,7 +642,8 @@ img {
   .home__container,
   .about__container,
   .projects__container,
-  .resume__container{
+  .resume__container,
+  .contact__container{
     grid-template-columns: 400px;
     justify-content: center;
   }
@@ -666,8 +667,16 @@ img {
   }
 
   .projects__container,
-  .resume__container{
+  .resume__container,
+  .contact__container{
     grid-template-columns: repeat(2, 350px);
+  }
+
+  .contact__content{
+    align-content: flex-start;
+  }
+  .contact__form{
+    order: 1;
   }
 }
 
@@ -763,6 +772,27 @@ img {
   }
   .resume__list{
     row-gap: 3rem;
+  }
+
+  .contact{
+    padding-block: 8rem 4rem;
+  }
+  .contact__container{
+    grid-template-columns: 310px 450px;
+    column-gap: 10rem;
+  }
+  .contact__content{
+    row-gap: 2rem;
+  }
+  .contact__data{
+    row-gap: 1.5rem;
+  }
+  .contact__form .button{
+    justify-self: center;
+    margin-top: 1rem;
+  }
+  .contact__area{
+    height: 14rem;
   }
 }
 
