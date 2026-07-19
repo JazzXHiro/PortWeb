@@ -241,7 +241,9 @@ img {
 }
 
 /* Active link */
-
+.active-link::after{
+  width: 60%;
+}
 
 /*=============== HOME ===============*/
 .home__container{
@@ -417,6 +419,13 @@ img {
 }
 
 /*=============== PROJECTS ===============*/
+/* Heading fades out (with a slight nudge) when a card popup would cover it (see main.js) */
+.projects .section__title{
+  pointer-events: none;   /* never intercept hovers on the cards below */
+  will-change: transform;
+  transition: transform .4s cubic-bezier(.22, 1, .36, 1), opacity .4s ease;
+}
+
 .projects__container{
   row-gap: 2rem;
 }
@@ -424,28 +433,42 @@ img {
 .projects__card{
   position: relative;
   border-radius: 1rem;
-  overflow: hidden;
   box-shadow: 0 8px 16px hsla(0, 0%, 0%, 0.5);
   transition: box-shadow .4s;
+  transform-style: preserve-3d;
+  will-change: transform;
+  cursor: pointer;
+}
+
+.projects__img{
+  position: relative;
+  z-index: 2;                 /* image sits ABOVE the sliding panel */
+  display: block;
+  width: 100%;
+  border-radius: 1rem;        /* image clips its own corners now */
 }
 
 .projects__data{
   position: absolute;
-  top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: hsla(var(--hue), 8%, 8%, .4); /* Black with opacity */
-  backdrop-filter: blur(16px);
+  bottom: 100%;               /* anchored just above the top edge of the card */
+  z-index: 1;                 /* behind the image, so it stays hidden at rest */
+  width: 100%;                /* match the tile width */
   display: grid;
-  place-content: center;
+  align-content: start;       /* keep text in the part that pokes out */
   row-gap: .5rem;
   text-align: center;
-  padding: 0 1rem;
-  border-radius: 1rem;
+  padding: 1.5rem 1.25rem 2rem; /* extra bottom padding stays hidden behind the tile */
+  border-radius: 1rem 1rem 0 0; /* round only the top corners */
+  background-color: hsla(var(--hue), 6%, 22%, .55); /* translucent grey */
+  backdrop-filter: blur(12px);
+  border: 2px solid var(--first-color);             /* cyan outline */
+  border-bottom: none;                              /* bottom edge hides behind the tile */
+  box-shadow: 0 0 20px hsla(var(--hue), 80%, 48%, .45); /* cyan glow */
   opacity: 0;
   pointer-events: none;
-  transition: opacity .4s;
+  transform: translateY(100%);  /* fully tucked behind the tile at rest */
+  transition: transform .4s ease, opacity .4s ease;
 }
 
 .projects__title{
@@ -456,12 +479,6 @@ img {
   font-size: var(--small-font-size);
 }
 
-.projects__data .button{
-  justify-self: center;
-  background-color: hsla(var(--hue), 8%, 8%, .4);
-  margin-top: .5rem;
-}
-
 .projects__card:hover{
   box-shadow: 0 8px 16px hsla(var(--hue), 80%, 48%, .2);
 }
@@ -469,6 +486,184 @@ img {
 .projects__card:hover .projects__data{
   opacity: 1;
   pointer-events: initial;
+  transform: translateY(1.5rem);  /* pokes out, bottom stays tucked behind the tile */
+}
+
+/* Bottom overlay strip that slides up over the image's lower edge */
+.projects__overlay{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 3;                  /* above the image (image is z-index 2) */
+  width: 100%;                 /* match the tile width */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* icons aligned to the left of the strip */
+  gap: 1rem;
+  height: 2.84rem;              /* fixed strip height so every card matches, icons or not */
+  padding: 0 5.5rem 0 1.25rem;   /* room for the arrow on the right, small gap on the left */
+  background-color: hsla(var(--hue), 8%, 8%, .66); /* dark blackish grey, mostly opaque */
+  backdrop-filter: blur(6px);
+  border-radius: 0 0 1rem 1rem; /* round only the bottom corners, matching the image */
+  border: 2px solid var(--first-color);
+  border-top: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(100%);  /* tucked below the image at rest */
+  transition: transform .4s ease, opacity .4s ease;
+}
+
+.projects__card:hover .projects__overlay{
+  opacity: 1;
+  pointer-events: initial;
+  transform: translateY(0);     /* slides up over the bottom of the image */
+}
+
+/* Skills / tools icons inside the overlay */
+.projects__skills{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.projects__skills img{
+  width: 1.75rem;
+  height: 1.75rem;
+  object-fit: contain;
+}
+
+/* Arrow button at the far-right edge of the overlay */
+.projects__arrow{
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background-color: var(--first-color);
+  color: var(--black-color);
+  font-family: var(--body-font);
+  font-weight: var(--font-medium);
+  font-size: .72rem;
+  padding: .4rem .8rem;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: box-shadow .3s, gap .3s;
+}
+
+.projects__arrow i{
+  font-size: .95rem;
+  display: inline-block;
+}
+
+.projects__arrow:hover{
+  box-shadow: 0 4px 18px hsla(var(--hue), 80%, 48%, .45);
+  gap: .6rem; /* icon moves slightly away from the text on hover */
+}
+
+/*=============== PROJECT DETAILS MODAL ===============*/
+.project-modal{
+  position: fixed; inset: 0; z-index: 1000;
+  display: grid; place-items: center; padding: 1.5rem;
+  background: hsla(var(--hue), 20%, 4%, .7);
+  backdrop-filter: blur(6px);
+  opacity: 0; visibility: hidden;
+  transition: opacity .4s, visibility .4s;
+}
+.project-modal.show-modal{ opacity: 1; visibility: visible; }
+
+.project-modal__content{
+  position: relative;
+  width: min(920px, 100%);
+  background: hsl(var(--hue), 12%, 10%);
+  border: 1.5px solid hsla(var(--hue), 80%, 48%, .25);
+  border-radius: 20px;
+  display: flex; flex-direction: column; row-gap: 1.75rem;
+  padding: 2rem 2.5rem 2.4rem; overflow-y: auto; max-height: 90vh;
+}
+
+.project-modal__close{
+  position: absolute; top: 1rem; right: 1rem; z-index: 50;
+  width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: hsla(var(--hue), 8%, 20%, .6); border: none;
+  color: #fff; font-size: 1.4rem; cursor: pointer;
+  transition: background .3s, color .3s;
+}
+.project-modal__close:hover{ color: var(--first-color); }
+
+.pm__head{ display: grid; row-gap: .5rem; padding-right: 3rem; }
+.pm__tagline{ font-family: monospace; font-size: .7rem; letter-spacing: .14rem; color: var(--first-color); text-transform: uppercase; }
+.pm__title{ font-size: 1.9rem; }
+
+/* --- Carousel --- */
+
+.pm__carousel{ position: relative; display:grid; justify-items: center; row-gap: 1rem; }
+.pm__stage{ position: relative; width: 100%; height: 340px; overflow: hidden; }
+.pm__tile{
+  position: absolute; top: 16px; left: 0; border-radius: 16px; overflow: hidden;
+  display: grid; place-items: center;
+  transition: transform .55s cubic-bezier(.22, 1, .36, 1), opacity .55s, filter .55s;
+  background: hsl(var(--hue), 14%, 13%);
+  background-image: repeating-linear-gradient(45deg, transparent 0 11px, hsla(var(--hue), 60%,60%, .05) 11px 22px);
+}
+.pm__tile img, .pm__tile video{ width: 100%; height: 100%; object-fit: cover; }
+.pm__tile.is-active{ box-shadow: 0 0 0 2px var(--first-color), 0 18px 50px hsla(var(--hue), 80%, 48%, .5); }
+.pm__tile:not(.is-active){ filter: brightness(.55) saturate(.45); cursor: pointer;}
+
+.pm__ph{ display: grid; justify-items: center; gap: .75rem; color: hsla(var(--hue), 30%, 80%, .85); }
+.pm__ph i{ font-size: 2.2rem; opacity: .6; }
+.pm__ph span{ font-family: monospace; font-size: .78rem; background: hsla(var(--hue), 10%, 6%, .35); padding: 4px 8px; border-radius: 5px; }
+
+.pm__arrow{
+  position: absolute; top: 45%; transform: translateY(-50%); z-index: 40;
+  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  cursor: pointer; color: #fff; font-size: 1.5rem;
+  background: hsla(var(--hue), 8%, 10%, .72); backdrop-filter: blur(8px);
+  border: 1.5px solid var(--first-color); transition: opacity .3s, color .3s;
+}
+.pm__arrow--prev{ left: 10px;} .pm__arrow--next{ right: 10px;}
+.pm__arrow:disabled{ opacity: .35; pointer-events: none; }
+.pm__arrow:hover{ color: var(--first-color); }
+
+.pm__dots{ display: flex; gap: 8px; }
+.pm__dots button{ height: 6px; border-radius: 3px; padding: 0; cursor: pointer; background: hsla(var(--hue), 8%, 55%, .4); transition: width .4s, background .4s; }
+.pm__dots button.is-active{ width: 26px; background: var(--first-color); }
+
+/* --- Footer --- */
+.pm__body{ display: grid; grid-template-columns: 270px 1fr; gap: 2rem; }
+.pm__tech{ background: hsla(var(--hue), 6%, 15%, .55); border: 1.5px solid hsla(var(--hue), 80%, 48%, .28); border-radius: 16px; padding: 1.4rem; display: grid; gap: 1rem; align-content: start; }
+.pm__label{ font-family: monospace; font-size: .7rem; letter-spacing: .12em; color: var(--first-color); }
+.pm__tech-list{ display: grid; gap: .75rem; }
+.pm__tech-list li{ display: flex; align-items: center; gap: .75rem; }
+.pm__tech-list img{ width: 26px; height: 26px; }
+.pm__tech-list i{ font-size: 26px; color: hsl(150, 55%, 60%); }
+
+.pm__about{ display: flex; flex-direction: column; gap: .9rem; }
+.pm__about-title{ font-size: 1.05rem; display: flex; flex-direction: column; gap: .4rem; }
+.pm__rule{ height: 3px; width: 64px; border-radius: 2px; background: var(--first-color); }
+.pm__desc{ color: hsl(var(--hue), 6%, 72%); line-height: 1.65; }
+.pm__stats{ display: flex; flex-wrap: wrap; gap: 1.1rem; }
+.pm__stats span{ font-family: monospace; font-size: .7rem; color: var(--gray-color); }
+.pm__actions{ display: flex; align-items: center; gap: 1rem; margin-top: auto; padding-top: .5rem; }
+.pm__github{ display: inline-flex; align-items: center; gap: .55rem; color: var(--white-color); font-size: .9rem; }
+.pm__github i{ font-size: 1.35rem; } .pm__github:hover{ color: var(--first-color); }
+.pm__cta{ margin-left: auto; gap: .55rem; align-items: center; }
+
+/* --- Mobile (Option 1d) --- */
+@media screen and (max-width: 768px){
+  .project-modal__content{ padding: 1.5rem 1.25rem 1.75rem; }
+  .pm__title{ font-size: 1.5rem; }
+  .pm__stage{ height: 250px; }
+  .pm__body{ grid-template-columns: 1fr; gap: 1.25rem; }
+  .pm__tech{ padding: 1rem; }
+  .pm__tech-list{ grid-auto-flow: column; justify-content: start; gap: 1.25rem; }
+  .pm__actions{ flex-direction: column; align-items: stretch; }
+  .pm__cta{ margin-left: 0; justify-content: center; }
+  .pm__github{ justify-content: center; }
 }
 
 /*=============== RESUME ===============*/
@@ -600,16 +795,103 @@ img {
 }
 
 /*=============== FOOTER ===============*/
+.footer{
+  padding-block: 5rem 2rem;
+}
 
+.footer__container{
+  row-gap: 2rem;
+}
+
+.footer__links,
+.footer__social{
+  display: flex;
+  justify-content: center;
+}
+
+.footer__logo{
+  color: var(--white-color);
+  font-size: var(--h1-font-size);
+  font-weight: var(--font-semi-bold);
+  justify-self: center;
+  margin-bottom: 1rem;
+  transition: color .4s;
+}
+
+.footer__logo:hover{
+  color: var(--first-color);
+}
+
+.footer__links{
+  column-gap: 2rem;
+}
+
+.footer__link{
+  color: var(--white-color);
+  transition: color .4s;
+}
+
+.footer__link:hover{
+  color:var(--first-color);
+}
+
+.footer__social{
+  column-gap: 1.5rem;
+}
+
+.footer__social-link{
+  color: var(--first-color);
+  font-size: 1.5rem;
+  transition: transform .4s;
+}
+
+.footer__social-link:hover{
+  transform: translateY(-.25rem);
+}
+
+.footer__copy{
+  display: block;
+  margin-top: 5rem;
+  text-align: center;
+  font-size: var(--small-font-size);
+  color: var(--gray-color);
+}
 
 /*=============== SCROLL BAR ===============*/
+::-webkit-scrollbar{
+  width: 0.6rem;
+  background-color: hsl(0, 0%, 25%);
+  border-radius: .5rem;
+}
 
+::-webkit-scrollbar-thumb:hover{
+  background-color: hsl(0, 0%, 35%);
+}
 
 /*=============== SCROLL UP ===============*/
+.scrollup{
+  position: fixed;
+  right: 1rem;
+  bottom: -50%;
+  background-color: var(--body-color);
+  box-shadow: 0 4px 16px hsla(0, 0%, 0%, 0.5);
+  display: inline-flex;
+  padding: 6px;
+  color: var(--white-color);
+  font-size: 1.25rem;
+  border-radius: .25rem;
+  z-index: var(--z-tooltip);
+  transition: bottom .4s, transform .4s;
+}
 
+.scrollup:hover{
+  transform: translateY(-.5rem);
+}
 
 /* Show Scroll Up */
-
+.show-scroll{
+  bottom: 3rem;
+}
 
 /*=============== BREAKPOINTS ===============*/
 /* For small devices */
@@ -631,9 +913,6 @@ img {
 
   .projects__data{
     padding-inline: .5rem;
-  }
-  .projects__data .button{
-    padding: .5rem .75rem;
   }
 }
 
@@ -756,9 +1035,6 @@ img {
     grid-template-columns: repeat(3, 350px);
     gap: 3rem 2rem;
   }
-  .projects__data .button{
-    margin-top: 1rem;
-  }
 
   .resume{
     padding-block: 8rem 4rem;
@@ -794,7 +1070,32 @@ img {
   .contact__area{
     height: 14rem;
   }
+
+  .footer__container{
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+  }
+  .footer__logo{
+    font-size: var(--h2-font-size);
+    justify-self: flex-start;
+    margin-bottom: 0;
+  }
+  .footer__links{
+    column-gap: 3rem;
+  }
+  .footer__social{
+    justify-self: flex-end;
+  }
+
+  .scrollup{
+    right: 3rem;
+  }
 }
 
 
 /* For 2K resolutions (2048 x 1152, 2048 x 1536) */
+@media screen and (min-width: 2048px) {
+  body{
+    zoom: 1.2;
+  }
+}

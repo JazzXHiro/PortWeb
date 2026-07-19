@@ -24,7 +24,7 @@
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <li>
-                            <a href="#home" class="nav__link">Home</a>
+                            <a href="#home" class="nav__link active-link">Home</a>
                         </li>
 
                         <li>
@@ -153,10 +153,51 @@
                         <img src="img/project-1.jpg" alt="image" class="projects__img">
 
                         <div class="projects__data">
-                            <h3 class="projects__title">Project 1</h3>
-                            <p class="projects__description">Creation, design and development of a 2D platformer game using Unity and C#.</p>
-                            <a href="#" target="_blank" class="button button__ghost">View Project</a>
+                            <h3 class="projects__title">Jaded - 2D Monster Catching Game</h3>
+                            <p class="projects__description">A monster catching game developed solely in python.</p>
                         </div>
+
+                        <div class="projects__overlay">
+                            <div class="projects__skills">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" title="Python">
+                                <img src="img/pygame.png" alt="Pygame" title="Pygame">
+                            </div>
+
+                            <button class="projects__arrow" type="button" aria-label="View project details">
+                                <span>View</span>
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </div>
+
+                        <!-- ===== Modal content for THIS project (hidden until opened) ===== -->
+                        <template class="project-detail">
+                            <p class = "pm__tagline">2D Game &middot; Monster-Catcher</p>
+                            <h2 class = "pm__title">Jaded - 2D Monster Catching Game</h2>
+
+                            <!-- Carousel media: one .pm__media per slide.
+                            data-type = image | gif | video   data-src = file path -->
+
+                            <div class="pm__media" data-type="gif" data-src="img/jaded/gameplay.gif" data-label="gameplay_loop.gif"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/forest.png" data-label="forest_biome.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/boss.png"   data-label="boss_fight.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/inventory.png" data-label="inventory_ui.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/title.png"  data-label="title_screen.png"></div>
+                        
+                            <ul class="pm__tech-src">
+                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt=""><span>Python</span></li>
+                                <li><img src="img/pygame.png" alt=""><span>Pygame</span></li>
+                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt=""><span>Git</span></li>
+                            </ul>
+
+                            <p class="pm__desc">A 2D monster-catching game built entirely within Python with Pygame.
+                                Explore a world filled with unique monsters, each with their own abilities and characteristics. Capture, train, and battle your way to become the ultimate monster master!
+                            </p>
+
+                            <ul class="pm__stats-src"><li>30+ MONSTERS</li><li>CUSTOM PHYSICS</li><li>SOLO BUILD</li></ul>
+
+                            <a class="pm__github-src" href="https://github.com/JazzXHiro/Jaded">JazzXHiro / Jaded</a>
+                            <a class="pm__cta-src" href="project-jaded.html">View full details</a>
+                        </template>
                     </article>
 
                     <article class="projects__card">
@@ -165,8 +206,48 @@
                         <div class="projects__data">
                             <h3 class="projects__title">Project 2</h3>
                             <p class="projects__description">Creation, design and development of a 2D platformer game using Unity and C#.</p>
-                            <a href="#" target="_blank" class="button button__ghost">View Project</a>
                         </div>
+
+                        <div class="projects__overlay">
+                            <div class="projects__skills">
+
+                            </div>
+
+                            <button class="projects__arrow" type="button" aria-label="View project details">
+                                <span>View</span>
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </div>
+
+                        <!-- ===== Modal content for THIS project (hidden until opened) ===== -->
+                        <template class="project-detail">
+                            <p class = "pm__tagline">2D Game &middot; Monster-Catcher</p>
+                            <h2 class = "pm__title">Jaded - 2D Monster Catching Game</h2>
+
+                            <!-- Carousel media: one .pm__media per slide.
+                            data-type = image | gif | video   data-src = file path -->
+
+                            <div class="pm__media" data-type="gif" data-src="img/jaded/gameplay.gif" data-label="gameplay_loop.gif"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/forest.png" data-label="forest_biome.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/boss.png"   data-label="boss_fight.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/inventory.png" data-label="inventory_ui.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/title.png"  data-label="title_screen.png"></div>
+                        
+                            <ul class="pm__tech-src">
+                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt=""><span>Python</span></li>
+                                <li><img src="img/pygame.png" alt=""><span>Pygame</span></li>
+                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt=""><span>Git</span></li>
+                            </ul>
+
+                            <p class="pm__desc">A 2D monster-catching game built entirely within Python with Pygame.
+                                Explore a world filled with unique monsters, each with their own abilities and characteristics. Capture, train, and battle your way to become the ultimate monster master!
+                            </p>
+
+                            <ul class="pm__stats-src"><li>30+ MONSTERS</li><li>CUSTOM PHYSICS</li><li>SOLO BUILD</li></ul>
+
+                            <a class="pm__github-src" href="https://github.com/JazzXHiro/Jaded">JazzXHiro / Jaded</a>
+                            <a class="pm__cta-src" href="project-jaded.html">View full details</a>
+                        </template>
                     </article>
 
                     <article class="projects__card">
@@ -175,8 +256,48 @@
                         <div class="projects__data">
                             <h3 class="projects__title">Project 3</h3>
                             <p class="projects__description">Creation, design and development of a 2D platformer game using Unity and C#.</p>
-                            <a href="#" target="_blank" class="button button__ghost">View Project</a>
                         </div>
+
+                        <div class="projects__overlay">
+                            <div class="projects__skills">
+
+                            </div>
+
+                            <button class="projects__arrow" type="button" aria-label="View project details">
+                                <span>View</span>
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </div>
+
+                        <!-- ===== Modal content for THIS project (hidden until opened) ===== -->
+                        <template class="project-detail">
+                            <p class = "pm__tagline">2D Game &middot; Monster-Catcher</p>
+                            <h2 class = "pm__title">Jaded - 2D Monster Catching Game</h2>
+
+                            <!-- Carousel media: one .pm__media per slide.
+                            data-type = image | gif | video   data-src = file path -->
+
+                            <div class="pm__media" data-type="gif" data-src="img/jaded/gameplay.gif" data-label="gameplay_loop.gif"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/forest.png" data-label="forest_biome.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/boss.png"   data-label="boss_fight.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/inventory.png" data-label="inventory_ui.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/title.png"  data-label="title_screen.png"></div>
+                        
+                            <ul class="pm__tech-src">
+                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt=""><span>Python</span></li>
+                                <li><img src="img/pygame.png" alt=""><span>Pygame</span></li>
+                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt=""><span>Git</span></li>
+                            </ul>
+
+                            <p class="pm__desc">A 2D monster-catching game built entirely within Python with Pygame.
+                                Explore a world filled with unique monsters, each with their own abilities and characteristics. Capture, train, and battle your way to become the ultimate monster master!
+                            </p>
+
+                            <ul class="pm__stats-src"><li>30+ MONSTERS</li><li>CUSTOM PHYSICS</li><li>SOLO BUILD</li></ul>
+
+                            <a class="pm__github-src" href="https://github.com/JazzXHiro/Jaded">JazzXHiro / Jaded</a>
+                            <a class="pm__cta-src" href="project-jaded.html">View full details</a>
+                        </template>
                     </article>
 
                     <article class="projects__card">
@@ -185,8 +306,48 @@
                         <div class="projects__data">
                             <h3 class="projects__title">Project 4</h3>
                             <p class="projects__description">Creation, design and development of a 2D platformer game using Unity and C#.</p>
-                            <a href="#" target="_blank" class="button button__ghost">View Project</a>
                         </div>
+
+                        <div class="projects__overlay">
+                            <div class="projects__skills">
+
+                            </div>
+
+                            <button class="projects__arrow" type="button" aria-label="View project details">
+                                <span>View</span>
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </div>
+
+                        <!-- ===== Modal content for THIS project (hidden until opened) ===== -->
+                        <template class="project-detail">
+                            <p class = "pm__tagline">2D Game &middot; Monster-Catcher</p>
+                            <h2 class = "pm__title">Jaded - 2D Monster Catching Game</h2>
+
+                            <!-- Carousel media: one .pm__media per slide.
+                            data-type = image | gif | video   data-src = file path -->
+
+                            <div class="pm__media" data-type="gif" data-src="img/jaded/gameplay.gif" data-label="gameplay_loop.gif"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/forest.png" data-label="forest_biome.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/boss.png"   data-label="boss_fight.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/inventory.png" data-label="inventory_ui.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/title.png"  data-label="title_screen.png"></div>
+                        
+                            <ul class="pm__tech-src">
+                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt=""><span>Python</span></li>
+                                <li><img src="img/pygame.png" alt=""><span>Pygame</span></li>
+                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt=""><span>Git</span></li>
+                            </ul>
+
+                            <p class="pm__desc">A 2D monster-catching game built entirely within Python with Pygame.
+                                Explore a world filled with unique monsters, each with their own abilities and characteristics. Capture, train, and battle your way to become the ultimate monster master!
+                            </p>
+
+                            <ul class="pm__stats-src"><li>30+ MONSTERS</li><li>CUSTOM PHYSICS</li><li>SOLO BUILD</li></ul>
+
+                            <a class="pm__github-src" href="https://github.com/JazzXHiro/Jaded">JazzXHiro / Jaded</a>
+                            <a class="pm__cta-src" href="project-jaded.html">View full details</a>
+                        </template>
                     </article>
 
                     <article class="projects__card">
@@ -195,8 +356,48 @@
                         <div class="projects__data">
                             <h3 class="projects__title">Project 5</h3>
                             <p class="projects__description">Creation, design and development of a 2D platformer game using Unity and C#.</p>
-                            <a href="#" target="_blank" class="button button__ghost">View Project</a>
                         </div>
+
+                        <div class="projects__overlay">
+                            <div class="projects__skills">
+
+                            </div>
+
+                            <button class="projects__arrow" type="button" aria-label="View project details">
+                                <span>View</span>
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </div>
+
+                        <!-- ===== Modal content for THIS project (hidden until opened) ===== -->
+                        <template class="project-detail">
+                            <p class = "pm__tagline">2D Game &middot; Monster-Catcher</p>
+                            <h2 class = "pm__title">Jaded - 2D Monster Catching Game</h2>
+
+                            <!-- Carousel media: one .pm__media per slide.
+                            data-type = image | gif | video   data-src = file path -->
+
+                            <div class="pm__media" data-type="gif" data-src="img/jaded/gameplay.gif" data-label="gameplay_loop.gif"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/forest.png" data-label="forest_biome.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/boss.png"   data-label="boss_fight.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/inventory.png" data-label="inventory_ui.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/title.png"  data-label="title_screen.png"></div>
+                        
+                            <ul class="pm__tech-src">
+                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt=""><span>Python</span></li>
+                                <li><img src="img/pygame.png" alt=""><span>Pygame</span></li>
+                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt=""><span>Git</span></li>
+                            </ul>
+
+                            <p class="pm__desc">A 2D monster-catching game built entirely within Python with Pygame.
+                                Explore a world filled with unique monsters, each with their own abilities and characteristics. Capture, train, and battle your way to become the ultimate monster master!
+                            </p>
+
+                            <ul class="pm__stats-src"><li>30+ MONSTERS</li><li>CUSTOM PHYSICS</li><li>SOLO BUILD</li></ul>
+
+                            <a class="pm__github-src" href="https://github.com/JazzXHiro/Jaded">JazzXHiro / Jaded</a>
+                            <a class="pm__cta-src" href="project-jaded.html">View full details</a>
+                        </template>
                     </article>
 
                     <article class="projects__card">
@@ -205,7 +406,17 @@
                         <div class="projects__data">
                             <h3 class="projects__title">Project 6</h3>
                             <p class="projects__description">Creation, design and development of a 2D platformer game using Unity and C#.</p>
-                            <a href="#" target="_blank" class="button button__ghost">View Project</a>
+                        </div>
+
+                        <div class="projects__overlay">
+                            <div class="projects__skills">
+
+                            </div>
+
+                            <button class="projects__arrow" type="button" aria-label="View project details">
+                                <span>View</span>
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
                         </div>
                     </article>
                 </div>
@@ -364,11 +575,79 @@
 
         <!--================== FOOTER ==================-->
         <footer class="footer">
+            <div class="footer__container container grid">
+                <a href="#" class="footer__logo">Keerti</a>
 
+                <div class="footer__links">
+                    <a href="#home" class="footer__link">Home</a>
+
+                    <a href="#about" class="footer__link">About</a>
+
+                    <a href="#projects" class="footer__link">Projects</a>
+                </div>
+
+                <div class="footer__social">
+                    <a href="https://bsky.app/profile/keertiv.bsky.social" target="_blank" class="footer__social-link">
+                        <i class="ri-bluesky-fill"></i>
+                    </a>
+
+                    <a href="https://www.instagram.com/keertiv_y/" target="_blank" class="footer__social-link">
+                        <i class="ri-instagram-fill"></i>
+                    </a>
+
+                    <a href="https://x.com/KeertiV_" target="_blank" class="footer__social-link">
+                        <i class="ri-twitter-x-line"></i>
+                    </a>
+                </div>
+            </div>
+
+            <span class="footer__copy">
+                &#169; Keerti Vardhan. All rights reserved
+            </span>
         </footer>
 
         <!--================== SCROLL UP ==================-->
+        <a href="#" class="scrollup" id="scroll-up">
+            <i class="ri-arrow-up-line"></i>
+        </a>
 
+        <!--================== PROJECT DETAILS MODAL ==================-->
+        <div class="project-modal" id="project-modal">
+            <div class="project-modal__content">
+                <button class="project-modal__close" id="project-modal-close" type="button" aria-label="Close">
+                    <i class="ri-close-line"></i>
+                </button>
+                
+                <header class="pm__head">
+                    <p class="pm__tagline" id="pm-tagline"></p>
+                    <h2 class="pm__title" id="pm-title"></h2>
+                </header>
+
+                <div class="pm__carousel">
+                    <div class="pm__stage" id="pm-stage"></div>
+                    <button class="pm__arrow pm__arrow--prev" id="pm-prev" aria-label="Previous"><i class="ri-arrow-left-line"></i></button>
+                    <button class="pm__arrow pm__arrow--next" id="pm-next" aria-label="Next"><i class="ri-arrow-right-line"></i></button>
+                    <div class="pm__dots" id="pm-dots"></div>
+                </div>
+
+                <div class="pm__body">
+                    <aside class="pm__tech">
+                        <span class="pm__label">BUILT WITH</span>
+                        <ul class="pm__tech-list" id="pm-tech"></ul>
+                    </aside>
+
+                    <div class="pm__about">
+                        <h3 class="pm__about-title">About Project<span class="pm__rule"></span></h3>
+                        <p class="pm__desc" id="pm-desc"></p>
+                        <div class="pm__stats" id="pm-stats"></div>
+                        <div class="pm__actions">
+                            <a class="pm__github" id="pm-github" target="_blank" rel="noopener"><i class="ri-github-fill"></i><span id="pm-github-label"></span></a>
+                            <a class="pm__cta button" id="pm-details">View full details <i class="ri-arrow-right-line"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!--================== SCROLLREVEAL ==================-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/4.0.9/scrollreveal.min.js"></script>
