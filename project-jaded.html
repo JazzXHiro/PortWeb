@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>Jaded — Case Study | Keerti Vardhan</title>
+  <style>
+    .pd{ max-width: var(--content-max); margin-inline: auto; padding-inline: var(--gutter); }
+    .pd__back{
+      display: inline-flex; align-items: center; gap: .5rem;
+      font: 400 .72rem var(--mono-font); letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted); margin-top: 1.5rem; transition: color .3s, gap .3s;
+    }
+    .pd__back:hover{ color: var(--cyan); gap: .8rem; }
+    .pd__back i{ font-size: 1rem; }
+
+    /* HERO */
+    .pd-hero{ padding-block: clamp(2.5rem, 6vh, 4.5rem) clamp(2rem, 5vh, 3.5rem); position: relative; z-index: 1; }
+    .pd-hero__tag{ font: 400 .72rem var(--mono-font); letter-spacing: .18em; color: var(--cyan); text-transform: uppercase; }
+    .pd-hero__title{
+      font-size: clamp(2.6rem, 7vw, 5.5rem); font-weight: 800; line-height: .98; margin-top: 1rem;
+      letter-spacing: -.02em;
+    }
+    .pd-hero__title em{ color: var(--cyan); font-style: normal; }
+    .pd-hero__lead{ color: var(--muted); font-size: clamp(1rem, 1.4vw, 1.18rem); line-height: 1.7; max-width: 46ch; margin-top: 1.5rem; font-weight: 300; }
+    .pd-hero__meta{ display: flex; flex-wrap: wrap; gap: 2.5rem; margin-top: 2.5rem; }
+    .pd-meta{ display: grid; gap: .35rem; }
+    .pd-meta__k{ font: 400 .64rem var(--mono-font); letter-spacing: .14em; color: var(--dim); text-transform: uppercase; }
+    .pd-meta__v{ font-size: 1.05rem; font-weight: 500; color: var(--ink); }
+    .pd-hero__actions{ display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2.5rem; }
+
+    /* COVER */
+    .pd-cover{ position: relative; aspect-ratio: 21/9; border-radius: 20px; overflow: hidden; border: 1.5px solid var(--line); margin-bottom: clamp(3rem, 7vh, 5rem); }
+    .pd-cover__scrim{ position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 40%, hsla(var(--hue),20%,4%,.55)); z-index: 2; transition: background .45s var(--ease-out); }
+    .pd-cover .pd-fill img{ transition: transform .55s var(--ease-out); }
+    .pd-cover:hover .pd-fill img{ transform: scale(1.06); }
+    .pd-cover:hover .pd-cover__scrim{ background: linear-gradient(180deg, transparent 30%, hsla(var(--hue),20%,4%,.82)); }
+    @media (prefers-reduced-motion: reduce){
+      .pd-cover:hover .pd-fill img{ transform: none; }
+    }
+
+    /* IMAGE FILL + graceful placeholder (stands in for <image-slot>) */
+    .pd-fill{ position: absolute; inset: 0; display: grid; place-items: center; background: hsla(var(--hue),8%,14%,.5); }
+    .pd-fill::after{
+      content: attr(data-ph); position: absolute; inset: 0; z-index: 0;
+      display: grid; place-items: center; text-align: center; padding: 1rem;
+      font: 400 .7rem var(--mono-font); letter-spacing: .1em; text-transform: uppercase; color: var(--dim);
+    }
+    .pd-fill img{ position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* SECTION shell */
+    .pd-sec{ padding-block: clamp(2.5rem, 6vh, 4.5rem); border-top: 1px solid var(--line); }
+    .pd-sec:first-of-type{ border-top: none; }
+
+    /* OVERVIEW split */
+    .pd-split{ display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+    .pd-prose p{ color: var(--muted); line-height: 1.8; font-weight: 300; font-size: 1.02rem; }
+    .pd-prose p + p{ margin-top: 1.1rem; }
+    .pd-prose b{ color: var(--ink); font-weight: 500; }
+    .pd-facts{ display: grid; gap: 0; border: 1.5px solid var(--line); border-radius: 16px; overflow: hidden; background: hsla(var(--hue),8%,12%,.5); }
+    .pd-fact{ display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--line); }
+    .pd-fact:last-child{ border-bottom: none; }
+    .pd-fact__k{ font: 400 .68rem var(--mono-font); letter-spacing: .1em; color: var(--dim); text-transform: uppercase; }
+    .pd-fact__v{ font-weight: 600; color: var(--cyan); text-align: right; }
+
+    /* FEATURES */
+    .pd-features{ display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-top: 2rem; }
+    .pd-feature{
+      background: hsla(var(--hue),8%,12%,.55); border: 1.5px solid var(--line); border-radius: 16px;
+      padding: 1.6rem; display: grid; gap: .7rem; align-content: start; transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .pd-feature:hover{ border-color: var(--cyan-soft); transform: translateY(-4px); box-shadow: 0 14px 40px hsla(var(--hue),80%,48%,.12); }
+    .pd-feature__ico{ width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: hsla(var(--hue),80%,48%,.12); color: var(--cyan); font-size: 1.4rem; }
+    .pd-feature__t{ font-size: 1.08rem; font-weight: 600; color: var(--ink); }
+    .pd-feature__d{ color: var(--muted); line-height: 1.6; font-weight: 300; font-size: .95rem; }
+
+    /* GALLERY */
+    .pd-gallery{ display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin-top: 2rem; }
+    .pd-shot{ position: relative; border-radius: 14px; overflow: hidden; border: 1.5px solid var(--line); }
+    .pd-shot--wide{ grid-column: span 4; aspect-ratio: 16/9; }
+    .pd-shot--tall{ grid-column: span 2; aspect-ratio: 3/4; }
+    .pd-shot--half{ grid-column: span 3; aspect-ratio: 16/10; }
+    .pd-shot__cap{ position: absolute; left: 10px; bottom: 10px; z-index: 3; font: 400 .6rem var(--mono-font); letter-spacing: .06em; color: hsla(0,0%,100%,.8); background: hsla(var(--hue),17%,5%,.6); padding: 4px 8px; border-radius: 999px; backdrop-filter: blur(4px); pointer-events: none; }
+
+    /* TECH */
+    .pd-tech{ display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 2rem; }
+    .pd-tech__item{ display: flex; align-items: center; gap: .75rem; background: hsla(var(--hue),8%,12%,.55); border: 1.5px solid var(--line); border-radius: 999px; padding: .6rem 1.15rem; font-weight: 500; }
+    .pd-tech__item img{ width: 22px; height: 22px; }
+
+    /* ROADMAP */
+    .pd-roadmap{ display: grid; gap: 0; margin-top: 2rem; }
+    .pd-step{ display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; padding-bottom: 2rem; position: relative; }
+    .pd-step:last-child{ padding-bottom: 0; }
+    .pd-step__dot{ position: relative; }
+    .pd-step__dot::before{ content: ""; display: block; width: 14px; height: 14px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 4px hsla(var(--hue),80%,48%,.18); margin-top: 4px; }
+    .pd-step:not(:last-child) .pd-step__dot::after{ content: ""; position: absolute; left: 6px; top: 20px; bottom: -8px; width: 2px; background: var(--line); }
+    .pd-step--done .pd-step__dot::before{ background: var(--muted); box-shadow: none; }
+    .pd-step__t{ font-weight: 600; font-size: 1.05rem; display: flex; align-items: center; gap: .75rem; }
+    .pd-step__badge{ font: 400 .58rem var(--mono-font); letter-spacing: .1em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--dim); }
+    .pd-step--now .pd-step__badge{ color: var(--cyan); border-color: var(--cyan-soft); background: hsla(var(--hue),80%,48%,.1); }
+    .pd-step__d{ color: var(--muted); line-height: 1.6; font-weight: 300; margin-top: .4rem; }
+
+    /* CTA band */
+    .pd-cta{ text-align: center; padding-block: clamp(3rem, 8vh, 6rem); border-radius: 24px; border: 1.5px solid var(--cyan-soft); background: radial-gradient(80% 120% at 50% 0%, hsla(var(--hue),80%,48%,.14), transparent 70%); margin-bottom: clamp(3rem,7vh,5rem); }
+    .pd-cta h2{ font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; letter-spacing: -.01em; }
+    .pd-cta p{ color: var(--muted); margin-top: 1rem; font-weight: 300; }
+    .pd-cta__row{ display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 2.25rem; }
+
+    /* PUSHES — right-edge slide-out drawer, pinned to the Build Journey section */
+    #build{ position: relative; }
+    .pd-drawer{ position: absolute; top: 50%; right: 0; transform: translateY(-50%); z-index: 950; display: flex; align-items: center; justify-content: flex-end; pointer-events: auto; }
+    .pd-drawer__handle{
+      pointer-events: auto; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: .7rem;
+      padding: .95rem .5rem; border: 1px solid var(--line); border-right: none;
+      border-radius: 12px 0 0 12px; background: hsla(var(--hue),8%,12%,.9); backdrop-filter: blur(8px);
+      color: var(--muted);
+      transition: color .3s, border-color .3s, background .3s, padding-right .3s, box-shadow .3s;
+    }
+    .pd-drawer__handle i{ font-size: 1.1rem; color: var(--cyan); }
+    .pd-drawer__handle span{ writing-mode: vertical-rl; font: 400 .62rem var(--mono-font); letter-spacing: .22em; text-transform: uppercase; }
+    .pd-drawer:hover .pd-drawer__handle,
+    .pd-drawer:focus-within .pd-drawer__handle{ color: var(--cyan); border-color: var(--cyan-soft); background: hsla(var(--hue),8%,14%,.95); padding-right: .8rem; box-shadow: 0 6px 24px hsla(var(--hue),80%,48%,.18); }
+    .pd-drawer__panel{
+      pointer-events: auto;
+      position: absolute; right: 0; top: 50%;
+      width: min(380px, 84vw); max-height: 82vh; overflow: hidden;
+      display: flex; flex-direction: column;
+      border: 1.5px solid var(--line); border-right: none; border-radius: 20px 0 0 20px;
+      background: hsla(var(--hue),8%,10%,.96); backdrop-filter: blur(14px);
+      box-shadow: -24px 0 60px hsla(var(--hue),20%,3%,.5);
+      transform: translate(101%, -50%); opacity: 0; visibility: hidden;
+      transition: transform .45s var(--ease-out), opacity .35s, visibility .45s;
+    }
+    .pd-drawer.is-open .pd-drawer__panel{ transform: translate(0, -50%); opacity: 1; visibility: visible; }
+    .pd-drawer.is-open .pd-drawer__handle{ opacity: 0; pointer-events: none; }
+    .pd-commits{ overflow-y: auto; }
+    @media (max-width: 700px){ .pd-drawer{ display: none; } }
+
+    .pd-pushes__bar{ display: flex; align-items: center; gap: .6rem; padding: .85rem 1.15rem; border-bottom: 1px solid var(--line); background: hsla(var(--hue),8%,14%,.7); }
+    .pd-pushes__dots{ display: flex; gap: 6px; }
+    .pd-pushes__dots i{ width: 11px; height: 11px; border-radius: 50%; display: block; }
+    .pd-pushes__repo{ font: 400 .72rem var(--mono-font); letter-spacing: .04em; color: var(--muted); display: flex; align-items: center; gap: .5rem; }
+    .pd-pushes__repo i{ font-size: .95rem; color: var(--cyan); }
+    .pd-pushes__live{ margin-left: auto; display: inline-flex; align-items: center; gap: .45rem; font: 400 .6rem var(--mono-font); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+    .pd-pushes__live::before{ content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--dim); }
+    .pd-pushes__live.is-live{ color: var(--cyan); }
+    .pd-pushes__live.is-live::before{ background: var(--cyan); box-shadow: 0 0 0 3px hsla(var(--hue),80%,48%,.2); animation: pdPulse 1.8s ease-in-out infinite; }
+    @keyframes pdPulse{ 0%,100%{ opacity: 1; } 50%{ opacity: .35; } }
+    .pd-commits{ display: grid; }
+    .pd-commit{ display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: start; padding: 1rem 1.15rem; border-bottom: 1px solid var(--line); transition: background .25s; }
+    .pd-commit:last-child{ border-bottom: none; }
+    .pd-commit:hover{ background: hsla(var(--hue),80%,48%,.05); }
+    .pd-commit__ico{ width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: hsla(var(--hue),80%,48%,.12); color: var(--cyan); font-size: .95rem; margin-top: 2px; }
+    .pd-commit__msg{ font-size: .95rem; font-weight: 400; color: var(--ink); line-height: 1.4; }
+    .pd-commit__meta{ margin-top: .3rem; font: 400 .68rem var(--mono-font); color: var(--dim); display: flex; flex-wrap: wrap; gap: .75rem; }
+    .pd-commit__meta a{ color: var(--muted); }
+    .pd-commit__meta a:hover{ color: var(--cyan); }
+    .pd-commit__sha{ font: 400 .7rem var(--mono-font); color: var(--cyan); background: hsla(var(--hue),80%,48%,.1); padding: 3px 8px; border-radius: 6px; white-space: nowrap; align-self: start; margin-top: 2px; }
+    .pd-pushes__foot{ padding: .85rem 1.15rem; text-align: center; }
+    .pd-pushes__foot a{ font: 400 .72rem var(--mono-font); letter-spacing: .06em; color: var(--muted); }
+    .pd-pushes__foot a:hover{ color: var(--cyan); }
+    .pd-commit--skel .pd-commit__msg,
+    .pd-commit--skel .pd-commit__sha{ color: transparent; background: linear-gradient(90deg, hsla(var(--hue),8%,20%,.5), hsla(var(--hue),8%,28%,.7), hsla(var(--hue),8%,20%,.5)); background-size: 200% 100%; border-radius: 6px; animation: pdShimmer 1.3s linear infinite; }
+    .pd-commit--skel .pd-commit__msg{ height: .95rem; width: 70%; }
+    @keyframes pdShimmer{ 0%{ background-position: 200% 0; } 100%{ background-position: -200% 0; } }
+
+    .pd-title-row{ display: flex; align-items: baseline; gap: 1rem; }
+    .pd-num{ font: 400 .8rem var(--mono-font); color: var(--cyan); }
+    .pd-h{ font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; letter-spacing: -.01em; }
+    /* Match the main page: a cyan section rule that draws itself out from the
+       left as it scrolls into view. */
+    .pd-rule{
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--cyan-soft), var(--line) 45%, transparent);
+      transform-origin: left center;
+      transition: transform .8s var(--ease-out);
+    }
+    .js-reveal .pd-rule{ transform: scaleX(0); }
+    .js-reveal .pd-rule.is-visible{ transform: scaleX(1); }
+    @media (prefers-reduced-motion: reduce){
+      .js-reveal .pd-rule{ transform: none !important; transition: none !important; }
+    }
+
+    @media (max-width: 900px){
+      .pd-split{ grid-template-columns: 1fr; }
+      .pd-gallery{ grid-template-columns: 1fr 1fr; }
+      .pd-shot--wide, .pd-shot--tall, .pd-shot--half{ grid-column: span 2; aspect-ratio: 16/10; }
+    }
+    @media (max-width: 560px){
+      .pd-gallery{ grid-template-columns: 1fr; }
+      .pd-shot--wide, .pd-shot--tall, .pd-shot--half{ grid-column: span 1; }
+    }
+  </style>
+  <script>
+    /* Match the main page: hold reveal targets until reveal.js can hide them
+       (this page has no reveal.js, so just fail open immediately). */
+    document.documentElement.classList.add('js-reveal');
+    setTimeout(function () {
+      document.documentElement.classList.add('reveal-ready');
+    }, 1500);
+
+    /* Draw the section rules out from the left when they enter the viewport,
+       replaying each time they come back — same feel as the main page. */
+    document.addEventListener('DOMContentLoaded', function () {
+      var rules = document.querySelectorAll('.pd-rule');
+      if (!('IntersectionObserver' in window) || !rules.length) {
+        rules.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          entry.target.classList.toggle('is-visible', entry.isIntersecting);
+        });
+      }, { threshold: 0.6 });
+      rules.forEach(function (el) { io.observe(el); });
+    });
+  </script>
+</head>
+<body>
+  <div class="layout">
+    <aside class="rail">
+      <a href="index.html#home" class="rail__logo">K<span>.</span></a>
+      <span class="rail__label">JADED — CASE STUDY</span>
+      <div class="rail__social">
+        <a href="https://github.com/JazzXHiro/Jaded" target="_blank" aria-label="GitHub"><i class="ri-github-fill"></i></a>
+        <a href="https://www.linkedin.com/in/keerti-vardhan-475423299/" target="_blank" aria-label="LinkedIn"><i class="ri-linkedin-box-fill"></i></a>
+      </div>
+      <span class="rail__accent" aria-hidden="true"></span>
+    </aside>
+
+    <main class="main">
+      <header class="topbar" id="topbar">
+        <nav class="nav">
+          <a href="index.html#projects">← Projects</a>
+          <a href="#overview">Overview</a>
+          <a href="#features">Features</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#build">Journey</a>
+        </nav>
+      </header>
+
+      <div class="pd">
+        <a href="index.html#projects" class="pd__back"><i class="ri-arrow-left-line"></i>Back to projects</a>
+
+        <!-- HERO -->
+        <section class="pd-hero">
+          <p class="pd-hero__tag">2D GAME · MONSTER-CATCHER · SOLO BUILD</p>
+          <h1 class="pd-hero__title">Jaded<br><em>Catch. Train. Battle.</em></h1>
+          <p class="pd-hero__lead">A 2D monster-catching adventure built entirely in Python with Pygame — from a hand-rolled physics loop to 30+ original creatures, all designed and coded by one person.</p>
+          <div class="pd-hero__meta">
+            <div class="pd-meta"><span class="pd-meta__k">Role</span><span class="pd-meta__v">Solo Developer</span></div>
+            <div class="pd-meta"><span class="pd-meta__k">Engine</span><span class="pd-meta__v">Custom / Pygame</span></div>
+            <div class="pd-meta"><span class="pd-meta__k">Timeline</span><span class="pd-meta__v">2024 — Present</span></div>
+            <div class="pd-meta"><span class="pd-meta__k">Status</span><span class="pd-meta__v">In Development</span></div>
+          </div>
+          <div class="pd-hero__actions">
+            <a href="https://github.com/JazzXHiro/Jaded" target="_blank" class="btn">View on GitHub</a>
+            <a href="#gallery" class="textlink">Jump to gallery →</a>
+          </div>
+        </section>
+
+        <!-- COVER -->
+        <div class="pd-cover">
+          <div class="pd-cover__scrim"></div>
+          <div class="pd-fill" data-ph="Drop cover / key art">
+            <img src="img/project-1.jpg" alt="Jaded key art" onerror="this.remove()">
+          </div>
+          <span class="pd-shot__cap">KEY ART · TITLE SCREEN</span>
+        </div>
+
+        <!-- OVERVIEW -->
+        <section class="pd-sec" id="overview">
+          <div class="pd-title-row"><span class="pd-num">01</span><h2 class="pd-h">Overview</h2><span class="pd-rule"></span></div>
+          <div class="pd-split" style="margin-top:2rem">
+            <div class="pd-prose">
+              <p><b>Jaded</b> is a 2D monster-catching game where you explore a hand-built world, discover creatures with their own abilities, and capture, train, and battle your way toward becoming the ultimate monster master.</p>
+              <p>The whole thing runs on a <b>custom engine loop</b> written on top of Pygame — collision, movement, animation timing and a turn-based battle system were all built from scratch rather than pulled from a framework. That constraint was the point: it forced every system to be understood end to end.</p>
+              <p>Art, creature design, systems and code are all <b>solo work</b>, which kept the vision tight and the iteration loop fast.</p>
+            </div>
+            <div class="pd-facts">
+              <div class="pd-fact"><span class="pd-fact__k">Creatures</span><span class="pd-fact__v">30+</span></div>
+              <div class="pd-fact"><span class="pd-fact__k">Language</span><span class="pd-fact__v">Python</span></div>
+              <div class="pd-fact"><span class="pd-fact__k">Framework</span><span class="pd-fact__v">Pygame</span></div>
+              <div class="pd-fact"><span class="pd-fact__k">Physics</span><span class="pd-fact__v">Custom</span></div>
+              <div class="pd-fact"><span class="pd-fact__k">Team size</span><span class="pd-fact__v">1</span></div>
+              <div class="pd-fact"><span class="pd-fact__k">Version control</span><span class="pd-fact__v">Git</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FEATURES -->
+        <section class="pd-sec" id="features">
+          <div class="pd-title-row"><span class="pd-num">02</span><h2 class="pd-h">Core Features</h2><span class="pd-rule"></span></div>
+          <div class="pd-features">
+            <div class="pd-feature">
+              <span class="pd-feature__ico"><i class="ri-ghost-2-line"></i></span>
+              <h3 class="pd-feature__t">30+ Unique Creatures</h3>
+              <p class="pd-feature__d">Each monster has its own sprite, stat spread and move set, so team-building actually matters in a fight.</p>
+            </div>
+            <div class="pd-feature">
+              <span class="pd-feature__ico"><i class="ri-compasses-2-line"></i></span>
+              <h3 class="pd-feature__t">Custom Physics</h3>
+              <p class="pd-feature__d">A hand-written movement and collision system tuned for tight, responsive exploration across biomes.</p>
+            </div>
+            <div class="pd-feature">
+              <span class="pd-feature__ico"><i class="ri-sword-line"></i></span>
+              <h3 class="pd-feature__t">Turn-Based Battles</h3>
+              <p class="pd-feature__d">Capture, train and battle with a strategy layer — type matchups, status effects and switching.</p>
+            </div>
+            <div class="pd-feature">
+              <span class="pd-feature__ico"><i class="ri-map-2-line"></i></span>
+              <h3 class="pd-feature__t">Explorable World</h3>
+              <p class="pd-feature__d">Distinct biomes — forest, caves and more — each seeded with their own creatures to find.</p>
+            </div>
+            <div class="pd-feature">
+              <span class="pd-feature__ico"><i class="ri-archive-2-line"></i></span>
+              <h3 class="pd-feature__t">Inventory &amp; Progression</h3>
+              <p class="pd-feature__d">Items, capture tools and a growing roster that persists as you train your team up.</p>
+            </div>
+            <div class="pd-feature">
+              <span class="pd-feature__ico"><i class="ri-code-s-slash-line"></i></span>
+              <h3 class="pd-feature__t">Built From Scratch</h3>
+              <p class="pd-feature__d">No game framework beyond Pygame — every system authored, debugged and owned solo.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- GALLERY -->
+        <section class="pd-sec" id="gallery">
+          <div class="pd-title-row"><span class="pd-num">03</span><h2 class="pd-h">Gallery</h2><span class="pd-rule"></span></div>
+          <div class="pd-gallery">
+            <div class="pd-shot pd-shot--wide">
+              <div class="pd-fill" data-ph="Gameplay loop (gif)"><img src="img/jaded/gameplay.gif" alt="Gameplay loop" onerror="this.remove()"></div>
+              <span class="pd-shot__cap">GAMEPLAY LOOP</span>
+            </div>
+            <div class="pd-shot pd-shot--tall">
+              <div class="pd-fill" data-ph="Title screen"><img src="img/jaded/title.png" alt="Title screen" onerror="this.remove()"></div>
+              <span class="pd-shot__cap">TITLE SCREEN</span>
+            </div>
+            <div class="pd-shot pd-shot--half">
+              <div class="pd-fill" data-ph="Forest biome"><img src="img/jaded/forest.png" alt="Forest biome" onerror="this.remove()"></div>
+              <span class="pd-shot__cap">FOREST BIOME</span>
+            </div>
+            <div class="pd-shot pd-shot--half">
+              <div class="pd-fill" data-ph="Boss fight"><img src="img/jaded/boss.png" alt="Boss fight" onerror="this.remove()"></div>
+              <span class="pd-shot__cap">BOSS FIGHT</span>
+            </div>
+            <div class="pd-shot pd-shot--wide">
+              <div class="pd-fill" data-ph="Inventory UI"><img src="img/jaded/inventory.png" alt="Inventory UI" onerror="this.remove()"></div>
+              <span class="pd-shot__cap">INVENTORY UI</span>
+            </div>
+            <div class="pd-shot pd-shot--tall">
+              <div class="pd-fill" data-ph="Drop a screenshot"></div>
+              <span class="pd-shot__cap">CREATURE DEX</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- TECH -->
+        <section class="pd-sec">
+          <div class="pd-title-row"><span class="pd-num">04</span><h2 class="pd-h">Built With</h2><span class="pd-rule"></span></div>
+          <div class="pd-tech">
+            <span class="pd-tech__item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="">Python</span>
+            <span class="pd-tech__item"><img src="img/pygame.png" alt="">Pygame</span>
+            <span class="pd-tech__item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="">Git</span>
+          </div>
+        </section>
+
+        <!-- BUILD / ROADMAP -->
+        <section class="pd-sec" id="build">
+          <div class="pd-title-row"><span class="pd-num">05</span><h2 class="pd-h">Build Journey</h2><span class="pd-rule"></span></div>
+          <div class="pd-roadmap">
+            <div class="pd-step pd-step--done">
+              <div class="pd-step__dot"></div>
+              <div>
+                <div class="pd-step__t">Engine &amp; movement <span class="pd-step__badge">shipped</span></div>
+                <p class="pd-step__d">Built the core loop, custom collision and character movement on top of raw Pygame.</p>
+              </div>
+            </div>
+            <div class="pd-step pd-step--done">
+              <div class="pd-step__dot"></div>
+              <div>
+                <div class="pd-step__t">Creature system <span class="pd-step__badge">shipped</span></div>
+                <p class="pd-step__d">Designed and implemented 30+ creatures with stats, sprites and move sets.</p>
+              </div>
+            </div>
+            <div class="pd-step pd-step--now">
+              <div class="pd-step__dot"></div>
+              <div>
+                <div class="pd-step__t">Battle &amp; capture loop <span class="pd-step__badge">in progress</span></div>
+                <p class="pd-step__d">Refining the turn-based battle system, capture mechanics and inventory flow.</p>
+              </div>
+            </div>
+            <div class="pd-step">
+              <div class="pd-step__dot"></div>
+              <div>
+                <div class="pd-step__t">World expansion <span class="pd-step__badge">planned</span></div>
+                <p class="pd-step__d">More biomes, story beats and a wider creature dex heading toward a playable demo.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- RECENT PUSHES — hover drawer, pinned to this section's right edge -->
+          <div class="pd-drawer" id="pushes-drawer" tabindex="0">
+            <div class="pd-drawer__panel">
+              <div class="pd-pushes__bar">
+                <span class="pd-pushes__dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span>
+                <span class="pd-pushes__repo"><i class="ri-git-branch-line"></i>Jade · main</span>
+                <span class="pd-pushes__live" id="pushes-live">connecting</span>
+              </div>
+              <div class="pd-commits" id="pushes-list"></div>
+              <div class="pd-pushes__foot"><a href="https://github.com/JazzXHiro/Jade/commits" target="_blank">View full commit history →</a></div>
+            </div>
+            <div class="pd-drawer__handle"><i class="ri-git-commit-line"></i><span>Pushes</span></div>
+          </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="pd-cta">
+          <h2>Want the source?</h2>
+          <p>Jaded is open on GitHub — dig into the code or follow the build.</p>
+          <div class="pd-cta__row">
+            <a href="https://github.com/JazzXHiro/Jaded" target="_blank" class="btn">JazzXHiro / Jaded</a>
+            <a href="index.html#contact" class="textlink">Get in touch →</a>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <a href="#topbar" class="scrollup" id="scrollup" aria-label="Back to top"><i class="ri-arrow-up-line"></i></a>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      /* =============== topbar height + scroll state =============== */
+      const topbar = document.getElementById('topbar');
+      const scrollup = document.getElementById('scrollup');
+      const progress = document.getElementById('progress');
+      if (topbar) {
+        document.documentElement.style.setProperty('--topbar-h',
+          Math.round(topbar.getBoundingClientRect().height) + 'px');
+      }
+
+      const links = [...document.querySelectorAll('.nav a[href^="#"]')];
+      const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+
+      let queued = false;
+      const onScroll = () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          const y = window.scrollY;
+          const vh = window.innerHeight;
+          const docH = document.documentElement.scrollHeight;
+          if (topbar) topbar.classList.toggle('scrolled', y > 20);
+          if (scrollup) scrollup.classList.toggle('show', y > 350);
+          const max = docH - vh;
+          if (progress) progress.style.transform = `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`;
+          let current = -1;
+          sections.forEach((sec, i) => { if (sec && y + 120 >= sec.offsetTop) current = i; });
+          links.forEach((l, i) => l.classList.toggle('active', i === current));
+        });
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      /* =============== recent pushes (GitHub) =============== */
+      initPushes();
+      initPushesDrawer();
+    });
+
+    function initPushesDrawer() {
+      const drawer = document.getElementById('pushes-drawer');
+      if (!drawer) return;
+      let closeTimer;
+      const open = () => { clearTimeout(closeTimer); drawer.classList.add('is-open'); };
+      const close = () => { clearTimeout(closeTimer); closeTimer = setTimeout(() => drawer.classList.remove('is-open'), 180); };
+      // mouseenter/leave account for descendants, so moving onto the panel keeps it open;
+      // the 180ms grace delay absorbs any transient gap while the panel slides, killing flicker.
+      drawer.addEventListener('mouseenter', open);
+      drawer.addEventListener('mouseleave', close);
+      drawer.addEventListener('focusin', open);
+      drawer.addEventListener('focusout', close);
+    }
+
+    function initPushes() {
+      const list = document.getElementById('pushes-list');
+      const live = document.getElementById('pushes-live');
+      if (!list) return;
+
+      const esc = (s) => (s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+      const ago = (date) => {
+        const s = Math.max(0, (Date.now() - date.getTime()) / 1000);
+        const u = [['yr', 31536000], ['mo', 2592000], ['wk', 604800], ['d', 86400], ['h', 3600], ['m', 60]];
+        for (const [label, secs] of u) {
+          const n = Math.floor(s / secs);
+          if (n >= 1) return n + label + ' ago';
+        }
+        return 'just now';
+      };
+
+      const skeleton = () => {
+        list.innerHTML = Array.from({ length: 4 }, () => `
+          <div class="pd-commit pd-commit--skel">
+            <span class="pd-commit__ico"><i class="ri-git-commit-line"></i></span>
+            <div><div class="pd-commit__msg">loading</div><div class="pd-commit__meta">&nbsp;</div></div>
+            <span class="pd-commit__sha">0000000</span>
+          </div>`).join('');
+      };
+
+      const render = (commits) => {
+        list.innerHTML = commits.map(c => `
+          <div class="pd-commit">
+            <span class="pd-commit__ico"><i class="ri-git-commit-line"></i></span>
+            <div>
+              <div class="pd-commit__msg">${esc(c.message)}</div>
+              <div class="pd-commit__meta">
+                <span><i class="ri-user-line"></i> ${esc(c.author)}</span>
+                <span>${esc(c.when)}</span>
+              </div>
+            </div>
+            ${c.url
+              ? `<a class="pd-commit__sha" href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.sha)}</a>`
+              : `<span class="pd-commit__sha">${esc(c.sha)}</span>`}
+          </div>`).join('');
+      };
+
+      const errorState = () => {
+        list.innerHTML = `
+          <div class="pd-commit pd-commit--empty">
+            <span class="pd-commit__ico"><i class="ri-cloud-off-line"></i></span>
+            <div>
+              <div class="pd-commit__msg">Couldn't reach GitHub right now</div>
+              <div class="pd-commit__meta"><a href="https://github.com/JazzXHiro/Jade/commits" target="_blank" rel="noopener">Open the repo →</a></div>
+            </div>
+          </div>`;
+      };
+
+      skeleton();
+
+      fetch('https://api.github.com/repos/JazzXHiro/Jade/commits?per_page=5', {
+        headers: { Accept: 'application/vnd.github+json' },
+      })
+        .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(data => {
+          if (!Array.isArray(data) || !data.length) throw new Error('empty');
+          const commits = data.map(item => ({
+            message: (item.commit.message || '').split('\n')[0],
+            author: (item.commit.author && item.commit.author.name) || (item.author && item.author.login) || 'unknown',
+            when: item.commit.author && item.commit.author.date ? ago(new Date(item.commit.author.date)) : '',
+            sha: (item.sha || '').slice(0, 7),
+            url: item.html_url,
+          }));
+          render(commits);
+          if (live) { live.textContent = 'live'; live.classList.add('is-live'); }
+        })
+        .catch(() => {
+          errorState();
+          if (live) { live.textContent = 'offline'; }
+        });
+    }
+  </script>
+</body>
+</html>

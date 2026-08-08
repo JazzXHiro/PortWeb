@@ -1,570 +1,1061 @@
-/*=============== GOOGLE FONTS ===============*/
-@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap");
+/*=============== FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&family=JetBrains+Mono:wght@400;500;700&display=swap");
 
-/*=============== VARIABLES CSS ===============*/
-:root {
-  --header-height: 3.5rem;
-
-  /*========== Colors ==========*/
-  /* 
-      Color mode HSL(hue, saturation, lightness)
-
-      Change favorite color:
-
-      Default Cyan: hsl(180, 80%, 48%)
-      Blue: hsl(220, 90%, 64%) - Pink: hsl(300, 70%, 64%)
-      Green: hsl(110, 70%, 64%) - Purple: hsl(255, 70%, 64%)
-      Orange: hsl(15, 80%, 64%) - Red: hsl(358, 80%, 64%)
-
-      For more colors visit: https://htmlcolorcodes.com/
-      -> Choose any color 
-      -> Copy the color mode (HSL)
-  */
+/*=============== VARIABLES ===============*/
+:root{
   --hue: 180;
-  --first-color: hsl(var(--hue), 80%, 48%);
-  --first-color-alt: hsl(var(--hue), 80%, 44%);
-  --white-color: hsl(var(--hue), 8%, 92%);
-  --black-color: hsl(var(--hue), 4%, 8%);
-  --gray-color: hsl(var(--hue), 4%, 50%);
-  --body-color: hsl(var(--hue), 8%, 8%);
-  --container-color: hsl(var(--hue), 8%, 12%);
+  --cyan: hsl(var(--hue), 80%, 48%);
+  --cyan-soft: hsla(var(--hue), 80%, 48%, .4);
+  --bg: hsl(var(--hue), 8%, 8%);
+  --surface: hsl(var(--hue), 8%, 9%);
+  --card: hsl(var(--hue), 10%, 11%);
+  --line: hsla(0, 0%, 100%, .1);
+  --ink: hsl(var(--hue), 12%, 95%);
+  --muted: hsl(var(--hue), 6%, 68%);
+  --dim: hsl(var(--hue), 4%, 47%);
+  --body-font: "Unbounded", system-ui, sans-serif;
+  --mono-font: "JetBrains Mono", monospace;
+  --rail-width: 96px;
+  --topbar-h: 64px;
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
 
-  /*========== Font and typography ==========*/
-  /*.5rem = 8px | 1rem = 16px ...*/
-  --body-font: "Unbounded", sans-serif;
-  --bigger-font-size: 2rem;
-  --h1-font-size: 1.5rem;
-  --h2-font-size: 1.25rem;
-  --h3-font-size: 1rem;
-  --normal-font-size: .938rem;
-  --small-font-size: .813rem;
+  /* One spacing scale for the whole page. Sections are sized by their content
+     plus this padding — never by the viewport — so a short section can't strand
+     a screenful of empty space on a tall monitor. */
+  --gutter: clamp(1.5rem, 3.5vw, 4rem);
+  --section-pad: clamp(3.25rem, 8vh, 6rem);
+  /* In rem, not px, so it tracks the root font-size bump on wide monitors —
+     otherwise a true 1920px viewport strands ~600px of dead space on the right. */
+  --content-max: 77.5rem;
+  --panel-max: 27.5rem;
 
-  /*========== Font weight ==========*/
-  --font-light: 300;
-  --font-regular: 400;
-  --font-medium: 500;
-  --font-semi-bold: 600;
-
-  /*========== z index ==========*/
-  --z-tooltip: 10;
-  --z-fixed: 100;
-}
-
-/*========== Responsive typography ==========*/
-@media screen and (min-width: 1150px) {
-  :root {
-    --bigger-font-size: 3rem;
-    --h1-font-size: 2.25rem;
-    --h2-font-size: 1.5rem;
-    --h3-font-size: 1.25rem;
-    --normal-font-size: 1rem;
-    --small-font-size: .875rem;
-  }
+  /* aliases so the ported carousel modal keeps working with the new palette */
+  --first-color: var(--cyan);
+  --white-color: var(--ink);
+  --gray-color: var(--muted);
+  --body-color: var(--bg);
+  --black-color: hsl(var(--hue), 20%, 6%);
+  --line-color: var(--line);
 }
 
 /*=============== BASE ===============*/
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+*{ box-sizing: border-box; margin: 0; padding: 0; }
+html{ scroll-behavior: smooth; scroll-padding-top: var(--topbar-h); }
+body{
+  font-family: var(--body-font);
+  font-weight: 300;
+  background: var(--surface);
+  color: var(--ink);
 }
+a{ text-decoration: none; color: var(--cyan); }
+a:hover{ color: hsl(var(--hue), 85%, 65%); }
+ul{ list-style: none; }
+img{ display: block; max-width: 100%; }
+h1,h2,h3{ font-weight: 600; }
+button, input, textarea{ font-family: var(--body-font); }
 
-html {
-  scroll-behavior: smooth;
+/*=============== SCROLLBAR ===============*/
+/* Firefox only gets width + colours; the WebKit rules below carry the rest. */
+*{ scrollbar-width: thin; scrollbar-color: var(--cyan-soft) transparent; }
+
+::-webkit-scrollbar{ width: 8px; height: 8px; }
+::-webkit-scrollbar-track{
+  background: hsla(var(--hue), 10%, 100%, .04);
+  border-radius: 99px;
 }
-
-body,
-button,
-input,
-textarea {
-  font: var(--font-light) var(--normal-font-size) var(--body-font);
+::-webkit-scrollbar-thumb{
+  background: linear-gradient(hsla(var(--hue), 80%, 48%, .55), hsla(var(--hue), 80%, 40%, .35));
+  border-radius: 99px;
+  /* Inset the thumb inside the track without changing the gutter width. */
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background .3s;
 }
-
-body {
-  background-color: var(--body-color);
-  color: var(--white-color);
+::-webkit-scrollbar-thumb:hover{
+  background: linear-gradient(var(--cyan), hsl(var(--hue), 80%, 38%));
+  background-clip: padding-box;
 }
+::-webkit-scrollbar-corner{ background: transparent; }
 
-button {
-  outline: none;
-  border: none;
-}
-
-h1, h2, h3, h4 {
-  font-weight: var(--font-semi-bold);
-}
-
-ul {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-}
-
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-/*=============== REUSABLE CSS CLASSES ===============*/
-.container {
-  max-width: 1120px;
-  margin-inline: 1.5rem;
-}
-
-.grid {
+/*=============== LAYOUT ===============*/
+.layout{
   display: grid;
-  gap: 1.5rem;
+  grid-template-columns: var(--rail-width) minmax(0, 1fr);
+  min-height: 100vh;
+  background: hsl(var(--hue), 8%, 7%);
 }
 
-.section {
-  padding-block: 5rem 1rem;
-}
-
-.section__title {
-  text-align: center;
-  font-size: var(--h1-font-size);
-  color: var(--first-color);
-  margin-bottom: 1.5rem;
-}
-
-.main {
-  overflow: hidden;
-}
-
-/*=============== HEADER & NAV ===============*/
-.header {
-  position: fixed;
-  width: 100%;
+/*=============== RAIL ===============*/
+.rail{
+  position: sticky;
   top: 0;
-  left: 0;
-  background-color: var(--body-color);
-  z-index: var(--z-fixed);
-  transition: box-shadow .4s;
-}
-
-.nav{
-  height: var(--header-height);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nav__logo{
-  color: var(--white-color);
-  font-weight: var(--font-semi-bold);
-  transition: color .4s;
-}
-
-.nav__logo:hover{
-  color: var(--first-color);
-}
-
-.nav__toggle,
-.nav__close{
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-/* Navigation for mobile devices */
-@media screen and (max-width: 1150px){
-  .nav__menu{
-    position: fixed; /* position relative to the viewport */
-    top: -120%; /* pushed above the screen */
-    left: 0;
-    width: 100%;
-    background-color: var(--body-color);
-    box-shadow: 0 8px 16px hsla(0, 0%, 0%, 0.5);
-    padding-block: 5rem 4rem;
-    border-radius: 0 0 1.5rem 1.5rem;
-    transition: top .4s;
-  }
-}
-
-.nav__list{
-  text-align: center;
+  height: 100vh;
+  border-right: 1px solid var(--line);
   display: flex;
   flex-direction: column;
-  row-gap: 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  padding-bottom: 3.5rem;
+  background: var(--surface);
 }
-
-.nav__link{
-  position: relative;
-  color: var(--white-color);
-  font-weight: var(--font-medium);
-  transition: color .4s, width .4s;
+.rail__logo{ font-weight: 700; color: var(--ink); font-size: 1rem; }
+.rail__logo span{ color: var(--cyan); }
+.rail__label{
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font: 400 .688rem/1 var(--mono-font);
+  letter-spacing: .3em;
+  color: var(--dim);
 }
-
-.nav__link::after{
-  content: '';
-  width: 0;
-  height: 2px;
-  background-color: var(--first-color);
+.rail__social{ display: flex; flex-direction: column; gap: .9rem; align-items: center; }
+.rail__accent{
   position: absolute;
   left: 0;
-  bottom: -.5rem;
-  transition: width .4s;
+  right: 0;
+  bottom: 0;
+  height: 34px;
+  background: var(--cyan);
+  border-radius: 0;
+  box-shadow: 0 0 18px var(--cyan-soft);
 }
+.rail__social a{ color: var(--dim); font-size: 1.05rem; transition: color .3s; }
+.rail__social a:hover{ color: var(--cyan); }
 
-.nav__link:hover{
-  color:  var(--first-color);
-}
-
-.nav__link:hover::after{
-  width: 100%;
-}
-
-.nav__close{
-  position: absolute;
-  top: 1rem;
-  right: 1.5rem;
-}
-
-/* Show menu */
-.show-menu{
-  top: 0;
-}
-
-/* Discord Profile Copy Notify Message */
-.copy-msg {
-  display: block;
-  margin-top: 0.5rem;
-  font-size: 0.85rem;
-  color: var(--first-color);
-}
-
-/* Add shadow header */
-.shadow-header{
-  box-shadow: 0 2px 16px hsla(0, 0%, 0%, 0.5);
-}
-
-/* Active link */
-.active-link::after{
-  width: 60%;
-}
-
-/*=============== HOME ===============*/
-.home__container{
-  row-gap: 4rem;
-  padding-block: 2.5rem 2rem;
-}
-
-.home__content{
-  position: relative;
-  justify-self: center;
-}
-
-.home__image{
-  width: 240px;
-  height: 240px;
-  background-color: var(--white-color);
-  border-radius: 50%;
-  overflow: hidden;
+/*=============== MAIN COLUMN ===============*/
+/* clip, not hidden: hidden would make this a scroll container and break the
+   sticky topbar inside it. The right-edge panels (.hero__right,
+   .about__img-wrap) sit in a 38px-offset hidden state whenever their reveal is
+   re-armed, which otherwise widens the page and puts a scrollbar along the
+   bottom for the whole time you are reading further down. */
+.main{ background: var(--surface); overflow-x: clip; }
+.nav{
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  border: 5px solid var(--first-color);
-  box-shadow: 0 8px 32px hsla(var(--hue), 80%, 48%, 0.3);
+  gap: 2rem;
+  font-size: .8rem;
+  color: var(--muted);
 }
-
-.home__img{
-  width: 200px;
-  filter: drop-shadow(0 4px 16px hsla(0, 0%, 0%, 0.2));
-}
-
-.home__social{
+/* Transparent underline reserved on every link so the active state never nudges the row */
+.nav a{ position: relative; color: var(--muted); transition: color .3s; border-bottom: 2px solid transparent; padding-bottom: 6px; }
+/* Underline wipes in from the left edge to the right on hover */
+.nav a::after{
+  content: "";
   position: absolute;
-  top:0;
-  bottom:0;
-  left: -2.5rem;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: var(--cyan);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+.nav a:hover{ color: var(--cyan); }
+.nav a:hover::after{ transform: scaleX(1); }
+.nav a.active{ color: var(--cyan); }
+.nav a.active::after{ transform: scaleX(1); }
+
+/* Sticky top navigation bar — stays pinned across the whole page */
+.topbar{
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  padding: 1.1rem var(--gutter);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background .3s, border-color .3s, backdrop-filter .3s;
+}
+.topbar.scrolled{
+  background: hsla(var(--hue), 8%, 8%, .82);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.mono-label{ font: 400 .66rem/1.3 var(--mono-font); letter-spacing: .18em; color: var(--dim); }
+
+/*=============== SECTION HEAD ===============*/
+.section__head{
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.section__num{ font: 500 .7rem var(--mono-font); color: var(--cyan); }
+.section__title{ font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 800; color: var(--ink); }
+.section__rule{ flex: 1; height: 1px; background: var(--line); }
+
+/*=============== HERO ===============*/
+/* The hero is the one section that earns the viewport — but it's capped, so a
+   tall monitor stretches it only so far before the extra height stops going into
+   dead space between the CTAs and the footer strip. */
+.hero{
   display: grid;
-  align-content: center;
-  row-gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, var(--panel-max));
+  min-height: min(calc(100svh - var(--topbar-h)), 760px);
+  border-bottom: 1px solid var(--line);
 }
-
-.home__link{
-  color: var(--white-color);
-  font-size: 1.5rem;
-  transition: color .4s;
+.hero__left{
+  /* No bottom pad: .hero__foot is the bottom edge here, the same way
+     .hero__panelfoot is on the right. Padding under it would show up as a dead
+     band whenever the hero sits at its min-height instead of at content height. */
+  padding: var(--section-pad) var(--gutter) 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2.5rem;
 }
-
-.home__link:hover{
-  transform: translateY(-.25rem);
-  color: var(--first-color);
+.hero__body{ display: flex; flex-direction: column; gap: 1.35rem; }
+.hero__kicker{ font: 400 .72rem var(--mono-font); letter-spacing: .25em; color: var(--cyan); }
+.hero__kicker .cursor{
+  display: inline-block; width: 8px; height: 13px; background: var(--cyan);
+  margin-left: 4px; vertical-align: -2px; animation: blink 1s infinite;
 }
-
-.home__data{
-  text-align: center;
-  row-gap: 1rem;
+@keyframes blink{ 0%,49%{opacity:1} 50%,100%{opacity:0} }
+.hero__title{
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  font-weight: 300;
+  line-height: 1.02;
+  color: var(--ink);
 }
-
-.home__subtitle span{
-  color: var(--first-color);
+.hero__title .hero__name--bold{ font-weight: 800; }
+/* Hover wipe: a solid bar sweeps left→right across each line and the glyphs
+   knock out to the page background, so the name reads as inverted type. The bar
+   is a pseudo-element behind the text rather than a background-size trick so the
+   two lines can wipe independently while sharing one hover target. */
+.hero__name{
+  position: relative;
+  display: inline-block;
+  /* Own stacking context so the z-index:-1 bar sits under the glyphs but never
+     slips behind the section background. */
+  isolation: isolate;
+  padding-inline: .12em;
+  margin-inline: -.12em;
+  color: var(--ink);
+  transition: color .35s var(--ease-out);
 }
-
-.home__title{
-  font-size: var(--bigger-font-size)
+.hero__name::before{
+  content: "";
+  position: absolute;
+  inset: .04em 0 .06em;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .45s var(--ease-out);
+  z-index: -1;
 }
+.hero__title:hover .hero__name{ color: var(--bg); }
+.hero__title:hover .hero__name::before{ transform: scaleX(1); }
+/* The second line starts a beat later so the sweep reads as one continuous
+   motion down the block instead of two bars firing at once. */
+.hero__title:hover .hero__name--bold::before{ transition-delay: .08s; }
 
-.home__buttons{
+@media (prefers-reduced-motion: reduce){
+  .hero__name, .hero__name::before{ transition-duration: .01ms; }
+}
+.hero__desc{ max-width: 27rem; font-size: .95rem; line-height: 1.8; color: var(--muted); }
+.hero__desc b{ color: var(--ink); font-weight: 500; }
+.hero__actions{ display: flex; gap: 1.6rem; align-items: center; margin-top: .4rem; }
+
+/* Stat strip under the CTAs. The dividers are left borders on every item but
+   the first, so items can wrap without leaving a rule dangling at a row edge. */
+.hero__stats{
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
-  justify-content: center;
-  margin-top: 2rem;
+  gap: 1.5rem 0;
+  margin-top: 1.6rem;
+  list-style: none;
+}
+.stat{
+  flex: 0 1 auto;
+  min-width: 0;
+  padding-right: 2.2rem;
+}
+.stat + .stat{
+  padding-left: 2.2rem;
+  border-left: 1px solid var(--line);
+}
+.stat__num{
+  display: block;
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.01em;
+  color: var(--ink);
+}
+/* Tabular figures so a 1 and a 9 are the same width, plus the sizer/live pair
+   js/counters.js builds inside: the hidden sizer holds the final number's exact
+   width and the live one is laid over it, so nothing reflows while it counts. */
+.stat__value{
+  position: relative;
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+.stat__sizer{ visibility: hidden; }
+.stat__live{ position: absolute; left: 0; top: 0; }
+.stat__unit{ display: inline-block; color: var(--cyan); font-weight: 800; }
+
+/* Focus-on-hover: pointing at one stat blurs the rest of the page so the number
+   you're reading is the only thing in focus. Because `.hero` is its own stacking
+   context (isolation: isolate), a single page-wide blur overlay can't let one
+   nested stat "punch through" it — so instead every region *except* the hovered
+   stat is blurred directly. The transition lives on the targets (not inside the
+   :has rule) so the blur eases in AND out. The sticky chrome (.rail, .topbar) is
+   deliberately left out of the filter transition: animating `filter` on a
+   position:sticky layer hits a compositing bug where the blur sticks on and never
+   reverses, so those two snap instead of ease.
+
+   The trigger keys off `.stat:hover` — the whole stat item, including its wide
+   2.2rem side padding — so pointing anywhere over a stat (number, label, or the
+   padding around them) blurs the rest and keeps that one stat sharp. This holds
+   at every breakpoint: the media queries only resize the padding, they don't
+   touch this hover logic. */
+.main > section:not(#home),
+.hero__right, .hero__foot,
+.hero__kicker, .hero__title, .hero__desc, .hero__actions,
+.stat{ transition: filter .35s ease; }
+
+.layout:has(.stat:hover) .rail,
+.layout:has(.stat:hover) .topbar,
+.layout:has(.stat:hover) .main > section:not(#home),
+.layout:has(.stat:hover) .hero__right,
+.layout:has(.stat:hover) .hero__foot,
+.layout:has(.stat:hover) .hero__kicker,
+.layout:has(.stat:hover) .hero__title,
+.layout:has(.stat:hover) .hero__desc,
+.layout:has(.stat:hover) .hero__actions,
+.layout:has(.stat:hover) .stat:not(:hover){ filter: blur(4px); }
+/* The unit fades and settles in as its number finishes, so the "+" reads as the
+   punchline rather than as part of the count. */
+[data-reveal].is-visible .stat__unit{ animation: unit-pop .5s var(--ease-out) 1.15s backwards; }
+@keyframes unit-pop{
+  from{ opacity: 0; transform: translateY(.18em) scale(.8); }
+  to{ opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce){
+  [data-reveal].is-visible .stat__unit{ animation: none; }
+}
+.stat__label{
+  display: block;
+  padding-top: .55rem; /* padding (not margin) so this gap is part of the label's
+                          hover box — keeps the focus-blur from flickering as the
+                          cursor moves between the number and its label */
+  max-width: 9rem;
+  font: 400 .66rem var(--mono-font);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--dim);
+}
+/* Pushed to the bottom edge and given a rule so it reads as a deliberate footer
+   strip lining up with .hero__panelfoot on the right — not as stranded text. */
+.hero__foot{
+  margin-top: auto;
+  /* 14px matches .hero__panelfoot so both rules land on the same baseline */
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  font: 400 .66rem var(--mono-font);
+  letter-spacing: .12em;
+  color: var(--dim);
 }
 
-
-
-/*=============== BUTTON ===============*/
-.button{
-  display: inline-flex;
-  justify-content: center;
-  background-color: var(--first-color);
-  color: var(--black-color);
-  font-weight: var(--font-medium);
-  padding: 1rem 1.5rem;
-  border-radius: .5rem;
-  transition: box-shadow .4s, background-color .4s;
+.btn{
+  background: var(--cyan);
+  color: hsl(var(--hue), 20%, 6%);
+  font-weight: 500;
+  font-size: .85rem;
+  padding: 15px 28px;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  transition: box-shadow .3s;
 }
-
-.button:hover{
-  box-shadow: 0 8px 24px hsla(var(--hue), 80%, 48%, 0.3);
+.btn:hover{ box-shadow: 0 8px 28px hsla(var(--hue), 80%, 48%, .35); color: hsl(var(--hue), 20%, 6%); }
+.textlink{
+  color: var(--ink);
+  font-size: .85rem;
+  border-bottom: 1px solid var(--cyan);
+  padding-bottom: 4px;
 }
+.textlink:hover{ color: var(--cyan); }
 
-.button__ghost{
-  background-color: var(--body-color);
-  color: var(--white-color);
-  border: 2px solid var(--first-color);
+.hero__right{
+  position: relative;
+  border-left: 1px solid var(--line);
+  background: linear-gradient(180deg, hsla(var(--hue), 80%, 48%, .10), transparent 60%);
 }
-
-.button__ghost:hover{
-  color: var(--first-color);
+/* Anchored between the badge and the panel foot and sized by the space it's
+   given, so the portrait grows with the panel instead of leaving a dead band
+   above it. object-position keeps it standing on the foot rule. */
+.hero__portrait{
+  position: absolute;
+  top: 4rem; bottom: 3.25rem; left: 50%;
+  transform: translateX(-50%);
+  width: min(21.25rem, 84%);
+  height: auto;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,.55));
+  /* The parallax handler writes a new transform here every frame. Without a
+     layer of its own the drop-shadow is re-rasterised on each one. */
+  will-change: transform;
+}
+.hero__badge{
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  white-space: nowrap;
+  font: 400 .6rem var(--mono-font); letter-spacing: .12em;
+  color: var(--cyan);
+  text-decoration: none;
+  border: 1px solid var(--cyan-soft);
+  border-radius: 999px;
+  padding: 6px 12px;
+}
+.hero__panelfoot{
+  position: absolute; inset: auto 0 0 0;
+  display: flex; justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding: 14px 24px;
+  font: 400 .6rem var(--mono-font); letter-spacing: .1em;
+  color: var(--dim);
 }
 
 /*=============== ABOUT ===============*/
-.about__container{
-  row-gap: 4rem;
+/* Right column matched to the hero's so the two full-bleed sections' inner divider lines up */
+.about{ display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, var(--panel-max)); min-height: 480px; border-bottom: 1px solid var(--line); }
+.about__body{ padding: var(--section-pad) var(--gutter); display: flex; flex-direction: column; justify-content: center; }
+.about__desc{ max-width: 32.5rem; font-size: .95rem; line-height: 1.85; color: var(--muted); margin-bottom: 2rem; }
+.about__skills-label{ font: 400 .66rem var(--mono-font); letter-spacing: .2em; color: var(--dim); margin-bottom: .9rem; }
+.chips{ display: flex; flex-wrap: wrap; gap: .5rem; max-width: 32.5rem; }
+.chip{
+  font: 400 .72rem var(--mono-font);
+  color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 6px 13px;
+  border-radius: 2px;
+  transition: background .3s, color .3s, border-color .3s;
 }
-
-.about__content{
-  display: grid;
-  row-gap: 3rem;
+.chip:hover{ background: hsla(var(--hue), 80%, 48%, .1); }
+.chip--hot{ color: var(--cyan); border-color: var(--cyan-soft); }
+.about__img-wrap{
+  position: relative;
+  border-left: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  padding: 3.5rem 1.25rem 2.5rem;
+  background: linear-gradient(180deg, hsla(var(--hue), 80%, 48%, .06), transparent 70%);
 }
-
-.about__data{
-  text-align: center;
+/* Footer rule that mirrors the top figure label: a hairline across the frame,
+   inset from the left spine so it reads as a caption divider. */
+.about__img-wrap::after{
+  content: ""; position: absolute; left: 1.5rem; right: 1.5rem; bottom: 1.25rem;
+  height: 1px; background: var(--line);
 }
+.about__img{ width: 24rem; max-width: 100%; will-change: transform; /* parallax target, as above */ }
+.about__fig{ position: absolute; top: 1.25rem; left: 1.5rem; font: 400 .62rem var(--mono-font); color: var(--dim); }
 
-.about__description{
-  margin-bottom: 3rem;
-}
-
-.about__subtitle{
+/*=============== SECTIONS WRAP ===============*/
+/* One shared left spine: every section starts its content at the same gutter
+   as the hero/about, and caps width on the RIGHT only (margin-inline start = 0).
+   This is what actually lines every section's left edge up. */
+.block{
+  padding: var(--section-pad) var(--gutter);
+  border-bottom: 1px solid var(--line);
   display: flex;
-  align-items: center;
-  column-gap: .5rem;
-  font-size: var(--h3-font-size);
-  color: var(--first-color);
-  margin-bottom: 1rem;
-}
-
-.about__subtitle i{
-  font-size: 1.5rem;
-  font-weight: initial;
-}
-
-.about__items{
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: .5rem;
-}
-
-.about__item{
-  background-color: var(--first-color);
-  padding: .5rem .75rem;
-  border-radius: 2rem;
-  color: var(--black-color);
-  font-weight: var(--font-regular);
-  border: 2px solid var(--body-color);
-  cursor: default;
-  transition: background-color .4s, color .4s, border-color .4s;
-}
-
-.about__item:hover{
-  background-color: var(--body-color);
-  color: var(--white-color);
-  border-color: var(--first-color);
-}
-
-.about__image{
-  width: 240px;
-  height: 240px;
-  background-color: var(--white-color);
-  border-radius: 1rem;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
+  flex-direction: column;
   justify-content: center;
-  justify-self: center;
-  box-shadow: 0 8px 32px hsla(var(--hue), 80%, 48%, 0.3);
+}
+.block__inner{ max-width: var(--content-max); width: 100%; }
+
+/* Experience and Education stack vertically, each one a text column paired with
+   a decorative panel on the opposite side — Experience reads left, Education
+   right, so the two rows mirror each other instead of repeating. */
+.paired{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .85fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+/* Mirror the track sizes too, not just the order — otherwise the flipped row
+   would hand the wider column to the panel and squeeze the list. */
+.paired--flip{ grid-template-columns: minmax(0, .85fr) minmax(0, 1fr); }
+.paired--flip .paired__body{ order: 2; }
+.paired--flip .deco{ order: 1; }
+
+/* CSS-only filler: the same dot grid / hairline / cyan-glow language the rest of
+   the page uses, so it fills the empty half without adding an image to load. */
+.deco{
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(13rem, 26vh, 19rem);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--card);
+}
+.deco > span{ position: absolute; inset: 0; }
+
+.deco__grid{
+  background-image:
+    linear-gradient(hsla(0, 0%, 100%, .05) 1px, transparent 1px),
+    linear-gradient(90deg, hsla(0, 0%, 100%, .05) 1px, transparent 1px),
+    repeating-linear-gradient(45deg, hsla(var(--hue), 80%, 48%, .05) 0 1px, transparent 1px 10px);
+  background-size: 28px 28px, 28px 28px, auto;
+  /* Fades the grid out toward the far edge so the panel never fights the list. */
+  -webkit-mask-image: linear-gradient(100deg, hsl(0 0% 0% / 1) 25%, hsl(0 0% 0% / .15) 100%);
+  mask-image: linear-gradient(100deg, hsl(0 0% 0% / 1) 25%, hsl(0 0% 0% / .15) 100%);
+}
+.deco--alt .deco__grid{
+  -webkit-mask-image: linear-gradient(260deg, hsl(0 0% 0% / 1) 25%, hsl(0 0% 0% / .15) 100%);
+  mask-image: linear-gradient(260deg, hsl(0 0% 0% / 1) 25%, hsl(0 0% 0% / .15) 100%);
 }
 
-.about__img{
-  width: 200px;
-  filter: drop-shadow(0 4px 16px hsla(0, 0%, 0%, 0.2));
+.deco__glow{
+  background: radial-gradient(60% 70% at 78% 30%, hsla(var(--hue), 80%, 48%, .22), transparent 70%);
 }
+.deco--alt .deco__glow{
+  background: radial-gradient(60% 70% at 22% 30%, hsla(var(--hue), 80%, 48%, .22), transparent 70%);
+}
+
+/* Blueprint corner brackets — two per panel, on the diagonal, so the frame
+   reads as a technical plate rather than a plain bordered box. */
+.deco::before,
+.deco::after{
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--cyan-soft);
+  z-index: 3;
+}
+.deco::before{ top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+.deco::after{ bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+
+/* Experience — a fire-watch tower at sunset, ported from a Pug/SCSS scene. It's
+   a self-contained illustration with its own warm palette, so it's presented as
+   a framed vignette: the 160x335 scene (.ts) is scaled to a porthole and centred
+   in the dark panel, with the cyan grid/brackets acting as its matte. EVERY rule
+   below is scoped under .tower-scene so the generic class names inside the scene
+   (.tree, .body, .top, .circle …) can never touch the rest of the page. */
+/* Taller than the photo panel: the scene is portrait, so a taller frame lets the
+   cover-crop show more of the tower before the sides are filled. */
+.deco--scene{ min-height: clamp(19rem, 40vh, 26rem); background: var(--black-color); }
+.tower-scene{
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Blue duotone at rest, like the Education photo: greyscale here, cyan tint
+     from the .deco__duotone overlay. Hover returns it to full colour. */
+  filter: grayscale(1) contrast(1.04) brightness(.9);
+  transition: filter .5s var(--ease-out);
+}
+/* .ts == the original 160x335 `.container`. Scaled up to COVER the panel (the
+   scene is clipped to this box first, then the box is blown up and the panel's
+   overflow crops it) so it fills the whole rectangle instead of a porthole. */
+.tower-scene .ts{
+  position: relative;
+  width: 160px;
+  height: 335px;
+  background: #FAE0C8;
+  overflow: hidden;
+  /* translateY lifts the crop so the tower cabin lands in view rather than the
+     dead centre of the scene. */
+  transform: scale(3) translateY(6px);
+  transition: transform .6s var(--ease-out);
+}
+
+/* Hover: drop the blue, zoom in a touch — same gesture as the Education photo. */
+.deco--scene:hover .tower-scene{ filter: grayscale(.08) contrast(1.02) brightness(1); }
+.deco--scene:hover .tower-scene .ts{ transform: scale(3.18) translateY(6px); }
+
+.deco--scene .deco__duotone{
+  z-index: 2;
+  opacity: .82;
+  transition: opacity .5s var(--ease-out);
+}
+.deco--scene:hover .deco__duotone{ opacity: .12; }
+
+/* --- mountain --- */
+.tower-scene .mountain{ position: absolute; top: 0; }
+.tower-scene .backdrop{
+  position: absolute; top: 80px; left: -180px; width: 0; height: 0;
+  border-left: 260px solid transparent; border-right: 260px solid transparent;
+  border-bottom: 200px solid #F59452;
+}
+.tower-scene .zig{ position: absolute; width: 0; height: 0; transform: rotate(217deg); }
+.tower-scene .zag1{ top: 83px;  left: 70px;  border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 30px solid #F47A45; }
+.tower-scene .zag2{ top: 94px;  left: 70px;  border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 60px solid #F47A45; }
+.tower-scene .zag3{ top: 115px; left: 84px;  border-left: 30px solid transparent; border-right: 30px solid transparent; border-bottom: 80px solid #F47A45; }
+.tower-scene .zag4{ top: 137px; left: 100px; border-left: 40px solid transparent; border-right: 40px solid transparent; border-bottom: 100px solid #F47A45; }
+
+/* --- range (jagged foothills) --- */
+.tower-scene .range{ position: absolute; top: 0; }
+.tower-scene .range > div{ position: absolute; background: #F46435; width: 60px; height: 50px; }
+.tower-scene .range .r1{ top: 200px; left: -22px; transform: rotate(34deg); }
+.tower-scene .range .r2{ top: 198px; left: -20px; transform: rotate(-8deg); }
+.tower-scene .range .r3{ top: 205px; left: 24px;  transform: rotate(25deg); }
+.tower-scene .range .r4{ top: 205px; left: 50px;  transform: rotate(-28deg); }
+.tower-scene .range .r5{ top: 200px; left: 88px;  transform: rotate(14deg); }
+.tower-scene .range .r6{ top: 200px; left: 100px; transform: rotate(-38deg); }
+.tower-scene .range .r7{ top: 199px; left: 122px; transform: rotate(30deg); }
+
+/* --- trees --- */
+.tower-scene .tree{ position: absolute; }
+.tower-scene .tree > div{ position: absolute; }
+.tower-scene .tree .top{  border-left: 17px solid transparent; border-right: 17px solid transparent; border-bottom: 45px solid #000; }
+.tower-scene .tree .mid{  top: 16px; left: -7px;  border-left: 24px solid transparent; border-right: 24px solid transparent; border-bottom: 58px solid #000; }
+.tower-scene .tree .bot{  top: 30px; left: -12px; border-left: 29px solid transparent; border-right: 29px solid transparent; border-bottom: 68px solid #000; }
+.tower-scene .tree .base{ top: 44px; left: -16px; border-left: 33px solid transparent; border-right: 33px solid transparent; border-bottom: 75px solid #000; }
+
+.tower-scene .treeFront > div{ border-bottom-color: #2D1427; }
+.tower-scene .treeFront.tree1{ top: 200px; left: 0; }
+.tower-scene .treeFront.tree2{ top: 220px; left: 52px; }
+.tower-scene .treeFront.tree3{ top: 238px; left: 94px; }
+.tower-scene .treeFront.tree4{ top: 224px; left: 136px; }
+
+.tower-scene .treeMid > div{ border-bottom-color: #5A0831; }
+.tower-scene .treeMid.tree1{ top: 225px; left: 27px; }
+.tower-scene .treeMid.tree2{ top: 232px; left: 67px; }
+.tower-scene .treeMid.tree3{ top: 225px; left: 86px; }
+.tower-scene .treeMid.tree4{ top: 223px; left: 106px; }
+.tower-scene .treeMid.tree5{ top: 215px; left: 127px; }
+
+.tower-scene .treeBack > div{ border-bottom-color: #CD4D45; }
+.tower-scene .treeBack.tree1{ top: 202px; left: -12px; }
+.tower-scene .treeBack.tree2{ top: 204px; left: 17px; }
+.tower-scene .treeBack.tree3{ top: 212px; left: 40px; }
+.tower-scene .treeBack.tree4{ top: 210px; left: 60px; }
+.tower-scene .treeBack.tree5{ top: 208px; left: 80px; }
+.tower-scene .treeBack.tree6{ top: 210px; left: 98px; }
+.tower-scene .treeBack.tree7{ top: 204px; left: 115px; }
+.tower-scene .treeBack.tree8{ top: 202px; left: 130px; }
+
+/* --- tower --- */
+.tower-scene .tower{ position: absolute; width: 74px; margin-top: 108px; margin-left: calc(50% - 37px); }
+.tower-scene .tower .shadow{
+  position: absolute; z-index: 20; top: 12px; width: 100%; height: 42px; background: #000; opacity: .4;
+  clip-path: polygon(50% 0, 100% 40%, 100% 45%, 87% 45%, 87% 90%, 100% 90%, 100% 100%, 60% 100%, 60% 31%, 50% 0);
+}
+.tower-scene .flagPole{ width: 2px; height: 12px; background: #791819; margin-left: 36px; }
+.tower-scene .flagPole::after{ content: ''; width: 12px; height: 6px; background: #C63737; position: absolute; display: block; }
+.tower-scene .roof1{ border-left: 34px solid transparent; border-right: 34px solid transparent; border-bottom: 15px solid #76122C; }
+.tower-scene .roof2{ width: 100%; height: 3px; background: #C93D3D; }
+.tower-scene .wall{ position: relative; width: 76%; height: 22px; background: #821021; margin-left: 12%; padding-top: 4px; }
+.tower-scene .wall > div{ position: absolute; width: 8px; height: 14px; background: #F4633A; }
+.tower-scene .wall .w1{ left: 4px; }
+.tower-scene .wall .w2{ left: 14px; }
+.tower-scene .wall .w3{ left: 24px; }
+.tower-scene .wall .w4{ left: 34px; }
+.tower-scene .wall .w5{ left: 44px; }
+
+.tower-scene .legs{ position: relative; }
+.tower-scene .legs .left,
+.tower-scene .legs .right{ position: absolute; width: 4px; height: 150px; background: #370D09; }
+.tower-scene .legs .left{ transform: rotate(3deg); left: 12px; }
+.tower-scene .legs .right{ transform: rotate(-3deg); right: 12px; }
+.tower-scene .support1,
+.tower-scene .support2{ position: absolute; }
+.tower-scene .support1 .criss,
+.tower-scene .support1 .cross,
+.tower-scene .support2 .criss,
+.tower-scene .support2 .cross{ position: absolute; left: 35px; width: 4px; height: 64px; background: #370D09; }
+.tower-scene .criss{ transform: rotate(45deg); }
+.tower-scene .cross{ transform: rotate(-45deg); }
+.tower-scene .support1 .flat,
+.tower-scene .support2 .flat{ position: absolute; width: 46px; height: 4px; background: #370D09; bottom: -55px; left: 14px; }
+.tower-scene .support1{ top: -14px; }
+.tower-scene .support2{ top: 28px; }
+
+.tower-scene .railing{ position: relative; top: -16px; }
+.tower-scene .railing > div{ position: absolute; }
+.tower-scene .railing .r1, .tower-scene .railing .r2, .tower-scene .railing .r3,
+.tower-scene .railing .r4, .tower-scene .railing .r5, .tower-scene .railing .r6,
+.tower-scene .railing .r7, .tower-scene .railing .r8, .tower-scene .railing .r9{ width: 2px; height: 10px; background: #370D09; }
+.tower-scene .railing .r1{ left: 5px; }
+.tower-scene .railing .r2{ left: 12px; }
+.tower-scene .railing .r3{ left: 20px; }
+.tower-scene .railing .r4{ left: 28px; }
+.tower-scene .railing .r5{ left: 36px; }
+.tower-scene .railing .r6{ left: 44px; }
+.tower-scene .railing .r7{ left: 52px; }
+.tower-scene .railing .r8{ left: 60px; }
+.tower-scene .railing .r9{ right: 5px; }
+.tower-scene .railing .top{ width: 100%; height: 2px; background: #4B1205; }
+.tower-scene .railing .bot1{ width: 100%; height: 4px; top: 10px; background: #C13C45; }
+.tower-scene .railing .bot2{ width: 80%; height: 2px; top: 14px; left: 8px; background: #4B1205; }
+
+/* --- clouds --- */
+.tower-scene .cloud{ position: absolute; width: 162px; height: 55px; overflow: hidden; }
+.tower-scene .cloud.big{ top: 10px; transform: scale(.8); animation: ts-bigCloud 4s linear infinite; }
+.tower-scene .cloud.small{ top: 70px; transform: scale(.4); animation: ts-smallCloud 4s linear infinite; animation-delay: 3s; }
+.tower-scene .cloud .circle{ position: absolute; border-radius: 50%; background: #FFF; }
+.tower-scene .cloud .c1{ width: 32px; height: 32px; bottom: -15px; }
+.tower-scene .cloud .c2{ width: 35px; height: 35px; left: 20px; bottom: 0; }
+.tower-scene .cloud .c3{ width: 25px; height: 25px; left: 48px; bottom: 15px; }
+.tower-scene .cloud .c4{ width: 35px; height: 35px; left: 65px; bottom: 20px; }
+.tower-scene .cloud .c5{ width: 25px; height: 25px; left: 94px; bottom: 16px; }
+.tower-scene .cloud .c6{ width: 30px; height: 30px; left: 110px; bottom: -5px; }
+.tower-scene .cloud .c7{ width: 30px; height: 30px; left: 132px; bottom: -15px; }
+.tower-scene .cloud .c8{ width: 90px; height: 90px; left: 30px; bottom: -55px; }
+
+/* --- birds --- */
+.tower-scene .birds{ position: absolute; z-index: 30; width: 100px; height: 100px; }
+.tower-scene .birds.front{ top: 200px; left: 200px; animation: ts-flyFront 4s linear infinite; animation-delay: .5s; }
+.tower-scene .birds.back{ top: 50px; left: -425px; animation: ts-flyBack 4s linear infinite; animation-delay: .5s; }
+.tower-scene .bird{ position: absolute; transform: scale(0.15); }
+.tower-scene .bird .wing1{ animation: ts-flap .5s ease-in-out infinite alternate; transform-origin: 0 0; }
+.tower-scene .b1 .wing1{ animation-duration: .8s; }
+.tower-scene .b2 .wing1{ animation-duration: 1.1s; }
+.tower-scene .b3 .wing1{ animation-duration: .6s; }
+.tower-scene .b4 .wing1{ animation-duration: 1.3s; }
+.tower-scene .b5 .wing1{ animation-duration: .9s; }
+.tower-scene .b6 .wing1{ animation-duration: 1s; }
+.tower-scene .b7 .wing1{ animation-duration: 1.4s; }
+.tower-scene .b8 .wing1{ animation-duration: .7s; }
+.tower-scene .b9 .wing1{ animation-duration: 1.2s; }
+.tower-scene .b10 .wing1{ animation-duration: .85s; }
+.tower-scene .b11 .wing1{ animation-duration: 1.05s; }
+.tower-scene .b12 .wing1{ animation-duration: .95s; }
+.tower-scene .b1{ top: -30px; }
+.tower-scene .b2{ top: -20px; left: -15px; }
+.tower-scene .b3{ left: 10px; }
+.tower-scene .b4{ top: 15px; left: 20px; }
+.tower-scene .b5{ top: 30px; left: -5px; }
+.tower-scene .b6{ top: 45px; left: 5px; }
+.tower-scene .b7{ top: -5px; left: -35px; }
+.tower-scene .b8{ top: 10px; left: -25px; }
+.tower-scene .b9{ top: 25px; left: -50px; }
+.tower-scene .b10{ top: 40px; left: -40px; }
+.tower-scene .b11{ top: -10px; left: -75px; }
+.tower-scene .b12{ top: 5px; left: -65px; }
+.tower-scene .body{ clip-path: polygon(0 100%, 20% 20%, 40% 0, 100% 100%, 20% 80%); background: #000; width: 150px; height: 40px; }
+.tower-scene .wing1{ position: relative; left: 40px; top: -20px; width: 40px; height: 50px; background: #000; transform: skew(10deg); }
+.tower-scene .wing2{ position: absolute; bottom: -25px; left: 13px; transform: rotate(-5deg); }
+.tower-scene .wing3{ width: 40px; height: 30px; background: #000; transform: skew(40deg); }
+
+@keyframes ts-flap{
+  0%{ transform: skew(10deg) rotateX(50deg); }
+  100%{ transform: skew(15deg) rotateX(120deg); }
+}
+@keyframes ts-bigCloud{
+  0%{ transform: translateX(-200px) scale(.8); }
+  100%{ transform: translateX(200px) scale(.8); }
+}
+@keyframes ts-smallCloud{
+  0%{ transform: translateX(-200px) scale(.4); }
+  100%{ transform: translateX(200px) scale(.4); }
+}
+@keyframes ts-flyFront{
+  0%{ transform: translate3d(0, 0, 0) rotate(15deg); }
+  100%{ transform: translate3d(-600px, -150px, 0) rotate(15deg); }
+}
+@keyframes ts-flyBack{
+  0%{ transform: translate3d(0, 0, 0) scale(.6) scaleX(-1) rotate(-15deg); }
+  100%{ transform: translate3d(600px, -50px, 0) scale(.6) scaleX(-1) rotate(15deg); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .tower-scene *{ animation: none !important; }
+}
+
+/* Education — a photo panel instead of drawn art. The source still is flat
+   green-grey, which would read as a foreign rectangle next to the cyan page, so
+   it's stripped to greyscale and re-tinted with the site hue. */
+.deco--photo{ min-height: clamp(15rem, 30vh, 21rem); background: var(--black-color); }
+.deco__photo{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Panel is far wider than the 4:3 still, so cover crops top and bottom — hold
+     the crop high to keep the face and the pointing hand in frame. */
+  object-position: 50% 18%;
+  filter: grayscale(1) contrast(1.12) brightness(.82);
+  transition: filter .5s var(--ease-out), transform .6s var(--ease-out);
+}
+/* `color` blend keeps the still's luminance and takes only the hue from the
+   cyan above it — a flat overlay would just grey the whole panel down. */
+.deco__duotone{
+  background: linear-gradient(150deg, hsl(var(--hue), 70%, 42%), hsl(var(--hue), 55%, 22%));
+  mix-blend-mode: color;
+  opacity: .8;
+  z-index: 1;
+}
+.deco--photo .deco__grid{ z-index: 2; opacity: .5; }
+/* Fades the photo into the panel on the side facing the list, so it meets the
+   text as a gradient rather than a hard cut. */
+.deco__scrim{
+  z-index: 2;
+  background:
+    linear-gradient(90deg, transparent 45%, hsla(var(--hue), 20%, 6%, .85) 100%),
+    linear-gradient(hsla(var(--hue), 20%, 6%, .45), transparent 35%, hsla(var(--hue), 20%, 6%, .6));
+}
+/* Hover restores the original colour — the only place on the page the art is
+   allowed off-palette. */
+.deco--photo:hover .deco__photo{ filter: grayscale(.15) contrast(1.05) brightness(.95); transform: scale(1.03); }
+.deco--photo:hover .deco__duotone{ opacity: .25; }
+.deco__duotone, .deco--photo:hover .deco__duotone{ transition: opacity .5s var(--ease-out); }
 
 /*=============== PROJECTS ===============*/
-/* Heading fades out (with a slight nudge) when a card popup would cover it (see main.js) */
-.projects .section__title{
-  pointer-events: none;   /* never intercept hovers on the cards below */
-  will-change: transform;
-  transition: transform .4s cubic-bezier(.22, 1, .36, 1), opacity .4s ease;
+.projects{
+  padding: var(--section-pad) var(--gutter);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-
-.projects__container{
-  row-gap: 2rem;
+.projects__head{ max-width: var(--content-max); }
+.projects__grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.25rem;
+  margin-top: .5rem;
+  max-width: var(--content-max);
+  align-items: start;
 }
-
-.projects__card{
+/* Pinned to three columns on desktop rather than letting auto-fill decide: six
+   projects then land as two full rows of three. Auto-fill resolved to four at
+   this width and left a hole at the end of the second row. */
+@media screen and (min-width: 1100px){
+  .projects__grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+}
+/* Two rows of 16/10 tiles plus the default section padding overrun a short
+   desktop viewport — a 1080p laptop at 125% OS scaling only has ~730 CSS px, so
+   the anchor jump landed with the bottom row half cut off. Tighten the padding,
+   the head gap and the tile ratio just enough for both rows to fit; taller
+   screens keep the roomier proportions. */
+@media screen and (min-width: 1100px) and (max-height: 860px){
+  .projects{ padding-block: clamp(1.5rem, 4vh, 3rem); }
+  .projects__head{ margin-bottom: clamp(.75rem, 2vh, 1.25rem); }
+  .projects__grid{ gap: clamp(1rem, 2.5vh, 1.5rem); }
+  .projects .card__img{ aspect-ratio: 16 / 9; }
+}
+.card{
   position: relative;
-  border-radius: 1rem;
-  box-shadow: 0 8px 16px hsla(0, 0%, 0%, 0.5);
-  transition: box-shadow .4s;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--line);
+  cursor: pointer;
   transform-style: preserve-3d;
   will-change: transform;
-  cursor: pointer;
+  transition: border-color .35s, box-shadow .35s;
 }
-
-.projects__img{
-  position: relative;
-  z-index: 2;                 /* image sits ABOVE the sliding panel */
-  display: block;
-  width: 100%;
-  border-radius: 1rem;        /* image clips its own corners now */
+.card:hover{
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 1px hsla(var(--hue), 80%, 48%, .35), 0 0 28px hsla(var(--hue), 80%, 48%, .35);
 }
-
-.projects__data{
-  position: absolute;
-  left: 0;
-  bottom: 100%;               /* anchored just above the top edge of the card */
-  z-index: 1;                 /* behind the image, so it stays hidden at rest */
-  width: 100%;                /* match the tile width */
+/* Animated on grid-template-rows (0fr -> 1fr) rather than max-height: the row
+   resolves to the panel's real height, so there's no dead travel at either end
+   and the grid below stops lurching on hover-out. */
+.card__data{
   display: grid;
-  align-content: start;       /* keep text in the part that pokes out */
-  row-gap: .5rem;
+  grid-template-rows: 0fr;
+  opacity: 0;
   text-align: center;
-  padding: 1.5rem 1.25rem 2rem; /* extra bottom padding stays hidden behind the tile */
-  border-radius: 1rem 1rem 0 0; /* round only the top corners */
-  background-color: hsla(var(--hue), 6%, 22%, .55); /* translucent grey */
-  backdrop-filter: blur(12px);
-  border: 2px solid var(--first-color);             /* cyan outline */
-  border-bottom: none;                              /* bottom edge hides behind the tile */
-  box-shadow: 0 0 20px hsla(var(--hue), 80%, 48%, .45); /* cyan glow */
+  padding-inline: 1.125rem;
+  transition: grid-template-rows .35s cubic-bezier(.4, 0, .2, 1), opacity .25s ease;
+}
+/* Pure clipper: vertical spacing lives on the children as margins so nothing
+   keeps the collapsed row off zero, and nothing jumps when hover ends. */
+.card__data-inner{ overflow: hidden; min-height: 0; }
+.card__data-inner > :first-child{ margin-top: 1rem; }
+.card__data-inner > :last-child{ margin-bottom: .75rem; }
+.card:hover .card__data{ grid-template-rows: 1fr; opacity: 1; }
+.card__title{ font-size: .95rem; font-weight: 700; color: var(--ink); margin-bottom: .35rem; }
+.card__desc{ font-size: .78rem; line-height: 1.6; color: var(--muted); }
+.card__media{ position: relative; }
+.card__img{ width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: #000; }
+.card__tag{
+  position: absolute; left: .75rem; bottom: .625rem;
+  white-space: nowrap;
+  font: 400 .62rem var(--mono-font); letter-spacing: .08em;
+  color: hsla(0, 0%, 100%, .75);
+  background: hsla(var(--hue), 17%, 5%, .6);
+  padding: 4px 9px; border-radius: 999px;
+  backdrop-filter: blur(4px);
+  transition: opacity .3s;
+}
+.card:hover .card__tag{ opacity: 0; }
+.card__overlay{
+  position: absolute; inset: auto 0 0 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.625rem .875rem .625rem;
+  background: linear-gradient(0deg, hsla(var(--hue), 17%, 5%, .92), transparent);
   opacity: 0;
-  pointer-events: none;
-  transform: translateY(100%);  /* fully tucked behind the tile at rest */
-  transition: transform .4s ease, opacity .4s ease;
+  transition: opacity .35s;
+}
+.card:hover .card__overlay{ opacity: 1; }
+.card__skills{ display: flex; align-items: center; gap: .5rem; }
+.card__skills img{ width: 1.25rem; height: 1.25rem; object-fit: contain; }
+.card__view{
+  display: flex; align-items: center; gap: .375rem;
+  background: var(--cyan); color: hsl(var(--hue), 20%, 6%);
+  font-weight: 600; font-size: .7rem;
+  padding: 7px 16px; border: none; border-radius: 999px;
+  cursor: pointer; white-space: nowrap;
 }
 
-.projects__title{
-  font-size: var(--h3-font-size);
-}
+/*=============== RESUME ===============*/
+.resume__col{ display: flex; flex-direction: column; gap: 1.6rem; max-width: 47.5rem; }
+.tl{ border-left: 1px solid var(--line); padding-left: 1.25rem; }
+.tl--now{ border-left-color: var(--cyan-soft); }
+.tl__top{ display: flex; justify-content: space-between; gap: .75rem; }
+.tl__title{ font-size: .88rem; font-weight: 700; color: var(--ink); }
+.tl__date{ font: 400 .62rem var(--mono-font); color: var(--dim); white-space: nowrap; }
+.tl--now .tl__date{ color: var(--cyan); }
+.tl__sub{ font-size: .75rem; color: var(--dim); margin-top: 5px; }
 
-.projects__description{
-  font-size: var(--small-font-size);
-}
-
-.projects__card:hover{
-  box-shadow: 0 8px 16px hsla(var(--hue), 80%, 48%, .2);
-}
-
-.projects__card:hover .projects__data{
-  opacity: 1;
-  pointer-events: initial;
-  transform: translateY(1.5rem);  /* pokes out, bottom stays tucked behind the tile */
-}
-
-/* Bottom overlay strip that slides up over the image's lower edge */
-.projects__overlay{
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  z-index: 3;                  /* above the image (image is z-index 2) */
-  width: 100%;                 /* match the tile width */
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* icons aligned to the left of the strip */
-  gap: 1rem;
-  height: 2.84rem;              /* fixed strip height so every card matches, icons or not */
-  padding: 0 5.5rem 0 1.25rem;   /* room for the arrow on the right, small gap on the left */
-  background-color: hsla(var(--hue), 8%, 8%, .66); /* dark blackish grey, mostly opaque */
-  backdrop-filter: blur(6px);
-  border-radius: 0 0 1rem 1rem; /* round only the bottom corners, matching the image */
-  border: 2px solid var(--first-color);
-  border-top: none;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(100%);  /* tucked below the image at rest */
-  transition: transform .4s ease, opacity .4s ease;
-}
-
-.projects__card:hover .projects__overlay{
-  opacity: 1;
-  pointer-events: initial;
-  transform: translateY(0);     /* slides up over the bottom of the image */
-}
-
-/* Skills / tools icons inside the overlay */
-.projects__skills{
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.projects__skills img{
-  width: 1.75rem;
-  height: 1.75rem;
-  object-fit: contain;
-}
-
-/* Arrow button at the far-right edge of the overlay */
-.projects__arrow{
-  position: absolute;
-  top: 50%;
-  right: 1rem;
-  transform: translateY(-50%);
+/* The hero already carries the solid cyan "Download CV" — this one rides in the
+   Experience head as a quiet secondary, sized off the mono dates in the column
+   below it so it reads as part of the same list rather than a second CTA. */
+.ghost-btn{
   display: inline-flex;
   align-items: center;
-  gap: .4rem;
-  background-color: var(--first-color);
-  color: var(--black-color);
-  font-family: var(--body-font);
-  font-weight: var(--font-medium);
-  font-size: .72rem;
-  padding: .4rem .8rem;
-  border: none;
-  border-radius: 2rem;
+  gap: .5rem;
+  flex: none;
+  align-self: center;
+  padding: 9px 16px;
+  border: 1px solid var(--cyan-soft);
+  border-radius: 2px;
+  font: 500 .66rem var(--mono-font);
+  letter-spacing: .14em;
+  color: var(--cyan);
+  background: hsla(var(--hue), 80%, 48%, .1);
+  white-space: nowrap;
+  transition: color .25s, border-color .25s, background-color .25s, box-shadow .3s;
+}
+.ghost-btn i{ font-size: .9rem; transition: transform .25s; }
+/* Hover pays off into the same solid cyan as the primary buttons */
+.ghost-btn:hover{
+  color: hsl(var(--hue), 20%, 6%);
+  border-color: var(--cyan);
+  background: var(--cyan);
+  box-shadow: 0 6px 22px hsla(var(--hue), 80%, 48%, .3);
+}
+.ghost-btn:hover i{ transform: translateY(2px); }
+
+/*=============== CONTACT ===============*/
+.contact__inner{ max-width: var(--content-max); }
+/* Form and the details list share a row — stacked they made the tallest,
+   emptiest section on the page. */
+.contact__grid{
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+.form{ display: flex; flex-direction: column; gap: .9rem; max-width: 40rem; }
+.form input, .form textarea{
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 13px 16px;
+  font-size: .8rem;
+  color: var(--ink);
+  border-radius: 2px;
+  outline: none;
+}
+.form input:focus, .form textarea:focus{ border-color: var(--cyan); }
+/* JS grows the height with the content (see initAutoGrowTextarea), so manual
+   resizing is off — a dragged height would be overwritten on the next keypress.
+   Past the max it stops growing and scrolls, which is why overflow is auto and
+   not the hidden value auto-grow textareas usually want. */
+.form textarea{
+  resize: none;
+  min-height: 110px;
+  max-height: 15rem;
+  overflow-y: auto;
+  line-height: 1.6;
+}
+.form .btn{ width: max-content; }
+.contact__details{ display: flex; flex-direction: column; gap: 1.1rem; max-width: 40rem; }
+.contact__row{
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  align-items: baseline;
+  gap: .75rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 14px;
+  font-size: .82rem;
+  color: var(--muted);
+}
+.contact__row .val{ font-weight: 300; }
+.contact__row--social{ grid-template-columns: 1fr; }
+.contact__socials{ display: flex; gap: 18px; align-items: center; }
+.contact__socials a{
+  display: grid; place-items: center;
+  font-size: 1.15rem; line-height: 1;
+  color: var(--muted);
+  transition: color .25s;
+}
+.contact__socials a i{ display: inline-block; transition: transform .25s var(--ease-out); }
+.contact__socials a:hover{ color: var(--cyan); }
+.contact__socials a:hover i{ transform: translateY(-3px); }
+/* Cat fills the dead space under the details column and is allowed to nudge
+   past the grid edge so it reads as a playful accent rather than a boxed asset. */
+.cat-wrap{
+  position: relative;
+  width: max-content;
+  margin: 1.5rem -1.5rem 0 auto;
   cursor: pointer;
-  line-height: 1;
-  transition: box-shadow .3s, gap .3s;
+  -webkit-tap-highlight-color: transparent;
 }
-
-.projects__arrow i{
-  font-size: .95rem;
-  display: inline-block;
+.contact__cat{
+  width: clamp(180px, 22vw, 260px);
+  height: auto;
+  display: block;
+  pointer-events: none;
 }
-
-.projects__arrow:hover{
-  box-shadow: 0 4px 18px hsla(var(--hue), 80%, 48%, .45);
-  gap: .6rem; /* icon moves slightly away from the text on hover */
+/* Cute "Meow" bubble that pops over the cat's hat on click */
+.cat-meow{
+  position: absolute;
+  top: 14%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(.4);
+  background: var(--cyan);
+  color: hsl(var(--hue), 40%, 10%);
+  font: 700 .74rem var(--mono-font);
+  letter-spacing: .02em;
+  padding: .28rem .62rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 6px 16px hsla(var(--hue), 80%, 20%, .45);
+  animation: catMeowPop 1.15s cubic-bezier(.22, 1.4, .4, 1) forwards;
 }
+.cat-meow::after{
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--cyan);
+  border-radius: 2px;
+  transform: translateX(-50%) rotate(45deg);
+}
+@keyframes catMeowPop{
+  0%   { opacity: 0; transform: translate(-50%, -30%) scale(.4); }
+  18%  { opacity: 1; transform: translate(-50%, -60%) scale(1.12); }
+  32%  { transform: translate(-50%, -55%) scale(1); }
+  70%  { opacity: 1; transform: translate(-50%, -75%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -110%) scale(.9); }
+}
+@media (prefers-reduced-motion: reduce){
+  .cat-meow{ animation-duration: .8s; }
+}
+.footer{
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-top: 1px solid var(--line);
+  padding-top: 1.4rem; margin-top: 2rem;
+}
+.footer__logo{ font-weight: 700; color: var(--ink); font-size: .9rem; }
+.footer__logo span{ color: var(--cyan); }
+.footer__copy{ font: 400 .62rem var(--mono-font); color: var(--dim); }
 
-/*=============== PROJECT DETAILS MODAL ===============*/
+/*=============== PROJECT DETAILS MODAL (carousel — ported, kept intact) ===============*/
 .project-modal{
   position: fixed; inset: 0; z-index: 1000;
   display: grid; place-items: center; padding: 1.5rem;
@@ -596,11 +1087,10 @@ img {
 .project-modal__close:hover{ color: var(--first-color); }
 
 .pm__head{ display: grid; row-gap: .5rem; padding-right: 3rem; }
-.pm__tagline{ font-family: monospace; font-size: .7rem; letter-spacing: .14rem; color: var(--first-color); text-transform: uppercase; }
-.pm__title{ font-size: 1.9rem; }
+.pm__tagline{ font-family: var(--mono-font); font-size: .7rem; letter-spacing: .14rem; color: var(--first-color); text-transform: uppercase; }
+.pm__title{ font-size: 1.9rem; font-weight: 800; color: var(--ink); }
 
 /* --- Carousel --- */
-
 .pm__carousel{ position: relative; display:grid; justify-items: center; row-gap: 1rem; }
 .pm__stage{ position: relative; width: 100%; height: 340px; overflow: hidden; }
 .pm__tile{
@@ -616,27 +1106,56 @@ img {
 
 .pm__ph{ display: grid; justify-items: center; gap: .75rem; color: hsla(var(--hue), 30%, 80%, .85); }
 .pm__ph i{ font-size: 2.2rem; opacity: .6; }
-.pm__ph span{ font-family: monospace; font-size: .78rem; background: hsla(var(--hue), 10%, 6%, .35); padding: 4px 8px; border-radius: 5px; }
+.pm__ph span{ font-family: var(--mono-font); font-size: .78rem; background: hsla(var(--hue), 10%, 6%, .35); padding: 4px 8px; border-radius: 5px; }
 
 .pm__arrow{
   position: absolute; top: 45%; transform: translateY(-50%); z-index: 40;
-  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
-  cursor: pointer; color: #fff; font-size: 1.5rem;
-  background: hsla(var(--hue), 8%, 10%, .72); backdrop-filter: blur(8px);
-  border: 1.5px solid var(--first-color); transition: opacity .3s, color .3s;
+  width: 70px; height: 70px; display: grid; place-items: center;
+  cursor: pointer; padding: 0; background: none; border: none;
+  transition: opacity .3s;
 }
-.pm__arrow--prev{ left: 10px;} .pm__arrow--next{ right: 10px;}
-.pm__arrow:disabled{ opacity: .35; pointer-events: none; }
-.pm__arrow:hover{ color: var(--first-color); }
+.pm__arrow--prev{ left: -6px;} .pm__arrow--next{ right: -6px;}
+.pm__arrow:disabled{ opacity: .3; pointer-events: none; }
+.pm__arrow:hover .pm__arrow-anim{ filter: brightness(.6); }
 
-.pm__dots{ display: flex; gap: 8px; }
-.pm__dots button{ height: 6px; border-radius: 3px; padding: 0; cursor: pointer; background: hsla(var(--hue), 8%, 55%, .4); transition: width .4s, background .4s; }
-.pm__dots button.is-active{ width: 26px; background: var(--first-color); }
+/* Animated sliding chevrons (cyan). --prev points/slides left; --next is
+   mirrored so it points/slides right. */
+.pm__arrow-anim{
+  position: relative; width: 100%; height: 100%;
+  display: grid; place-items: center;
+  transition: filter .3s;
+}
+.pm__arrow--next .pm__arrow-anim{ transform: scaleX(-1); }
+.pm__arrow-anim .arrowSliding{
+  position: absolute;
+  animation: pm-arrow-slide 3s linear infinite;
+}
+.pm__arrow-anim .delay1{ animation-delay: .75s; }
+.pm__arrow-anim .delay2{ animation-delay: 1.5s; }
+.pm__arrow-anim .delay3{ animation-delay: 2.25s; }
+.pm__arrow-anim .arrow{
+  box-sizing: content-box; display: block;
+  width: 14px; height: 14px;
+  border: 6px solid;
+  border-color: var(--cyan) transparent transparent var(--cyan);
+  transform: rotate(-45deg);
+}
+@keyframes pm-arrow-slide{
+    0% { opacity: 0; transform: translateX(22px);  }
+   20% { opacity: 1; transform: translateX(12px);  }
+   80% { opacity: 1; transform: translateX(-12px); }
+  100% { opacity: 0; transform: translateX(-22px); }
+}
+
+.pm__dots{ display: flex; align-items: center; gap: 7px; }
+.pm__dots button{ width: 16px; height: 7px; border-radius: 4px; padding: 0; cursor: pointer; border: none; background: hsla(var(--hue), 8%, 60%, .45); transition: width .4s, background .4s; }
+.pm__dots button:hover{ background: hsla(var(--hue), 8%, 70%, .6); }
+.pm__dots button.is-active{ width: 30px; background: var(--first-color); }
 
 /* --- Footer --- */
 .pm__body{ display: grid; grid-template-columns: 270px 1fr; gap: 2rem; }
 .pm__tech{ background: hsla(var(--hue), 6%, 15%, .55); border: 1.5px solid hsla(var(--hue), 80%, 48%, .28); border-radius: 16px; padding: 1.4rem; display: grid; gap: 1rem; align-content: start; }
-.pm__label{ font-family: monospace; font-size: .7rem; letter-spacing: .12em; color: var(--first-color); }
+.pm__label{ font-family: var(--mono-font); font-size: .7rem; letter-spacing: .12em; color: var(--first-color); }
 .pm__tech-list{ display: grid; gap: .75rem; }
 .pm__tech-list li{ display: flex; align-items: center; gap: .75rem; }
 .pm__tech-list img{ width: 26px; height: 26px; }
@@ -647,13 +1166,12 @@ img {
 .pm__rule{ height: 3px; width: 64px; border-radius: 2px; background: var(--first-color); }
 .pm__desc{ color: hsl(var(--hue), 6%, 72%); line-height: 1.65; }
 .pm__stats{ display: flex; flex-wrap: wrap; gap: 1.1rem; }
-.pm__stats span{ font-family: monospace; font-size: .7rem; color: var(--gray-color); }
+.pm__stats span{ font-family: var(--mono-font); font-size: .7rem; color: var(--gray-color); }
 .pm__actions{ display: flex; align-items: center; gap: 1rem; margin-top: auto; padding-top: .5rem; }
 .pm__github{ display: inline-flex; align-items: center; gap: .55rem; color: var(--white-color); font-size: .9rem; }
 .pm__github i{ font-size: 1.35rem; } .pm__github:hover{ color: var(--first-color); }
-.pm__cta{ margin-left: auto; gap: .55rem; align-items: center; }
+.pm__cta{ margin-left: auto; display: inline-flex; gap: .55rem; align-items: center; }
 
-/* --- Mobile (Option 1d) --- */
 @media screen and (max-width: 768px){
   .project-modal__content{ padding: 1.5rem 1.25rem 1.75rem; }
   .pm__title{ font-size: 1.5rem; }
@@ -666,436 +1184,268 @@ img {
   .pm__github{ justify-content: center; }
 }
 
-/*=============== RESUME ===============*/
-
-.resume__container{
-  row-gap: 4rem;
-}
-
-.resume__content{
-  row-gap: 1rem;
-}
-
-.resume__subtitle{
-  display:flex;
-  align-items: center;
-  column-gap: .5rem;
-  font-size: var(--h3-font-size);
-  color: var(--first-color);
-}
-
-  .resume__subtitle i{
-    font-size: 1.5rem;
-    font-weight: initial;
-  }
-
-  .resume__list{
-    row-gap: 2rem;
-  }
-
-  .resume__data{
-    display: grid;
-    row-gap: .5rem;
-  }
-
-  .resume__title{
-    font-size: var(--h3-font-size);
-  }
-
-  .resume__info{
-    display: flex;
-    column-gap: 1.5rem;
-    font-size: var(--small-font-size);
-    color: var(--gray-color);
-  }
-
-  .resume__info address{
-    font-style: initial;
-  }
-
-/*=============== CONTACT ===============*/
-.contact__container{
-  row-gap: 4rem;
-}
-
-.contact__form{
-  position: relative;
-  row-gap: 1rem;
-}
-
-.contact__input{
-  width:  100%;
-  background-color: var(--body-color);
-  color: var(--white-color); /* Text color */
-  border: 2px solid var(--first-color);
-  outline: none;
-  padding: 1.25rem 1rem;
-  border-radius: .5rem;
-  font-weight: var(--font-medium);
-}
-
-.contact__input::placeholder{
-  color: var(--gray-color);
-  transition: color .4s;
-}
-
-.contact__input:focus::placeholder{
-  color: var(--first-color);
-}
-
-.contact__input:autofill{
-  transition: background-color 6000s, color 6000s;
-}
-
-.contact__area{
-  height: 10rem;
-  resize: none;
-}
-
-.contact__form .button{
-  cursor: pointer;
-}
-
-.contact__message{
-  position: absolute;
-  bottom: -2rem;
-  font-size: var(--small-font-size);
-}
-
-.contact__data{
-  row-gap: 1rem;
-}
-
-.contact__address{
-  display: flex;
-  align-items: center;
-  column-gap: 1rem;
-  font-style: initial;
-}
-
-.contact__address i{
-  font-size: 1.5rem;
-  color: var(--first-color);
-}
-
-.contact__social{
-  display: flex;
-  column-gap: 1rem;
-}
-
-.contact__link{
-  color: var(--white-color);
-  font-size: 1.5rem;
-  transition: transform .4s, color .4s;
-}
-
-.contact__link:hover{
-  transform: translateY(-.25rem);
-  color: var(--first-color);
-}
-
-/*=============== FOOTER ===============*/
-.footer{
-  padding-block: 5rem 2rem;
-}
-
-.footer__container{
-  row-gap: 2rem;
-}
-
-.footer__links,
-.footer__social{
-  display: flex;
-  justify-content: center;
-}
-
-.footer__logo{
-  color: var(--white-color);
-  font-size: var(--h1-font-size);
-  font-weight: var(--font-semi-bold);
-  justify-self: center;
-  margin-bottom: 1rem;
-  transition: color .4s;
-}
-
-.footer__logo:hover{
-  color: var(--first-color);
-}
-
-.footer__links{
-  column-gap: 2rem;
-}
-
-.footer__link{
-  color: var(--white-color);
-  transition: color .4s;
-}
-
-.footer__link:hover{
-  color:var(--first-color);
-}
-
-.footer__social{
-  column-gap: 1.5rem;
-}
-
-.footer__social-link{
-  color: var(--first-color);
-  font-size: 1.5rem;
-  transition: transform .4s;
-}
-
-.footer__social-link:hover{
-  transform: translateY(-.25rem);
-}
-
-.footer__copy{
-  display: block;
-  margin-top: 5rem;
-  text-align: center;
-  font-size: var(--small-font-size);
-  color: var(--gray-color);
-}
-
-/*=============== SCROLL BAR ===============*/
-::-webkit-scrollbar{
-  width: 0.6rem;
-  background-color: hsl(0, 0%, 25%);
-  border-radius: .5rem;
-}
-
-::-webkit-scrollbar-thumb:hover{
-  background-color: hsl(0, 0%, 35%);
-}
+/*=============== MODAL ===============*/
+/* (simple modal from the template is unused — the carousel modal above replaces it) */
 
 /*=============== SCROLL UP ===============*/
 .scrollup{
-  position: fixed;
-  right: 1rem;
-  bottom: -50%;
-  background-color: var(--body-color);
-  box-shadow: 0 4px 16px hsla(0, 0%, 0%, 0.5);
-  display: inline-flex;
-  padding: 6px;
-  color: var(--white-color);
-  font-size: 1.25rem;
-  border-radius: .25rem;
-  z-index: var(--z-tooltip);
-  transition: bottom .4s, transform .4s;
+  position: fixed; right: 1.5rem; bottom: -60px;
+  width: 42px; height: 42px; border-radius: 10px;
+  display: grid; place-items: center;
+  background: var(--card); border: 1px solid var(--line);
+  color: var(--ink); font-size: 1.1rem;
+  transition: bottom .4s, color .3s;
+  z-index: 50;
+}
+.scrollup.show{ bottom: 1.5rem; }
+.scrollup:hover{ color: var(--cyan); }
+
+/*=============== SCROLL REVEAL ===============*/
+/* .js-reveal is set by a tiny inline script in <head>; .reveal-ready by
+   js/reveal.js once its targets are hidden. Between the two the column is held
+   back so nothing paints in place only to jump back to its hidden state. */
+.js-reveal .main{ opacity: 0; }
+.js-reveal.reveal-ready .main{ opacity: 1; transition: opacity .3s linear; }
+
+/* Elements are tagged with data-reveal by the observer script; the delay comes
+   in per-element as --reveal-delay so a container can stagger its children. */
+[data-reveal]{
+  opacity: 0;
+  transform: translate3d(0, 34px, 0);
+  transition:
+    opacity .8s var(--ease-out) var(--reveal-delay, 0ms),
+    transform .8s var(--ease-out) var(--reveal-delay, 0ms);
+  /* Deliberately no will-change: there are ~60 of these and the hint is not
+     scoped to the moment they animate, so it would hold a compositor layer per
+     element for the life of the page. The transition promotes them on its own
+     for the 0.8s it actually runs. */
+}
+/* Until the script has finished tagging, anything it just hid must snap to the
+   hidden state instead of animating out from whatever already painted. */
+html:not(.reveal-ready) [data-reveal]{ transition: none !important; }
+[data-reveal="down"]{ transform: translate3d(0, -26px, 0); }
+[data-reveal="left"]{ transform: translate3d(-38px, 0, 0); }
+[data-reveal="right"]{ transform: translate3d(38px, 0, 0); }
+[data-reveal="pop"]{ transform: translate3d(0, 26px, 0) scale(.94); }
+[data-reveal="fade"]{ transform: none; }
+
+/* Reveals replay every time an element comes back. When it left over the top of
+   the viewport it should drop back down instead of rising, so the motion always
+   follows the scroll direction. Horizontal reveals are unaffected. */
+[data-reveal].from-above{ transform: translate3d(0, -34px, 0); }
+[data-reveal="down"].from-above{ transform: translate3d(0, 26px, 0); }
+[data-reveal="left"].from-above{ transform: translate3d(-38px, 0, 0); }
+[data-reveal="right"].from-above{ transform: translate3d(38px, 0, 0); }
+[data-reveal="pop"].from-above{ transform: translate3d(0, -26px, 0) scale(.94); }
+[data-reveal="fade"].from-above{ transform: none; }
+
+[data-reveal].is-visible{ opacity: 1; transform: none; }
+
+/* The rules in the section headers draw themselves out from the left */
+.section__rule{ transform-origin: left center; }
+[data-reveal].section__rule{ opacity: 1; transform: scaleX(0); }
+[data-reveal].section__rule.is-visible{ transform: scaleX(1); }
+
+/* Progress bar for the whole page */
+.progress{
+  position: fixed; inset: 0 auto auto 0;
+  height: 2px; width: 100%;
+  transform: scaleX(0); transform-origin: left center;
+  background: linear-gradient(90deg, var(--cyan), hsl(var(--hue), 85%, 70%));
+  z-index: 90;
+  pointer-events: none;
 }
 
-.scrollup:hover{
-  transform: translateY(-.5rem);
-}
-
-/* Show Scroll Up */
-.show-scroll{
-  bottom: 3rem;
-}
-
-/*=============== BREAKPOINTS ===============*/
-/* For small devices */
-@media screen and (max-width: 320px) {
-  .container {
-    margin-inline: 1rem;
-  }
-
-  .home__image,
-  .about__image{
-    width: 200px;
-    height: 200px;
-  }
-
-  .home__img,
-  .about__img{
-    width: 170px;
-  }
-
-  .projects__data{
-    padding-inline: .5rem;
-  }
-}
-
-/* For medium devices */
-@media screen and (min-width: 540px){
-  .home__container,
-  .about__container,
-  .projects__container,
-  .resume__container,
-  .contact__container{
-    grid-template-columns: 400px;
-    justify-content: center;
-  }
-}
-
-@media screen and (min-width: 768px){
-  .home__container,
-  .about__container{
-    grid-template-columns: repeat(2, 350px);
-    align-items: center;
-  }
-
-  .home__data,
-  .about__data,
-  .about__data .section__title{
-    text-align: initial;
-  }
-
-  .home__buttons{
-    justify-content: initial;
-  }
-
-  .projects__container,
-  .resume__container,
-  .contact__container{
-    grid-template-columns: repeat(2, 350px);
-  }
-
-  .contact__content{
-    align-content: flex-start;
-  }
-  .contact__form{
-    order: 1;
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  [data-reveal], [data-reveal].section__rule{
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 
-/* For large devices */
-@media screen and (min-width: 1150px) {
-  .container {
-    margin-inline: auto;
-  }
-
-  .section{
-    padding-block: 7rem 2rem;
-  }
-  .section__title{
-    margin-bottom: 3rem;
-  }
-
-  .nav{
-    height: calc(var(--header-height) + 2rem);
-  }
-  .nav__toggle,
-  .nav__close{
-    display: none;
-  }
-  .nav__list{
-    flex-direction: row;
-    column-gap: 4rem;
-  }
-
-  .home__container{
-    grid-template-columns: 400px 480px;
-    column-gap: 7rem;
-    padding-block: 8rem 3rem;
-  }
-  .home__image{
-    width: 400px;
-    height: 400px;
-    border-width: 8px;
-  }
-  .home__img{
-    width: 340px;
-  }
-  .home__social{
-    left: -4rem;
-  }
-  .home__data{
-    row-gap: 1.5rem;
-  }
-  .home__buttons{
-    margin-top: 3.5rem;
-    column-gap: 1.5rem;
-  }
-
-  .about__container{
-    grid-template-columns: 540px 400px;
-    column-gap: 6rem;
-    padding-block: 5rem 3rem; 
-  }
-  .about__content{
-    row-gap: 5rem;
-  }
-  .about__data .section__title{
-    margin-bottom: 1.5rem;
-  }
-  .about__image{
-    width: 400px;
-    height: 400px;
-    border-radius: 1.5rem;
-  }
-  .about__img{
-    width: 340px;
-  }
-
-  .projects{
-    padding-block: 8rem 4rem;
-  }
-  .projects__container{
-    grid-template-columns: repeat(3, 350px);
-    gap: 3rem 2rem;
-  }
-
-  .resume{
-    padding-block: 8rem 4rem;
-  }
-  .resume__container{
-    grid-template-columns: repeat(2, 465px);
-    gap: 7rem;
-  }
-  .resume__content{
-    row-gap: 1.5rem;
-  }
-  .resume__list{
-    row-gap: 3rem;
-  }
-
-  .contact{
-    padding-block: 8rem 4rem;
-  }
-  .contact__container{
-    grid-template-columns: 310px 450px;
-    column-gap: 10rem;
-  }
-  .contact__content{
-    row-gap: 2rem;
-  }
-  .contact__data{
-    row-gap: 1.5rem;
-  }
-  .contact__form .button{
-    justify-self: center;
-    margin-top: 1rem;
-  }
-  .contact__area{
-    height: 14rem;
-  }
-
-  .footer__container{
-    grid-template-columns: repeat(3, 1fr);
-    align-items: center;
-  }
-  .footer__logo{
-    font-size: var(--h2-font-size);
-    justify-self: flex-start;
-    margin-bottom: 0;
-  }
-  .footer__links{
-    column-gap: 3rem;
-  }
-  .footer__social{
-    justify-self: flex-end;
-  }
-
-  .scrollup{
-    right: 3rem;
-  }
+/*=============== RESPONSIVE ===============*/
+/* Wide external monitors. A 1080p laptop usually runs at 125–150% Windows
+   scaling, so its CSS viewport is only ~1280–1536px and the page fills it. A
+   1080p monitor at 100% is a true 1920px viewport: without this, every cap
+   (--content-max, the hero/about panel, the rem-based type) stays put and the
+   surplus width turns into dead space instead of a larger-reading page. */
+@media screen and (min-width: 1500px){
+  html{ font-size: 17px; }
+  :root{ --rail-width: 108px; --panel-max: 29rem; }
+}
+@media screen and (min-width: 1800px){
+  html{ font-size: 18px; }
+  :root{ --rail-width: 120px; --panel-max: 31rem; --content-max: 82rem; }
 }
 
+@media screen and (max-width: 1080px){
+  .layout{ grid-template-columns: minmax(0, 1fr); }
+  .rail{ display: none; }
+  .hero{ grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .hero__right{ border-left: none; border-top: 1px solid var(--line); min-height: 460px; }
+  .hero__portrait{ top: 3.5rem; }
+  .about{ grid-template-columns: minmax(0, 1fr); }
+  .about__img-wrap{ border-left: none; border-top: 1px solid var(--line); min-height: 360px; padding: 3rem 0 2rem; }
+  /* Below this width the filler panel has no room left to be decorative — drop
+     it and let the list use the full column. */
+  .paired{ grid-template-columns: minmax(0, 1fr); }
+  .deco{ display: none; }
+  .contact__grid{ grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+  /* Single column: no dead corner to fill, so centre the cat and drop the
+     edge-overhang that would otherwise spill past the viewport. */
+  .cat-wrap{ margin: .5rem 0 0; align-self: center; }
+}
 
-/* For 2K resolutions (2048 x 1152, 2048 x 1536) */
-@media screen and (min-width: 2048px) {
-  body{
-    zoom: 1.2;
-  }
+/* In this window the hero is still two columns but the left one is narrow
+   enough that the flex stat strip wraps its third item. Pin it to a fixed
+   3-column grid so it stays on one row, same trick as the ≤640px rule. */
+@media screen and (min-width: 1081px) and (max-width: 1220px){
+  .hero__stats{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .stat{ padding-right: 1.2rem; }
+  .stat + .stat{ padding-left: 1.2rem; }
+}
+
+@media screen and (max-width: 640px){
+  .nav{ gap: 1.1rem; flex-wrap: wrap; font-size: .75rem; }
+  .hero__actions{ flex-wrap: wrap; }
+  .hero__left{ gap: 2rem; }
+  /* Grid rather than wrapping flex: three fixed columns keep the strip on one
+     row, so a divider can never end up at the start of a wrapped line. */
+  .hero__stats{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .stat{ padding-right: 1rem; }
+  .stat + .stat{ padding-left: 1rem; }
+  .stat__num{ font-size: 1.5rem; }
+  .stat__label{ max-width: none; font-size: .6rem; letter-spacing: .08em; }
+}
+
+/*=============== POLISH PASS ===============*/
+/* Adds depth + motion + micro-detail on top of the existing look. Palette and
+   fonts are untouched; everything below is a later, additive layer so removing
+   this block returns the page to its previous state. */
+
+/* --- Ambient page depth: two soft fixed glows so scrolling feels lit, not flat ---
+
+   These live on a `position: fixed` layer rather than on a `background-attachment:
+   fixed` background. Same picture, very different cost: a fixed background cannot
+   be scrolled by the compositor, so the whole viewport-sized gradient is repainted
+   on every scroll frame. A fixed element is one static layer that never repaints.
+
+   The layer covers the viewport (so the gradient percentages still resolve against
+   it, exactly as the fixed background did) and is clipped back to the main column,
+   which is the clipping the old background got for free from .main's own box. */
+.main{ background-color: var(--surface); position: relative; }
+.main::before{
+  content: "";
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    radial-gradient(72% 44% at 100% 0%, hsla(var(--hue), 70%, 45%, .06), transparent 55%),
+    radial-gradient(64% 40% at 0% 100%, hsla(var(--hue), 70%, 45%, .045), transparent 55%);
+  background-repeat: no-repeat;
+  clip-path: inset(0 0 0 var(--rail-width));
+}
+/* The glow sits above .main's own background, so the content has to be lifted
+   over it. The topbar is excluded — it carries its own, much higher z-index. */
+.main > *:not(.topbar){ position: relative; z-index: 1; }
+
+@media screen and (max-width: 1080px){
+  .main::before{ clip-path: none; } /* rail is hidden, main spans the viewport */
+}
+
+/* --- Hero: layered animated background (faint grid + drifting glow) --- */
+.hero{ position: relative; overflow: hidden; isolation: isolate; }
+.hero__left, .hero__right{ position: relative; z-index: 2; }
+.hero::before{
+  content: "";
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(to right,  hsla(var(--hue), 80%, 60%, .05) 1px, transparent 1px),
+    linear-gradient(to bottom, hsla(var(--hue), 80%, 60%, .05) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(125% 120% at 12% 18%, #000 0%, transparent 72%);
+          mask-image: radial-gradient(125% 120% at 12% 18%, #000 0%, transparent 72%);
+}
+.hero::after{
+  content: "";
+  position: absolute; inset: -25%; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(38% 42% at 24% 32%, hsla(var(--hue), 80%, 50%, .16), transparent 70%),
+    radial-gradient(34% 40% at 80% 66%, hsla(200, 75%, 55%, .10), transparent 70%);
+  animation: hero-drift 20s ease-in-out infinite alternate;
+}
+@keyframes hero-drift{
+  0%  { transform: translate3d(-3%, -2%, 0) scale(1); }
+  100%{ transform: translate3d(4%, 3%, 0) scale(1.14); }
+}
+
+/* Hero right panel: glow behind the portrait + corner ticks so it reads as a
+   deliberate spec panel instead of empty space */
+.hero__right{ overflow: hidden; }
+.hero__right::before{
+  content: "";
+  position: absolute; z-index: 0; pointer-events: none;
+  left: 50%; top: 47%; transform: translate(-50%, -50%);
+  width: min(24rem, 92%); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle, hsla(var(--hue), 80%, 48%, .22), transparent 62%);
+  filter: blur(6px);
+  animation: hero-pulse 7s ease-in-out infinite;
+}
+@keyframes hero-pulse{
+  0%, 100%{ opacity: .55; transform: translate(-50%, -50%) scale(.94); }
+  50%     { opacity: 1;   transform: translate(-50%, -50%) scale(1.06); }
+}
+.hero__portrait{ z-index: 1; }
+.hero__badge, .hero__panelfoot{ z-index: 2; }
+.hero__badge{ animation: badge-glow 3.2s ease-in-out infinite; }
+@keyframes badge-glow{
+  0%, 100%{ box-shadow: 0 0 0 0 hsla(var(--hue), 80%, 48%, 0); border-color: var(--cyan-soft); }
+  50%     { box-shadow: 0 0 20px hsla(var(--hue), 80%, 48%, .22); border-color: var(--cyan); }
+}
+
+/* --- Typography: tighter display tracking for cleaner hierarchy --- */
+.hero__title{ letter-spacing: -.018em; }
+.section__title{ letter-spacing: -.012em; }
+
+/* Section rules fade the cyan out instead of a flat grey hairline */
+.section__rule{ background: linear-gradient(90deg, var(--cyan-soft), var(--line) 45%, transparent); }
+
+/* --- Buttons: gradient face + a sheen that sweeps across on hover --- */
+.btn{
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--cyan), hsl(var(--hue), 80%, 42%));
+  transition: box-shadow .3s, transform .18s var(--ease-out);
+}
+.btn::after{
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 32%, hsla(0, 0%, 100%, .35) 50%, transparent 68%);
+  transform: translateX(-130%);
+  transition: transform .6s var(--ease-out);
+  pointer-events: none;
+}
+.btn:hover::after{ transform: translateX(130%); }
+.btn:active{ transform: translateY(1px); }
+
+/* --- Chips: lift + text/border warm-up on hover --- */
+.chip{ transition: background .3s, color .3s, border-color .3s, transform .3s var(--ease-out), box-shadow .3s; }
+.chip:hover{ color: var(--ink); border-color: var(--cyan-soft); transform: translateY(-2px); }
+.chip--hot:hover{ color: var(--cyan); background: hsla(var(--hue), 80%, 48%, .16); box-shadow: 0 8px 20px hsla(var(--hue), 80%, 48%, .16); }
+
+/* --- Cards: media slowly zooms on hover (tilt transform stays on the card, so
+   this rides the image only and never fights the JS) --- */
+.card__media{ overflow: hidden; }
+.card__img{ transition: transform .55s var(--ease-out), filter .55s var(--ease-out); }
+.card:hover .card__img{ transform: scale(1.06); }
+
+/* --- Rail social: subtle lift so the icons feel tactile ---
+   Lift the inner icon, not the <a>: moving the hover target itself would
+   uncover the cursor near the bottom edge and cause a hover flicker loop. */
+.rail__social a{ transition: color .3s; }
+.rail__social a i{ display: inline-block; transition: transform .3s var(--ease-out); }
+.rail__social a:hover i{ transform: translateY(-3px); }
+
+@media (prefers-reduced-motion: reduce){
+  .hero::after, .hero__right::before, .hero__badge{ animation: none; }
 }

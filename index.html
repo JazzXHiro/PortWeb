@@ -1,197 +1,162 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Keerti Vardhan | Computer Science Portfolio</title>
+    <script>
+        /* Module scripts are deferred, so js/reveal.js cannot hide its targets
+           before the first paint. Hold the column until it has done so, or the
+           content would paint in place and then snap back to hidden. The timer
+           fails open: a script error can never leave a permanently blank page. */
+        document.documentElement.classList.add('js-reveal');
+        setTimeout(function () {
+            document.documentElement.classList.add('reveal-ready');
+        }, 1500);
+    </script>
+</head>
+<body>
+    <div class="layout">
+        <!--=============== RAIL ===============-->
+        <aside class="rail">
+            <a href="#home" class="rail__logo">K<span>.</span></a>
+            <span class="rail__label">PORTFOLIO — 2026</span>
+            <div class="rail__social">
+                <a href="https://www.linkedin.com/in/keerti-vardhan-475423299/" target="_blank" aria-label="LinkedIn"><i class="ri-linkedin-box-fill"></i></a>
+                <a href="https://github.com/JazzXHiro" target="_blank" aria-label="GitHub"><i class="ri-github-fill"></i></a>
+                <a href="#" id="discord-copy" aria-label="Copy Discord handle"><i id="discord-rail" class="ri-discord-fill"></i></a>
+            </div>
+            <span class="rail__accent" aria-hidden="true"></span>
+        </aside>
 
-        <!--================== FAVICON ==================-->
-        <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
-
-        <!--================== REMIXICONS ==================-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
-
-        <!--================== CSS ==================-->
-        <link rel="stylesheet" href="css/styles.css">
-
-        <title>Keerti Vardhan | Computer Science Portfolio</title>
-    </head>
-    <body>
-        <!--================== HEADER ==================-->
-        <header class="header" id="header">
-            <nav class="nav container">
-                <a href="#" class="nav__logo">Keerti</a>
-
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li>
-                            <a href="#home" class="nav__link active-link">Home</a>
-                        </li>
-
-                        <li>
-                            <a href="#about" class="nav__link">About</a>
-                        </li>
-
-                        <li>
-                            <a href="#projects" class="nav__link">Projects</a>
-                        </li>
-
-                        <li>
-                            <a href="#resume" class="nav__link">Resume</a>
-                        </li>
-
-                        <li>
-                            <a href="#contact" class="nav__link">Contact</a>
-                        </li>
-                    </ul>
-
-                    <!-- Close button -->
-                    <div class="nav__close" id="nav-close">
-                        <i class="ri-close-large-line"></i>
-                    </div>
-                </div>
-
-                <!-- Toggle menu -->
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class="ri-menu-line"></i>
-                </div>
-            </nav>
-        </header>
-
-        <!--================== MAIN ==================-->
         <main class="main">
-            <!--================== HOME ==================-->
-            <section class="home section" id="home">
-                <div class="home__container container grid">
-                    <div class = "home__content">
-                        <div class = "home__image">
-                            <img src="img/home-profile.png" alt="image" class="home__img">
+            <!--=============== TOP NAV (sticky) ===============-->
+            <header class="topbar" id="topbar">
+                <nav class="nav">
+                    <a href="#home" class="active">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#resume">Resume</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+            </header>
+
+            <!--=============== HERO ===============-->
+            <section class="hero" id="home">
+                <div class="hero__left">
+                    <div class="hero__body">
+                        <p class="hero__kicker"><span id="home-typed">GAME DEVELOPER</span><span class="cursor"></span></p>
+                        <h1 class="hero__title"><span class="hero__name">Keerti</span><br><span class="hero__name hero__name--bold">Vardhan</span></h1>
+                        <p class="hero__desc">I design and build 2D worlds — most recently <b>Jaded</b>, a solo-built monster-catching game with 30+ creatures and custom physics.</p>
+                        <div class="hero__actions">
+                            <a href="pdf/KeertiVardhan_Resume.pdf" download target="_blank" class="btn">Download CV</a>
+                            <a href="#projects" class="textlink">View projects →</a>
                         </div>
 
-                        <div class = "home__social">
-                            <a href="https://www.linkedin.com/in/keerti-vardhan-475423299/" target="_blank" class="home__link">
-                                <i class="ri-linkedin-box-fill"></i>
-                            </a>
-
-                            <a href="https://github.com/JazzXHiro" target="_blank" class="home__link">
-                                <i class="ri-github-fill"></i>
-                            </a>
-
-                            <a href="#" class="home__link" onclick="copyDiscord(event)" title="Copy Discord Username">
-                                <i id="discord-icon" class="ri-discord-fill"></i>
-                            </a>
-
-                            <span id ="discord-msg" class="copy-msg"></span>
-                        </div>
+                        <ul class="hero__stats">
+                            <li class="stat">
+                                <span class="stat__num"><span class="stat__value" data-count="30">30</span><span class="stat__unit">+</span></span>
+                                <span class="stat__label">Creatures designed</span>
+                            </li>
+                            <li class="stat">
+                                <span class="stat__num"><span class="stat__value" data-count="100">100</span><span class="stat__unit">%</span></span>
+                                <span class="stat__label">Solo-built engine</span>
+                            </li>
+                            <li class="stat">
+                                <span class="stat__num"><span class="stat__value" data-count="6">6</span><span class="stat__unit">+</span></span>
+                                <span class="stat__label">Languages &amp; engines</span>
+                            </li>
+                        </ul>
                     </div>
-                    
-                    <div class="home__data grid">
-                        <p class="home__subtitle">
-                        Hi, I'm a <span id="home-typed">Game Developer</span>
-                        </p>
 
-                        <h1 class="home__title">Keerti Vardhan</h1>
+                    <span class="hero__foot">BASED IN INDIA · UPES · OPEN TO INTERNSHIPS</span>
+                </div>
 
-                        <p class="home__description">
-                            A Computer Science student passionate about game development and software engineering.Check out my portfolio to see my projects and skills!
-                        </p>
-
-                        <div class="home__buttons">
-                            <a href="pdf/KeertiVardhan_Resume.pdf" download="" target="_blank" class="button">Download CV</a>
-                            <a href="#projects" class="button button__ghost">Projects</a>
-                        </div>
-                    </div>
+                <div class="hero__right">
+                    <img src="img/home-profile.png" alt="Keerti Vardhan" class="hero__portrait">
+                    <a href="https://www.linkedin.com/in/keerti-vardhan-475423299/" target="_blank" rel="noopener" class="hero__badge">● OPEN TO WORK</a>
+                    <div class="hero__panelfoot"><span>FEATURED: JADED</span><span>PYGAME · SOLO</span></div>
                 </div>
             </section>
 
-            <!--================== ABOUT ==================-->
-            <section class="about section" id="about">
-                <div class="about__container container grid">
-                    <div class="about__content">
-                        <div class="about__data">
-                            <h2 class="section__title">About Me</h2>
-
-                            <p class="about__description">
-                                I am an enthusiastic Computer Science student with a passion for game development and software engineering. I love creating immersive experiences and innovative solutions through code.
-                            </p>
-
-                            <a href="#contact" class="button button__ghost">Contact Me</a>
-                        </div>
-
-                        <div class="about__skills">
-                            <h3 class="about__subtitle">
-                                <i class="ri-bookmark-3-fill"></i>
-                                <span>Skills</span>
-                            </h3>
-
-                            <ul class="about__items">
-                                <li class="about__item">HTML</li>
-                                <li class="about__item">CSS</li>
-                                <li class="about__item">JavaScript</li>
-                                <li class="about__item">C</li>
-                                <li class="about__item">C++</li>
-                                <li class="about__item">Python</li>
-                                <li class="about__item">Unity</li>
-                                <li class="about__item">Godot</li>
-                                <li class="about__item">Pygame</li>
-                                <li class="about__item">Git</li>
-                            </ul>
-                        </div>
+            <!--=============== ABOUT ===============-->
+            <section class="about" id="about">
+                <div class="about__body">
+                    <div class="section__head">
+                        <span class="section__num">01</span>
+                        <h2 class="section__title">About</h2>
+                        <span class="section__rule"></span>
                     </div>
-
-                    <div class="about__image">
-                        <img src="img/about-profile.png" alt="image" class="about__img">
+                    <p class="about__desc">Enthusiastic Computer Science student with a passion for game development and software engineering. I love creating immersive experiences and innovative solutions through code.</p>
+                    <p class="about__skills-label">SKILLS</p>
+                    <div class="chips">
+                        <span class="chip">HTML</span>
+                        <span class="chip">CSS</span>
+                        <span class="chip">JavaScript</span>
+                        <span class="chip">C</span>
+                        <span class="chip">C++</span>
+                        <span class="chip">Python</span>
+                        <span class="chip chip--hot">Unity</span>
+                        <span class="chip chip--hot">Godot</span>
+                        <span class="chip chip--hot">Pygame</span>
+                        <span class="chip">Git</span>
                     </div>
+                </div>
+                <div class="about__img-wrap">
+                    <img src="img/about-profile.png" alt="About Keerti" class="about__img">
+                    <span class="about__fig">FIG. 01 — THE DEVELOPER</span>
                 </div>
             </section>
 
-            <!--================== PROJECTS ==================-->
-            <section class="projects section" id="projects">
-                <h2 class="section__title">Projects</h2>
+            <!--=============== PROJECTS ===============-->
+            <section class="projects" id="projects">
+                <div class="section__head projects__head">
+                    <span class="section__num">02</span>
+                    <h2 class="section__title">Projects</h2>
+                    <span class="section__rule"></span>
+                    <span class="mono-label">HOVER A TILE TO EXPAND</span>
+                </div>
 
-                <div class="projects__container container grid">
-                    <article class="projects__card">
-                        <img src="img/project-1.jpg" alt="image" class="projects__img">
-
-                        <div class="projects__data">
-                            <h3 class="projects__title">Jaded - 2D Monster Catching Game</h3>
-                            <p class="projects__description">A monster catching game developed solely in python.</p>
-                        </div>
-
-                        <div class="projects__overlay">
-                            <div class="projects__skills">
-                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" title="Python">
-                                <img src="img/pygame.png" alt="Pygame" title="Pygame">
+                <div class="projects__grid">
+                    <article class="card">
+                        <div class="card__data">
+                            <div class="card__data-inner">
+                                <h3 class="card__title">Jaded — 2D Monster Catching Game</h3>
+                                <p class="card__desc">A monster catching game developed solely in Python.</p>
                             </div>
-
-                            <button class="projects__arrow" type="button" aria-label="View project details">
-                                <span>View</span>
-                                <i class="ri-arrow-right-line"></i>
-                            </button>
+                        </div>
+                        <div class="card__media">
+                            <img src="img/project-1.jpg" alt="Jaded" class="card__img">
+                            <span class="card__tag">PYTHON · PYGAME</span>
+                            <div class="card__overlay">
+                                <div class="card__skills">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                                    <img src="img/pygame.png" alt="Pygame">
+                                </div>
+                                <button class="card__view" type="button">View <i class="ri-arrow-right-line"></i></button>
+                            </div>
                         </div>
 
-                        <!-- ===== Modal content for THIS project (hidden until opened) ===== -->
+                        <!-- Carousel modal content for THIS project -->
                         <template class="project-detail">
-                            <p class = "pm__tagline">2D Game &middot; Monster-Catcher</p>
-                            <h2 class = "pm__title">Jaded - 2D Monster Catching Game</h2>
+                            <p class="pm__tagline">2D GAME · MONSTER-CATCHER</p>
+                            <h2 class="pm__title">Jaded — 2D Monster Catching Game</h2>
 
-                            <!-- Carousel media: one .pm__media per slide.
-                            data-type = image | gif | video   data-src = file path -->
-
-                            <div class="pm__media" data-type="gif" data-src="img/jaded/gameplay.gif" data-label="gameplay_loop.gif"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/forest.png" data-label="forest_biome.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/boss.png"   data-label="boss_fight.png"></div>
+                            <div class="pm__media" data-type="gif"   data-src="img/jaded/gameplay.gif"  data-label="gameplay_loop.gif"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/forest.png"    data-label="forest_biome.png"></div>
+                            <div class="pm__media" data-type="image" data-src="img/jaded/boss.png"      data-label="boss_fight.png"></div>
                             <div class="pm__media" data-type="image" data-src="img/jaded/inventory.png" data-label="inventory_ui.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/title.png"  data-label="title_screen.png"></div>
-                        
+                            <div class="pm__media" data-type="image" data-src="img/jaded/title.png"     data-label="title_screen.png"></div>
+
                             <ul class="pm__tech-src">
                                 <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt=""><span>Python</span></li>
                                 <li><img src="img/pygame.png" alt=""><span>Pygame</span></li>
                                 <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt=""><span>Git</span></li>
                             </ul>
 
-                            <p class="pm__desc">A 2D monster-catching game built entirely within Python with Pygame.
-                                Explore a world filled with unique monsters, each with their own abilities and characteristics. Capture, train, and battle your way to become the ultimate monster master!
-                            </p>
+                            <p class="pm__desc">A 2D monster-catching game built entirely in Python with Pygame. Explore a world filled with unique monsters, each with their own abilities. Capture, train, and battle your way to become the ultimate monster master!</p>
 
                             <ul class="pm__stats-src"><li>30+ MONSTERS</li><li>CUSTOM PHYSICS</li><li>SOLO BUILD</li></ul>
 
@@ -200,465 +165,440 @@
                         </template>
                     </article>
 
-                    <article class="projects__card">
-                        <img src="img/project-2.jpg" alt="image" class="projects__img">
-
-                        <div class="projects__data">
-                            <h3 class="projects__title">Project 2</h3>
-                            <p class="projects__description">Creation, design and development of a 2D platformer game using Unity and C#.</p>
-                        </div>
-
-                        <div class="projects__overlay">
-                            <div class="projects__skills">
-
+                    <article class="card">
+                        <div class="card__data">
+                            <div class="card__data-inner">
+                                <h3 class="card__title">2D Platformer</h3>
+                                <p class="card__desc">A 2D platformer built with Unity and C#.</p>
                             </div>
-
-                            <button class="projects__arrow" type="button" aria-label="View project details">
-                                <span>View</span>
-                                <i class="ri-arrow-right-line"></i>
-                            </button>
+                        </div>
+                        <div class="card__media">
+                            <img src="img/project-2.jpg" alt="Project" class="card__img">
+                            <span class="card__tag">UNITY · C#</span>
+                            <div class="card__overlay">
+                                <div class="card__skills"></div>
+                                <button class="card__view" type="button">View <i class="ri-arrow-right-line"></i></button>
+                            </div>
                         </div>
 
-                        <!-- ===== Modal content for THIS project (hidden until opened) ===== -->
                         <template class="project-detail">
-                            <p class = "pm__tagline">2D Game &middot; Monster-Catcher</p>
-                            <h2 class = "pm__title">Jaded - 2D Monster Catching Game</h2>
-
-                            <!-- Carousel media: one .pm__media per slide.
-                            data-type = image | gif | video   data-src = file path -->
-
-                            <div class="pm__media" data-type="gif" data-src="img/jaded/gameplay.gif" data-label="gameplay_loop.gif"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/forest.png" data-label="forest_biome.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/boss.png"   data-label="boss_fight.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/inventory.png" data-label="inventory_ui.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/title.png"  data-label="title_screen.png"></div>
-                        
+                            <p class="pm__tagline">2D GAME · PLATFORMER</p>
+                            <h2 class="pm__title">2D Platformer</h2>
+                            <div class="pm__media" data-type="image" data-src="img/project-2.jpg" data-label="preview.png"></div>
                             <ul class="pm__tech-src">
-                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt=""><span>Python</span></li>
-                                <li><img src="img/pygame.png" alt=""><span>Pygame</span></li>
-                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt=""><span>Git</span></li>
+                                <li><span>Unity</span></li>
+                                <li><span>C#</span></li>
                             </ul>
-
-                            <p class="pm__desc">A 2D monster-catching game built entirely within Python with Pygame.
-                                Explore a world filled with unique monsters, each with their own abilities and characteristics. Capture, train, and battle your way to become the ultimate monster master!
-                            </p>
-
-                            <ul class="pm__stats-src"><li>30+ MONSTERS</li><li>CUSTOM PHYSICS</li><li>SOLO BUILD</li></ul>
-
-                            <a class="pm__github-src" href="https://github.com/JazzXHiro/Jaded">JazzXHiro / Jaded</a>
-                            <a class="pm__cta-src" href="project-jaded.html">View full details</a>
+                            <p class="pm__desc">Design and development of a 2D platformer game using Unity and C# — level design, character controller and enemy AI.</p>
+                            <ul class="pm__stats-src"><li>UNITY</li><li>C#</li><li>WIP</li></ul>
+                            <a class="pm__github-src" href="https://github.com/JazzXHiro">JazzXHiro</a>
+                            <a class="pm__cta-src" href="https://github.com/JazzXHiro">View full details</a>
                         </template>
                     </article>
 
-                    <article class="projects__card">
-                        <img src="img/project-3.jpg" alt="image" class="projects__img">
-
-                        <div class="projects__data">
-                            <h3 class="projects__title">Project 3</h3>
-                            <p class="projects__description">Creation, design and development of a 2D platformer game using Unity and C#.</p>
-                        </div>
-
-                        <div class="projects__overlay">
-                            <div class="projects__skills">
-
+                    <article class="card">
+                        <div class="card__data">
+                            <div class="card__data-inner">
+                                <h3 class="card__title">Project Three</h3>
+                                <p class="card__desc">A 2D game built with Godot.</p>
                             </div>
-
-                            <button class="projects__arrow" type="button" aria-label="View project details">
-                                <span>View</span>
-                                <i class="ri-arrow-right-line"></i>
-                            </button>
+                        </div>
+                        <div class="card__media">
+                            <img src="img/project-3.jpg" alt="Project" class="card__img">
+                            <span class="card__tag">GODOT</span>
+                            <div class="card__overlay">
+                                <div class="card__skills"></div>
+                                <button class="card__view" type="button">View <i class="ri-arrow-right-line"></i></button>
+                            </div>
                         </div>
 
-                        <!-- ===== Modal content for THIS project (hidden until opened) ===== -->
                         <template class="project-detail">
-                            <p class = "pm__tagline">2D Game &middot; Monster-Catcher</p>
-                            <h2 class = "pm__title">Jaded - 2D Monster Catching Game</h2>
-
-                            <!-- Carousel media: one .pm__media per slide.
-                            data-type = image | gif | video   data-src = file path -->
-
-                            <div class="pm__media" data-type="gif" data-src="img/jaded/gameplay.gif" data-label="gameplay_loop.gif"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/forest.png" data-label="forest_biome.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/boss.png"   data-label="boss_fight.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/inventory.png" data-label="inventory_ui.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/title.png"  data-label="title_screen.png"></div>
-                        
+                            <p class="pm__tagline">2D GAME</p>
+                            <h2 class="pm__title">Project Three</h2>
+                            <div class="pm__media" data-type="image" data-src="img/project-3.jpg" data-label="preview.png"></div>
                             <ul class="pm__tech-src">
-                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt=""><span>Python</span></li>
-                                <li><img src="img/pygame.png" alt=""><span>Pygame</span></li>
-                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt=""><span>Git</span></li>
+                                <li><span>Godot</span></li>
+                                <li><span>GDScript</span></li>
                             </ul>
-
-                            <p class="pm__desc">A 2D monster-catching game built entirely within Python with Pygame.
-                                Explore a world filled with unique monsters, each with their own abilities and characteristics. Capture, train, and battle your way to become the ultimate monster master!
-                            </p>
-
-                            <ul class="pm__stats-src"><li>30+ MONSTERS</li><li>CUSTOM PHYSICS</li><li>SOLO BUILD</li></ul>
-
-                            <a class="pm__github-src" href="https://github.com/JazzXHiro/Jaded">JazzXHiro / Jaded</a>
-                            <a class="pm__cta-src" href="project-jaded.html">View full details</a>
+                            <p class="pm__desc">A 2D game project built with the Godot engine.</p>
+                            <ul class="pm__stats-src"><li>GODOT</li><li>GDSCRIPT</li></ul>
+                            <a class="pm__github-src" href="https://github.com/JazzXHiro">JazzXHiro</a>
+                            <a class="pm__cta-src" href="https://github.com/JazzXHiro">View full details</a>
                         </template>
                     </article>
 
-                    <article class="projects__card">
-                        <img src="img/project-4.jpg" alt="image" class="projects__img">
-
-                        <div class="projects__data">
-                            <h3 class="projects__title">Project 4</h3>
-                            <p class="projects__description">Creation, design and development of a 2D platformer game using Unity and C#.</p>
-                        </div>
-
-                        <div class="projects__overlay">
-                            <div class="projects__skills">
-
+                    <article class="card">
+                        <div class="card__data">
+                            <div class="card__data-inner">
+                                <h3 class="card__title">Project Four</h3>
+                                <p class="card__desc">A 2D platformer built with Unity and C#.</p>
                             </div>
-
-                            <button class="projects__arrow" type="button" aria-label="View project details">
-                                <span>View</span>
-                                <i class="ri-arrow-right-line"></i>
-                            </button>
+                        </div>
+                        <div class="card__media">
+                            <img src="img/project-4.jpg" alt="Project" class="card__img">
+                            <span class="card__tag">UNITY · C#</span>
+                            <div class="card__overlay">
+                                <div class="card__skills"></div>
+                                <button class="card__view" type="button">View <i class="ri-arrow-right-line"></i></button>
+                            </div>
                         </div>
 
-                        <!-- ===== Modal content for THIS project (hidden until opened) ===== -->
                         <template class="project-detail">
-                            <p class = "pm__tagline">2D Game &middot; Monster-Catcher</p>
-                            <h2 class = "pm__title">Jaded - 2D Monster Catching Game</h2>
-
-                            <!-- Carousel media: one .pm__media per slide.
-                            data-type = image | gif | video   data-src = file path -->
-
-                            <div class="pm__media" data-type="gif" data-src="img/jaded/gameplay.gif" data-label="gameplay_loop.gif"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/forest.png" data-label="forest_biome.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/boss.png"   data-label="boss_fight.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/inventory.png" data-label="inventory_ui.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/title.png"  data-label="title_screen.png"></div>
-                        
+                            <p class="pm__tagline">2D GAME</p>
+                            <h2 class="pm__title">Project Four</h2>
+                            <div class="pm__media" data-type="image" data-src="img/project-4.jpg" data-label="preview.png"></div>
                             <ul class="pm__tech-src">
-                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt=""><span>Python</span></li>
-                                <li><img src="img/pygame.png" alt=""><span>Pygame</span></li>
-                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt=""><span>Git</span></li>
+                                <li><span>Unity</span></li>
+                                <li><span>C#</span></li>
                             </ul>
-
-                            <p class="pm__desc">A 2D monster-catching game built entirely within Python with Pygame.
-                                Explore a world filled with unique monsters, each with their own abilities and characteristics. Capture, train, and battle your way to become the ultimate monster master!
-                            </p>
-
-                            <ul class="pm__stats-src"><li>30+ MONSTERS</li><li>CUSTOM PHYSICS</li><li>SOLO BUILD</li></ul>
-
-                            <a class="pm__github-src" href="https://github.com/JazzXHiro/Jaded">JazzXHiro / Jaded</a>
-                            <a class="pm__cta-src" href="project-jaded.html">View full details</a>
+                            <p class="pm__desc">A 2D platformer project built with Unity and C#.</p>
+                            <ul class="pm__stats-src"><li>UNITY</li><li>C#</li></ul>
+                            <a class="pm__github-src" href="https://github.com/JazzXHiro">JazzXHiro</a>
+                            <a class="pm__cta-src" href="https://github.com/JazzXHiro">View full details</a>
                         </template>
                     </article>
 
-                    <article class="projects__card">
-                        <img src="img/project-5.png" alt="image" class="projects__img">
-
-                        <div class="projects__data">
-                            <h3 class="projects__title">Project 5</h3>
-                            <p class="projects__description">Creation, design and development of a 2D platformer game using Unity and C#.</p>
-                        </div>
-
-                        <div class="projects__overlay">
-                            <div class="projects__skills">
-
+                    <article class="card">
+                        <div class="card__data">
+                            <div class="card__data-inner">
+                                <h3 class="card__title">Project Five</h3>
+                                <p class="card__desc">A C++ project exploring low-level systems.</p>
                             </div>
-
-                            <button class="projects__arrow" type="button" aria-label="View project details">
-                                <span>View</span>
-                                <i class="ri-arrow-right-line"></i>
-                            </button>
+                        </div>
+                        <div class="card__media">
+                            <img src="img/project-5.png" alt="Project" class="card__img">
+                            <span class="card__tag">C++</span>
+                            <div class="card__overlay">
+                                <div class="card__skills"></div>
+                                <button class="card__view" type="button">View <i class="ri-arrow-right-line"></i></button>
+                            </div>
                         </div>
 
-                        <!-- ===== Modal content for THIS project (hidden until opened) ===== -->
                         <template class="project-detail">
-                            <p class = "pm__tagline">2D Game &middot; Monster-Catcher</p>
-                            <h2 class = "pm__title">Jaded - 2D Monster Catching Game</h2>
-
-                            <!-- Carousel media: one .pm__media per slide.
-                            data-type = image | gif | video   data-src = file path -->
-
-                            <div class="pm__media" data-type="gif" data-src="img/jaded/gameplay.gif" data-label="gameplay_loop.gif"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/forest.png" data-label="forest_biome.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/boss.png"   data-label="boss_fight.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/inventory.png" data-label="inventory_ui.png"></div>
-                            <div class="pm__media" data-type="image" data-src="img/jaded/title.png"  data-label="title_screen.png"></div>
-                        
+                            <p class="pm__tagline">SYSTEMS</p>
+                            <h2 class="pm__title">Project Five</h2>
+                            <div class="pm__media" data-type="image" data-src="img/project-5.png" data-label="preview.png"></div>
                             <ul class="pm__tech-src">
-                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt=""><span>Python</span></li>
-                                <li><img src="img/pygame.png" alt=""><span>Pygame</span></li>
-                                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt=""><span>Git</span></li>
+                                <li><span>C++</span></li>
                             </ul>
-
-                            <p class="pm__desc">A 2D monster-catching game built entirely within Python with Pygame.
-                                Explore a world filled with unique monsters, each with their own abilities and characteristics. Capture, train, and battle your way to become the ultimate monster master!
-                            </p>
-
-                            <ul class="pm__stats-src"><li>30+ MONSTERS</li><li>CUSTOM PHYSICS</li><li>SOLO BUILD</li></ul>
-
-                            <a class="pm__github-src" href="https://github.com/JazzXHiro/Jaded">JazzXHiro / Jaded</a>
-                            <a class="pm__cta-src" href="project-jaded.html">View full details</a>
+                            <p class="pm__desc">A C++ project exploring low-level game systems and performance.</p>
+                            <ul class="pm__stats-src"><li>C++</li></ul>
+                            <a class="pm__github-src" href="https://github.com/JazzXHiro">JazzXHiro</a>
+                            <a class="pm__cta-src" href="https://github.com/JazzXHiro">View full details</a>
                         </template>
                     </article>
 
-                    <article class="projects__card">
-                        <img src="img/project-6.jpg" alt="image" class="projects__img">
-
-                        <div class="projects__data">
-                            <h3 class="projects__title">Project 6</h3>
-                            <p class="projects__description">Creation, design and development of a 2D platformer game using Unity and C#.</p>
-                        </div>
-
-                        <div class="projects__overlay">
-                            <div class="projects__skills">
-
+                    <article class="card">
+                        <div class="card__data">
+                            <div class="card__data-inner">
+                                <h3 class="card__title">Project Six</h3>
+                                <p class="card__desc">A Python tools and scripting project.</p>
                             </div>
-
-                            <button class="projects__arrow" type="button" aria-label="View project details">
-                                <span>View</span>
-                                <i class="ri-arrow-right-line"></i>
-                            </button>
                         </div>
+                        <div class="card__media">
+                            <img src="img/project-6.jpg" alt="Project" class="card__img">
+                            <span class="card__tag">PYTHON</span>
+                            <div class="card__overlay">
+                                <div class="card__skills"></div>
+                                <button class="card__view" type="button">View <i class="ri-arrow-right-line"></i></button>
+                            </div>
+                        </div>
+
+                        <template class="project-detail">
+                            <p class="pm__tagline">TOOLS</p>
+                            <h2 class="pm__title">Project Six</h2>
+                            <div class="pm__media" data-type="image" data-src="img/project-6.jpg" data-label="preview.png"></div>
+                            <ul class="pm__tech-src">
+                                <li><span>Python</span></li>
+                            </ul>
+                            <p class="pm__desc">A Python tools and scripting project.</p>
+                            <ul class="pm__stats-src"><li>PYTHON</li></ul>
+                            <a class="pm__github-src" href="https://github.com/JazzXHiro">JazzXHiro</a>
+                            <a class="pm__cta-src" href="https://github.com/JazzXHiro">View full details</a>
+                        </template>
                     </article>
                 </div>
             </section>
 
-            <!--================== RESUME ==================-->
-            <section class="resume section" id="resume">
-                <h2 class="section__title">My Resume</h2>
-
-                <div class="resume__container container grid">
-                    <div class="resume__content grid">
-                        <h3 class="resume__subtitle">
-                            <i class="ri-award-fill"></i>
-                            <span>Experience</span>
-                        </h3>
-
-                        <div class="resume__list grid">
-                            <div class="resume__data">
-                                <h3 class="resume__title">Frontend Developer</h3>
-
-                                <div class="resume__info">
-                                    <address>VortexTech</address>
-                                    <address>2024 - Present</address>
-                                </div>
-
-                                <p class="resume__description">Building reliable and fast interfaces</p>
+            <!--=============== RESUME ===============-->
+            <section class="block block--paired" id="resume">
+                <div class="block__inner paired">
+                    <div class="paired__body">
+                        <div class="section__head">
+                            <span class="section__num">03</span>
+                            <h2 class="section__title">Experience</h2>
+                            <span class="section__rule"></span>
+                            <a class="ghost-btn" href="pdf/KeertiVardhan_Resume.pdf" download target="_blank"><i class="ri-download-line"></i>RESUME.PDF</a>
+                        </div>
+                        <div class="resume__col">
+                            <div class="tl tl--now">
+                                <div class="tl__top"><span class="tl__title">Frontend Developer</span><span class="tl__date">2024 — NOW</span></div>
+                                <p class="tl__sub">VortexTech · Building reliable, fast interfaces</p>
                             </div>
-
-                            <div class="resume__data">
-                                <h3 class="resume__title">Game Programmer</h3>
-
-                                <div class="resume__info">
-                                    <address>Pixel Studio</address>
-                                    <address>2020-2022</address>
-                                </div>
-
-                                <p class="resume__description">Game development and programming using Unity and C#.</p>
+                            <div class="tl">
+                                <div class="tl__top"><span class="tl__title">Game Programmer</span><span class="tl__date">2020 — 22</span></div>
+                                <p class="tl__sub">Pixel Studio · Unity &amp; C# game development</p>
                             </div>
-
-                            <div class="resume__data">
-                                <h3 class="resume__title">Visual Design in interfaces</h3>
-
-                                <div class="resume__info">
-                                    <address>Something Bright</address>
-                                    <address>2018-2020</address>
-                                </div>
-
-                                <p class="resume__description">Creating visually appealing and user-friendly interface designs.</p>
+                            <div class="tl">
+                                <div class="tl__top"><span class="tl__title">Visual Design</span><span class="tl__date">2018 — 20</span></div>
+                                <p class="tl__sub">Something Bright · Interface design</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="resume__content grid">
-                        <h3 class="resume__subtitle">
-                            <i class="ri-graduation-cap-fill"></i>
-                            <span>Education</span>
-                        </h3>
-
-                        <div class="resume__list grid">
-                            <div class="resume__data">
-                                <h3 class="resume__title">B.Tech in Computer Science</h3>
-
-                                <div class="resume__info">
-                                    <address>University of Petroleum and Energy Studies</address>
-                                    <address>2023-Present</address>
+                    <!-- Filler art: a fire-watch tower at sunset. Ported from a
+                         Pug/SCSS scene — all pure CSS shapes (borders, clip-paths),
+                         no images. Everything is scoped under .tower-scene so the
+                         generic class names (.tree, .mountain, .body…) can't leak
+                         into the rest of the page. -->
+                    <div class="deco deco--scene" aria-hidden="true">
+                        <span class="deco__glow"></span>
+                        <div class="tower-scene">
+                            <div class="ts">
+                                <div class="birds front">
+                                    <div class="bird b1"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b2"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b3"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b4"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b5"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b6"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b7"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b8"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b9"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b10"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b11"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b12"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                </div>
+                                <div class="birds back">
+                                    <div class="bird b1"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b2"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b3"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b4"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b5"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b6"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b7"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b8"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b9"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b10"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b11"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
+                                    <div class="bird b12"><div class="body"></div><div class="wing1"><div class="wing2"><div class="wing3"></div></div></div></div>
                                 </div>
 
-                                <p class="resume__description"></p>
-                            </div>
-
-                            <div class="resume__data">
-                                <h3 class="resume__title">Intermediate</h3>
-
-                                <div class="resume__info">
-                                    <address>Sun Flower Public School</address>
-                                    <address>2019-2021</address>
+                                <div class="cloud big">
+                                    <div class="circle c1"></div><div class="circle c2"></div><div class="circle c3"></div>
+                                    <div class="circle c4"></div><div class="circle c5"></div><div class="circle c6"></div>
+                                    <div class="circle c7"></div><div class="circle c8"></div>
+                                </div>
+                                <div class="cloud small">
+                                    <div class="circle c1"></div><div class="circle c2"></div><div class="circle c3"></div>
+                                    <div class="circle c4"></div><div class="circle c5"></div><div class="circle c6"></div>
+                                    <div class="circle c7"></div><div class="circle c8"></div>
                                 </div>
 
-                                <p class="resume__description">Just School</p>
-                            </div>
-                            
-                            <div class="resume__data">
-                                <h3 class="resume__title">High School</h3>
-
-                                <div class="resume__info">
-                                    <address>Shah Faiz Public School</address>
-                                    <address>2017-2019</address>
+                                <div class="mountain">
+                                    <div class="backdrop"></div>
+                                    <div class="zig zag1"></div>
+                                    <div class="zig zag2"></div>
+                                    <div class="zig zag3"></div>
+                                    <div class="zig zag4"></div>
                                 </div>
 
-                                <p class="resume__description">The Actual School</p>
+                                <div class="range">
+                                    <div class="r1"></div><div class="r2"></div><div class="r3"></div><div class="r4"></div>
+                                    <div class="r5"></div><div class="r6"></div><div class="r7"></div>
+                                </div>
+
+                                <div class="tree treeBack tree1"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeBack tree2"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeBack tree3"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeBack tree4"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeBack tree5"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeBack tree6"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeBack tree7"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeBack tree8"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+
+                                <div class="tower">
+                                    <div class="shadow"></div>
+                                    <div class="flagPole"></div>
+                                    <div class="roof1"></div>
+                                    <div class="roof2"></div>
+                                    <div class="wall">
+                                        <div class="w1"></div><div class="w2"></div><div class="w3"></div><div class="w4"></div><div class="w5"></div>
+                                    </div>
+                                    <div class="legs">
+                                        <div class="left"></div>
+                                        <div class="right"></div>
+                                        <div class="support1"><div class="criss"></div><div class="cross"></div><div class="flat"></div></div>
+                                        <div class="support2"><div class="criss"></div><div class="cross"></div><div class="flat"></div></div>
+                                    </div>
+                                    <div class="railing">
+                                        <div class="top"></div><div class="bot1"></div><div class="bot2"></div>
+                                        <div class="r1"></div><div class="r2"></div><div class="r3"></div><div class="r4"></div><div class="r5"></div>
+                                        <div class="r6"></div><div class="r7"></div><div class="r8"></div><div class="r9"></div>
+                                    </div>
+                                </div>
+
+                                <div class="tree treeMid tree1"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeMid tree2"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeMid tree3"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeMid tree4"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeMid tree5"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+
+                                <div class="tree treeFront tree1"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeFront tree2"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeFront tree3"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
+                                <div class="tree treeFront tree4"><div class="top"></div><div class="mid"></div><div class="bot"></div><div class="base"></div></div>
                             </div>
                         </div>
+                        <span class="deco__duotone"></span>
                     </div>
                 </div>
             </section>
 
-            <!--================== CONTACT ==================-->
-            <section class="contact section" id="contact">
-                <h2 class="section__title">Contact Me</h2>
+            <section class="block block--paired">
+                <div class="block__inner paired paired--flip">
+                    <div class="paired__body">
+                        <div class="section__head">
+                            <span class="section__num">04</span>
+                            <h2 class="section__title">Education</h2>
+                            <span class="section__rule"></span>
+                        </div>
+                        <div class="resume__col">
+                            <div class="tl tl--now">
+                                <div class="tl__top"><span class="tl__title">B.Tech Computer Science</span><span class="tl__date">2023 — NOW</span></div>
+                                <p class="tl__sub">University of Petroleum and Energy Studies</p>
+                            </div>
+                            <div class="tl">
+                                <div class="tl__top"><span class="tl__title">Intermediate</span><span class="tl__date">2019 — 21</span></div>
+                                <p class="tl__sub">Sun Flower Public School</p>
+                            </div>
+                            <div class="tl">
+                                <div class="tl__top"><span class="tl__title">High School</span><span class="tl__date">2017 — 19</span></div>
+                                <p class="tl__sub">Shah Faiz Public School</p>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="contact__container container grid">
-                    <form action="" class="contact__form grid" id="contact-form">
-                        <input type="text" placeholder="Names" name="user_name" required class="contact__input">
-                        <input type="email" placeholder="Email" name="user_email" required class="contact__input">
-                        <textarea placeholder="Message" name="user_message" required class="contact__input contact__area"></textarea>
+                    <!-- Photo panel. The source is a flat green-grey anime still,
+                         so it's duotoned to the site's cyan and edge-faded rather
+                         than dropped in raw. -->
+                    <div class="deco deco--alt deco--photo" aria-hidden="true">
+                        <img class="deco__photo" src="img/ginpachisensei.jpg" alt="" loading="lazy" decoding="async">
+                        <span class="deco__duotone"></span>
+                        <span class="deco__grid"></span>
+                        <span class="deco__scrim"></span>
+                    </div>
+                </div>
+            </section>
 
-                        <button type="submit" class="button">Send Message</button>
+            <!--=============== CONTACT ===============-->
+            <section class="block" id="contact" style="border-bottom:none">
+                <div class="contact__inner">
+                    <div class="section__head">
+                        <span class="section__num">05</span>
+                        <h2 class="section__title">Contact</h2>
+                        <span class="section__rule"></span>
+                    </div>
+                    <p class="about__desc">Have a project or an internship in mind? Let's talk.</p>
 
-                        <p class="contact__message" id="contact-message"></p>
+                    <div class="contact__grid">
+                    <form class="form" id="contact-form">
+                        <input type="text" name="user_name" placeholder="Name" required>
+                        <input type="email" name="user_email" placeholder="Email" required>
+                        <textarea name="user_message" placeholder="Message" required></textarea>
+                        <button type="submit" class="btn" id="send-btn">Send message</button>
+                        <p class="mono-label" id="contact-message"></p>
                     </form>
 
-                    <div class="contact__content grid">
-                        <div class="contact__data grid">
-                            <address class="contact__address">
-                                <i class="ri-mail-fill"></i>
-                                <span>ishukvy29@gmail.com</span>
-                            </address>
-
-                            <address class="contact__address">
-                                <i class="ri-smartphone-fill"></i>
-                                <span>+91-6397116020</span>
-                            </address>
-
-                            <address class="contact__address">
-                                <i class="ri-map-pin-2-fill"></i>
-                                <span>India</span>
-                            </address>
-
-                            <!-- <address class="contact__address">
-
-                                <span></span>
-                            </address> -->
+                    <div class="contact__details">
+                        <div class="contact__row"><span class="mono-label">EMAIL</span><span class="val">ishukvy29@gmail.com</span></div>
+                        <div class="contact__row"><span class="mono-label">PHONE</span><span class="val">+91-6397116020</span></div>
+                        <div class="contact__row"><span class="mono-label">LOCATION</span><span class="val">India</span></div>
+                        <div class="contact__row contact__row--social">
+                            <span class="contact__socials">
+                                <a href="https://api.whatsapp.com/send/?phone=6397116020&amp;text=Hello,%20more%20information!" target="_blank" aria-label="WhatsApp" title="WhatsApp"><i class="ri-whatsapp-line"></i></a>
+                                <a href="https://bsky.app/profile/keertiv.bsky.social" target="_blank" aria-label="Bluesky" title="Bluesky"><i class="ri-bluesky-line"></i></a>
+                                <a href="https://www.instagram.com/keertiv_y/" target="_blank" aria-label="Instagram" title="Instagram"><i class="ri-instagram-line"></i></a>
+                                <a href="https://x.com/KeertiV_" target="_blank" aria-label="X" title="X"><i class="ri-twitter-x-line"></i></a>
+                            </span>
                         </div>
 
-                        <div class="contact__social">
-                            <a href="https://api.whatsapp.com/send/?phone=6397116020&text=Hello,%20more%20information!" target="_blank" class="contact__link">
-                                <i class="ri-whatsapp-fill"></i>
-                            </a>
-
-                            <a href="https://bsky.app/profile/keertiv.bsky.social" target="_blank" class="contact__link">
-                                <i class="ri-bluesky-fill"></i>
-                            </a>
-
-                            <a href="https://www.instagram.com/keertiv_y/" target="_blank" class="contact__link">
-                                <i class="ri-instagram-fill"></i>
-                            </a>
-
-                            <a href="https://x.com/KeertiV_" target="_blank" class="contact__link">
-                                <i class="ri-twitter-x-line"></i>
-                            </a>
+                        <div class="cat-wrap" id="cat-wrap" title="pet me">
+                            <video class="contact__cat" src="img/Loader cat.webm"
+                                   autoplay loop muted playsinline
+                                   aria-hidden="true"></video>
                         </div>
+                    </div>
+                    </div>
+
+                    <div class="footer">
+                        <span class="footer__logo">Keerti<span>.</span></span>
+                        <span class="footer__copy">© 2026 KEERTI VARDHAN</span>
                     </div>
                 </div>
             </section>
         </main>
+    </div>
 
-        <!--================== FOOTER ==================-->
-        <footer class="footer">
-            <div class="footer__container container grid">
-                <a href="#" class="footer__logo">Keerti</a>
+    <!--=============== PROJECT DETAILS MODAL (carousel) ===============-->
+    <div class="project-modal" id="project-modal">
+        <div class="project-modal__content">
+            <button class="project-modal__close" id="project-modal-close" type="button" aria-label="Close">
+                <i class="ri-close-line"></i>
+            </button>
 
-                <div class="footer__links">
-                    <a href="#home" class="footer__link">Home</a>
+            <header class="pm__head">
+                <p class="pm__tagline" id="pm-tagline"></p>
+                <h2 class="pm__title" id="pm-title"></h2>
+            </header>
 
-                    <a href="#about" class="footer__link">About</a>
-
-                    <a href="#projects" class="footer__link">Projects</a>
-                </div>
-
-                <div class="footer__social">
-                    <a href="https://bsky.app/profile/keertiv.bsky.social" target="_blank" class="footer__social-link">
-                        <i class="ri-bluesky-fill"></i>
-                    </a>
-
-                    <a href="https://www.instagram.com/keertiv_y/" target="_blank" class="footer__social-link">
-                        <i class="ri-instagram-fill"></i>
-                    </a>
-
-                    <a href="https://x.com/KeertiV_" target="_blank" class="footer__social-link">
-                        <i class="ri-twitter-x-line"></i>
-                    </a>
-                </div>
+            <div class="pm__carousel">
+                <div class="pm__stage" id="pm-stage"></div>
+                <button class="pm__arrow pm__arrow--prev" id="pm-prev" aria-label="Previous">
+                    <span class="pm__arrow-anim">
+                        <span class="arrowSliding"><span class="arrow"></span></span>
+                        <span class="arrowSliding delay1"><span class="arrow"></span></span>
+                        <span class="arrowSliding delay2"><span class="arrow"></span></span>
+                        <span class="arrowSliding delay3"><span class="arrow"></span></span>
+                    </span>
+                </button>
+                <button class="pm__arrow pm__arrow--next" id="pm-next" aria-label="Next">
+                    <span class="pm__arrow-anim">
+                        <span class="arrowSliding"><span class="arrow"></span></span>
+                        <span class="arrowSliding delay1"><span class="arrow"></span></span>
+                        <span class="arrowSliding delay2"><span class="arrow"></span></span>
+                        <span class="arrowSliding delay3"><span class="arrow"></span></span>
+                    </span>
+                </button>
+                <div class="pm__dots" id="pm-dots"></div>
             </div>
 
-            <span class="footer__copy">
-                &#169; Keerti Vardhan. All rights reserved
-            </span>
-        </footer>
+            <div class="pm__body">
+                <aside class="pm__tech">
+                    <span class="pm__label">BUILT WITH</span>
+                    <ul class="pm__tech-list" id="pm-tech"></ul>
+                </aside>
 
-        <!--================== SCROLL UP ==================-->
-        <a href="#" class="scrollup" id="scroll-up">
-            <i class="ri-arrow-up-line"></i>
-        </a>
-
-        <!--================== PROJECT DETAILS MODAL ==================-->
-        <div class="project-modal" id="project-modal">
-            <div class="project-modal__content">
-                <button class="project-modal__close" id="project-modal-close" type="button" aria-label="Close">
-                    <i class="ri-close-line"></i>
-                </button>
-                
-                <header class="pm__head">
-                    <p class="pm__tagline" id="pm-tagline"></p>
-                    <h2 class="pm__title" id="pm-title"></h2>
-                </header>
-
-                <div class="pm__carousel">
-                    <div class="pm__stage" id="pm-stage"></div>
-                    <button class="pm__arrow pm__arrow--prev" id="pm-prev" aria-label="Previous"><i class="ri-arrow-left-line"></i></button>
-                    <button class="pm__arrow pm__arrow--next" id="pm-next" aria-label="Next"><i class="ri-arrow-right-line"></i></button>
-                    <div class="pm__dots" id="pm-dots"></div>
-                </div>
-
-                <div class="pm__body">
-                    <aside class="pm__tech">
-                        <span class="pm__label">BUILT WITH</span>
-                        <ul class="pm__tech-list" id="pm-tech"></ul>
-                    </aside>
-
-                    <div class="pm__about">
-                        <h3 class="pm__about-title">About Project<span class="pm__rule"></span></h3>
-                        <p class="pm__desc" id="pm-desc"></p>
-                        <div class="pm__stats" id="pm-stats"></div>
-                        <div class="pm__actions">
-                            <a class="pm__github" id="pm-github" target="_blank" rel="noopener"><i class="ri-github-fill"></i><span id="pm-github-label"></span></a>
-                            <a class="pm__cta button" id="pm-details">View full details <i class="ri-arrow-right-line"></i></a>
-                        </div>
+                <div class="pm__about">
+                    <h3 class="pm__about-title">About Project<span class="pm__rule"></span></h3>
+                    <p class="pm__desc" id="pm-desc"></p>
+                    <div class="pm__stats" id="pm-stats"></div>
+                    <div class="pm__actions">
+                        <a class="pm__github" id="pm-github" target="_blank" rel="noopener"><i class="ri-github-fill"></i><span id="pm-github-label"></span></a>
+                        <a class="pm__cta btn" id="pm-details">View full details <i class="ri-arrow-right-line"></i></a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!--================== SCROLLREVEAL ==================-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/4.0.9/scrollreveal.min.js"></script>
+    <div class="progress" id="progress" aria-hidden="true"></div>
 
-        <!--================== TYPED JS ==================-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.1.0/typed.umd.min.js"></script>
+    <a href="#home" class="scrollup" id="scrollup" aria-label="Back to top"><i class="ri-arrow-up-line"></i></a>
 
-        <!--================== EMAIL JS ==================-->
-        <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!--=============== EMAIL JS ===============-->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-        <!--================== MAIN JS ==================-->
-        <script src="js/main.js"></script>
-    </body>
-    </html>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
