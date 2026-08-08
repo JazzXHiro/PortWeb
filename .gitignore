@@ -6,3 +6,12 @@ img/
 
 # Logs
 *.log
+
+# Docs
+docs/
+
+# PDFs
+pdf/
+
+# Claude
+.claude/
