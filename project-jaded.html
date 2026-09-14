@@ -48,7 +48,7 @@
       display: grid; place-items: center; text-align: center; padding: 1rem;
       font: 400 .7rem var(--mono-font); letter-spacing: .1em; text-transform: uppercase; color: var(--dim);
     }
-    .pd-fill img{ position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pd-fill img, .pd-fill video{ position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* SECTION shell */
     .pd-sec{ padding-block: clamp(2.5rem, 6vh, 4.5rem); border-top: 1px solid var(--line); }
@@ -77,11 +77,22 @@
     .pd-feature__d{ color: var(--muted); line-height: 1.6; font-weight: 300; font-size: .95rem; }
 
     /* GALLERY */
-    .pd-gallery{ display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin-top: 2rem; }
-    .pd-shot{ position: relative; border-radius: 14px; overflow: hidden; border: 1.5px solid var(--line); }
-    .pd-shot--wide{ grid-column: span 4; aspect-ratio: 16/9; }
-    .pd-shot--tall{ grid-column: span 2; aspect-ratio: 3/4; }
-    .pd-shot--half{ grid-column: span 3; aspect-ratio: 16/10; }
+    /* 12-col track so frames can be sized to the SOURCE ratio of each shot.
+       Rows stretch, so the tallest tile in a row sets the height and its
+       neighbour only ever loses a few percent to object-fit: cover. */
+    .pd-gallery{ display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; margin-top: 2rem; }
+    /* height:100% lets a tile fill the row its neighbour sized, so row bottoms
+       stay flush while each aspect-ratio still sets the natural row height */
+    .pd-shot{ position: relative; border-radius: 14px; overflow: hidden; border: 1.5px solid var(--line); width: 100%; height: 100%; }
+    /* hero — full bleed. The capture is 1276x746 including a 27px OS title bar;
+       the game area under it is 1276x719, i.e. 16:9. Anchoring to the bottom
+       makes object-fit: cover trim exactly that title bar off the top edge. */
+    .pd-shot--wide{ grid-column: span 12; aspect-ratio: 16/9; }
+    .pd-shot--wide video{ object-position: center bottom; }
+    /* landscape UI / screenshot — pairs beside a portrait */
+    .pd-shot--half{ grid-column: span 7; aspect-ratio: 4/3; }
+    /* portrait / map shot */
+    .pd-shot--tall{ grid-column: span 5; aspect-ratio: 1/1; }
     .pd-shot__cap{ position: absolute; left: 10px; bottom: 10px; z-index: 3; font: 400 .6rem var(--mono-font); letter-spacing: .06em; color: hsla(0,0%,100%,.8); background: hsla(var(--hue),17%,5%,.6); padding: 4px 8px; border-radius: 999px; backdrop-filter: blur(4px); pointer-events: none; }
 
     /* TECH */
@@ -186,12 +197,14 @@
 
     @media (max-width: 900px){
       .pd-split{ grid-template-columns: 1fr; }
-      .pd-gallery{ grid-template-columns: 1fr 1fr; }
-      .pd-shot--wide, .pd-shot--tall, .pd-shot--half{ grid-column: span 2; aspect-ratio: 16/10; }
+      /* stack: every shot keeps its own ratio instead of being cropped to a common one */
+      .pd-gallery{ grid-template-columns: 1fr; }
+      .pd-shot--wide{ grid-column: 1; aspect-ratio: 16/9; }
+      .pd-shot--half{ grid-column: 1; aspect-ratio: 4/3; }
+      .pd-shot--tall{ grid-column: 1; aspect-ratio: 9/10; width: 68%; justify-self: center; }
     }
     @media (max-width: 560px){
-      .pd-gallery{ grid-template-columns: 1fr; }
-      .pd-shot--wide, .pd-shot--tall, .pd-shot--half{ grid-column: span 1; }
+      .pd-shot--tall{ width: 85%; }
     }
   </style>
   <script>
@@ -247,17 +260,17 @@
 
         <!-- HERO -->
         <section class="pd-hero">
-          <p class="pd-hero__tag">2D GAME · MONSTER-CATCHER · SOLO BUILD</p>
+          <p class="pd-hero__tag">2D GAME · MONSTER-CATCHER · ENGINELESS BUILD</p>
           <h1 class="pd-hero__title">Jaded<br><em>Catch. Train. Battle.</em></h1>
-          <p class="pd-hero__lead">A 2D monster-catching adventure built entirely in Python with Pygame — from a hand-rolled physics loop to 30+ original creatures, all designed and coded by one person.</p>
+          <p class="pd-hero__lead">A 2D monster-catching adventure built entirely in Python with Pygame — from a hand-rolled physics loop to 30+ creatures coded from scratch.</p>
           <div class="pd-hero__meta">
-            <div class="pd-meta"><span class="pd-meta__k">Role</span><span class="pd-meta__v">Solo Developer</span></div>
-            <div class="pd-meta"><span class="pd-meta__k">Engine</span><span class="pd-meta__v">Custom / Pygame</span></div>
+            <div class="pd-meta"><span class="pd-meta__k">Role</span><span class="pd-meta__v">Game Developer</span></div>
+            <div class="pd-meta"><span class="pd-meta__k">Tools</span><span class="pd-meta__v">Custom / Pygame</span></div>
             <div class="pd-meta"><span class="pd-meta__k">Timeline</span><span class="pd-meta__v">2024 — Present</span></div>
-            <div class="pd-meta"><span class="pd-meta__k">Status</span><span class="pd-meta__v">In Development</span></div>
+            <div class="pd-meta"><span class="pd-meta__k">Status</span><span class="pd-meta__v">Prototype (Actively Developing)</span></div>
           </div>
           <div class="pd-hero__actions">
-            <a href="https://github.com/JazzXHiro/Jaded" target="_blank" class="btn">View on GitHub</a>
+            <a href="https://github.com/JazzXHiro/Jade" target="_blank" class="btn">View on GitHub</a>
             <a href="#gallery" class="textlink">Jump to gallery →</a>
           </div>
         </section>
@@ -268,7 +281,7 @@
           <div class="pd-fill" data-ph="Drop cover / key art">
             <img src="img/project-1.jpg" alt="Jaded key art" onerror="this.remove()">
           </div>
-          <span class="pd-shot__cap">KEY ART · TITLE SCREEN</span>
+          <span class="pd-shot__cap">KEY ART</span>
         </div>
 
         <!-- OVERVIEW -->
@@ -276,9 +289,9 @@
           <div class="pd-title-row"><span class="pd-num">01</span><h2 class="pd-h">Overview</h2><span class="pd-rule"></span></div>
           <div class="pd-split" style="margin-top:2rem">
             <div class="pd-prose">
-              <p><b>Jaded</b> is a 2D monster-catching game where you explore a hand-built world, discover creatures with their own abilities, and capture, train, and battle your way toward becoming the ultimate monster master.</p>
-              <p>The whole thing runs on a <b>custom engine loop</b> written on top of Pygame — collision, movement, animation timing and a turn-based battle system were all built from scratch rather than pulled from a framework. That constraint was the point: it forced every system to be understood end to end.</p>
-              <p>Art, creature design, systems and code are all <b>solo work</b>, which kept the vision tight and the iteration loop fast.</p>
+              <p><b>Jaded</b> is a 2D monster-catching game where you explore a hand-crafted world, discover creatures with their own abilities, and capture, train, and battle your way toward becoming the ultimate monster master.</p>
+              <p>The whole thing runs on a <b>custom engine loop</b> written on top of Pygame — collision, movement, asset importers via custom loaders, animation timing and a turn-based battle system were all built from scratch rather than pulled from a framework. That constraint was the point: it forced every system to be understood end to end.</p>
+              <p>All the systems and code are all <b>solo work</b>, which kept the vision tight and the iteration loop fast.</p>
             </div>
             <div class="pd-facts">
               <div class="pd-fact"><span class="pd-fact__k">Creatures</span><span class="pd-fact__v">30+</span></div>
@@ -317,13 +330,13 @@
             </div>
             <div class="pd-feature">
               <span class="pd-feature__ico"><i class="ri-archive-2-line"></i></span>
-              <h3 class="pd-feature__t">Inventory &amp; Progression</h3>
-              <p class="pd-feature__d">Items, capture tools and a growing roster that persists as you train your team up.</p>
+              <h3 class="pd-feature__t">Progression</h3>
+              <p class="pd-feature__d">A growing roster that persists as you train your team up.</p>
             </div>
             <div class="pd-feature">
               <span class="pd-feature__ico"><i class="ri-code-s-slash-line"></i></span>
               <h3 class="pd-feature__t">Built From Scratch</h3>
-              <p class="pd-feature__d">No game framework beyond Pygame — every system authored, debugged and owned solo.</p>
+              <p class="pd-feature__d">No game framework beyond Pygame — every system is designed and developed from the ground up.</p>
             </div>
           </div>
         </section>
@@ -333,27 +346,16 @@
           <div class="pd-title-row"><span class="pd-num">03</span><h2 class="pd-h">Gallery</h2><span class="pd-rule"></span></div>
           <div class="pd-gallery">
             <div class="pd-shot pd-shot--wide">
-              <div class="pd-fill" data-ph="Gameplay loop (gif)"><img src="img/jaded/gameplay.gif" alt="Gameplay loop" onerror="this.remove()"></div>
+              <div class="pd-fill" data-ph="Gameplay loop"><video src="img/gameplay.mp4"
+                     autoplay loop muted playsinline aria-label="Gameplay loop" onerror="this.remove()"></video></div>
               <span class="pd-shot__cap">GAMEPLAY LOOP</span>
             </div>
             <div class="pd-shot pd-shot--tall">
-              <div class="pd-fill" data-ph="Title screen"><img src="img/jaded/title.png" alt="Title screen" onerror="this.remove()"></div>
-              <span class="pd-shot__cap">TITLE SCREEN</span>
-            </div>
-            <div class="pd-shot pd-shot--half">
-              <div class="pd-fill" data-ph="Forest biome"><img src="img/jaded/forest.png" alt="Forest biome" onerror="this.remove()"></div>
+              <div class="pd-fill" data-ph="Forest biome"><img src="img/forest.png" alt="Forest biome" onerror="this.remove()"></div>
               <span class="pd-shot__cap">FOREST BIOME</span>
             </div>
             <div class="pd-shot pd-shot--half">
-              <div class="pd-fill" data-ph="Boss fight"><img src="img/jaded/boss.png" alt="Boss fight" onerror="this.remove()"></div>
-              <span class="pd-shot__cap">BOSS FIGHT</span>
-            </div>
-            <div class="pd-shot pd-shot--wide">
-              <div class="pd-fill" data-ph="Inventory UI"><img src="img/jaded/inventory.png" alt="Inventory UI" onerror="this.remove()"></div>
-              <span class="pd-shot__cap">INVENTORY UI</span>
-            </div>
-            <div class="pd-shot pd-shot--tall">
-              <div class="pd-fill" data-ph="Drop a screenshot"></div>
+              <div class="pd-fill" data-ph="Creature dex"><img src="img/datadex.png" alt="Creature dex UI" onerror="this.remove()"></div>
               <span class="pd-shot__cap">CREATURE DEX</span>
             </div>
           </div>

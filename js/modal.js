@@ -118,5 +118,10 @@ export function initProjectModal() {
     projectCards.forEach(card => card.addEventListener('click', () => openProjectModal(card)));
     if (projectModalClose) projectModalClose.addEventListener('click', close);
     projectModal.addEventListener('click', (e) => { if (e.target === projectModal) close(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { close(); return; }
+        if (!projectModal.classList.contains('show-modal') || csMedia.length <= 1) return;
+        if (e.key === 'ArrowLeft') { e.preventDefault(); setActive(csActive - 1); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); setActive(csActive + 1); }
+    });
 }

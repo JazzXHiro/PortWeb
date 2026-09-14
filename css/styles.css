@@ -1101,6 +1101,11 @@ button, input, textarea{ font-family: var(--body-font); }
   background-image: repeating-linear-gradient(45deg, transparent 0 11px, hsla(var(--hue), 60%,60%, .05) 11px 22px);
 }
 .pm__tile img, .pm__tile video{ width: 100%; height: 100%; object-fit: cover; }
+/* The Jaded capture is 1276x746 including a 27px OS title bar (game area is
+   1276x719). Tiles are narrower than the source, so object-fit crops the sides
+   and leaves the bar showing — overflow the tile by that 3.76% and anchor to
+   the bottom so the tile's overflow:hidden clips it off the top. */
+.pm__tile video[src$="gameplay.mp4"]{ height: 103.76%; align-self: end; }
 .pm__tile.is-active{ box-shadow: 0 0 0 2px var(--first-color), 0 18px 50px hsla(var(--hue), 80%, 48%, .5); }
 .pm__tile:not(.is-active){ filter: brightness(.55) saturate(.45); cursor: pointer;}
 
