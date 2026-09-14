@@ -1,9 +1,6 @@
 # VS Code
 .vscode/
 
-# Images
-img/
-
 # Logs
 *.log
 
