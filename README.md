@@ -2,7 +2,7 @@
 
 Personal portfolio site for Keerti Vardhan (Computer Science). A static, single-page site with a home/about section, a project showcase with a modal viewer, a resume/CV section, and a contact form.
 
-**Live site:** https://jazzxhiro.github.io/PortWeb/
+**Live site:** https://k-vardhan.netlify.app/
 
 ## Structure
 
@@ -39,8 +39,8 @@ The contact form uses [EmailJS](https://www.emailjs.com/) (loaded via CDN in `js
 
 ## Deployment
 
-Hosted for free on **GitHub Pages**, deployed from the `main` branch.
+Hosted for free on **Netlify**, auto-deployed from the `main` branch (no build command needed — publish directory is the repo root).
 
 ## Notes
 
-- `img/`, `docs/`, `pdf/`, and `info.txt` are gitignored — media/local-only assets aren't tracked in the repo.
+- `docs/`, `pdf/`, and `info.txt` are gitignored — local-only assets aren't tracked in the repo.
